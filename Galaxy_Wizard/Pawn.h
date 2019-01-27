@@ -4,8 +4,9 @@ class Pawn :
 	public Figure
 {
 public:
-	Pawn();
+	Pawn(size_t x, size_t y, double Score);
 	~Pawn();
 
-	static double Value;
+	virtual Figure* Clone();
+	virtual std::list<Matrix> moves(Matrix, size_t, size_t);
 };

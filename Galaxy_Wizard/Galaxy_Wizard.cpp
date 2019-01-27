@@ -6,18 +6,16 @@
 
 #include "Game.h"
 
-double King::Value = 500;
-double Queen::Value = 11;
-double Rook::Value = 6;
-double Bishop::Value = 4.5;
-double Knight::Value = 4;
-double Pawn::Value = 1;
-
 int main()
 {
     std::cout << "Hello World!\n"; 
 
-	std::auto_ptr<Game> game(new Game());
+	Game* game = new Game();
+
+	if (game != nullptr)
+	{
+		delete game;
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

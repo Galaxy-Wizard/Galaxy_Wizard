@@ -9,11 +9,11 @@ protected:
 	Matrix position;
 public:
 	Board();
-	Board(const Matrix m);
+	Board(const Matrix &m);
 	~Board();
 	Board(const Board &b);
-	Board operator=(const Board b);
+	Board& operator=(const Board& b);
 
-	Board move(const Matrix m);
+	Board& move(const Matrix &m);
 };
 

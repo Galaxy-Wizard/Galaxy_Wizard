@@ -4,8 +4,9 @@ class Queen :
 	public Figure
 {
 public:
-	Queen();
+	Queen(size_t x, size_t y, double Score);
 	~Queen();
 
-	static double Value;
+	virtual Figure* Clone();
+	virtual std::list<Matrix> moves(Matrix, size_t, size_t);
 };

@@ -1,11 +1,15 @@
 #pragma once
 #include <vector>
+#include <memory>
+
 #include "Exception.h"
+
+class Figure;
 
 class Matrix
 {
 protected:
-	std::vector<std::vector<double>> matrix;
+	std::vector<std::vector<Figure*>> matrix;
 	size_t matrix_n;
 	size_t matrix_m;
 public:
@@ -13,13 +17,11 @@ public:
 	Matrix(size_t n, size_t m);
 	~Matrix();
 	Matrix(const Matrix &m);
-	Matrix operator=(const Matrix m);
+	Matrix& operator=(const Matrix& m) throw(Exception());
 
-	Matrix put(size_t x, size_t y, double value) throw(Exception);
-	double get(size_t x, size_t y) throw(Exception);
+	Matrix& put(size_t x, size_t y, Figure* value) throw(Exception);
+	Figure* get(size_t x, size_t y) throw(Exception);
 	size_t get_matrix_n() const;
 	size_t get_matrix_m() const;
-
-	Matrix operator+(const Matrix m) throw(Exception);
 };
 

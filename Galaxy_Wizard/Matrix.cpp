@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Matrix.h"
+#include "Figure.h"
 
 Matrix::Matrix()
 {
@@ -7,17 +8,17 @@ Matrix::Matrix()
 	matrix_m = 0;
 }
 
-Matrix::Matrix(size_t n, size_t m)
+Matrix::Matrix(size_t m, size_t n)
 {
-	matrix_n = n;
 	matrix_m = m;
+	matrix_n = n;
 
-	for (size_t c = 0; c < n; c++)
+	for (size_t c = 0; c < m; c++)
 	{
-		std::vector<double> line;
-		for (size_t i = 0; i < m; i++)
+		std::vector<Figure*> line(n);
+		for (size_t i = 0; i < n; i++)
 		{
-			line[i] = 0;
+			line[i] = nullptr;
 		}
 		matrix.push_back(line);
 	}
@@ -26,6 +27,17 @@ Matrix::Matrix(size_t n, size_t m)
 
 Matrix::~Matrix()
 {
+	for (size_t c = 0; c < matrix_m; c++)
+	{
+		for (size_t i = 0; i < matrix_n; i++)
+		{
+			if (matrix.at(c).at(i) != nullptr)
+			{
+				delete matrix.at(c).at(i);
+				matrix.at(c).at(i) = nullptr;
+			}
+		}
+	}
 }
 
 Matrix::Matrix(const Matrix &m)
@@ -33,18 +45,63 @@ Matrix::Matrix(const Matrix &m)
 	matrix = m.matrix;
 }
 
-Matrix Matrix::operator=(const Matrix m)
+Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 {
-	matrix = m.matrix;
+	if (matrix_m != m.matrix_m)
+	{
+		if (matrix_m == 0)
+		{
+			matrix_m = m.matrix_m;
+			matrix_n = m.matrix_n;
+
+			for (size_t c = 0; c < matrix_m; c++)
+			{
+				std::vector<Figure*> line(matrix_n);
+				for (size_t i = 0; i < matrix_n; i++)
+				{
+					line[i] = nullptr;
+				}
+				matrix.push_back(line);
+			}
+		}
+		else
+		{
+			throw Exception();
+		}
+	}
+
+	if (matrix_n != m.matrix_n)
+	{
+		throw Exception();
+	}
+
+	for (size_t c = 0; c < matrix_n; c++)
+	{
+		for (size_t i = 0; i < matrix_m; i++)
+		{
+			if (m.matrix.at(c).at(i) != nullptr)
+			{
+				matrix.at(c).at(i) = m.matrix.at(c).at(i)->Clone();
+			}
+			else
+			{
+				matrix.at(c).at(i) = nullptr;
+			}
+		}
+	}
 
 	return *this;
 }
 
-Matrix Matrix::put(size_t x, size_t y, double value) throw(Exception)
+Matrix& Matrix::put(size_t x, size_t y, Figure* f) throw(Exception)
 {
-	if (x < matrix_n && y < matrix_m)
+	if (x < matrix_m && y < matrix_n)
 	{
-		matrix.at(x).at(y) = value;
+		if (matrix.at(x).at(y) != nullptr)
+		{
+			delete matrix.at(x).at(y);
+		}
+		matrix.at(x).at(y) = f;
 	}
 	else
 	{
@@ -54,10 +111,10 @@ Matrix Matrix::put(size_t x, size_t y, double value) throw(Exception)
 	return *this;
 }
 
-double Matrix::get(size_t x, size_t y) throw(Exception)
+Figure* Matrix::get(size_t x, size_t y) throw(Exception)
 {
-	double value = 0;
-	if (x < matrix_n && y < matrix_m)
+	Figure* value = nullptr;
+	if (x < matrix_m && y < matrix_n)
 	{
 		value = matrix.at(x).at(y);
 	}
@@ -77,24 +134,4 @@ size_t Matrix::get_matrix_n() const
 size_t Matrix::get_matrix_m() const
 {
 	return matrix_m;
-}
-
-Matrix Matrix::operator+(const Matrix m) throw(Exception)
-{
-	if (matrix_n == m.matrix_n && matrix_m == m.matrix_m)
-	{
-		for (size_t c = 0; c < matrix_n; c++)
-		{
-			for (size_t i = 0; i < matrix_m; i++)
-			{
-				matrix.at(c).at(i) += m.matrix.at(c).at(i);
-			}
-		}
-	}
-	else
-	{
-		throw Exception();
-	}
-
-	return *this;
 }

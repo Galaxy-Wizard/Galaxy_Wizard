@@ -4,9 +4,10 @@ class King :
 	public Figure
 {
 public:
-	King();
+	King(size_t x, size_t y, double Score);
 	~King();
 
-	static double Value;
+	virtual Figure* Clone();
+	virtual std::list<Matrix> moves(Matrix, size_t, size_t);
 };
 
