@@ -27,6 +27,27 @@
     <ClInclude Include="Exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="King.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Queen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bishop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -42,6 +63,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Figure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Queen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bishop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
