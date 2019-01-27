@@ -10,4 +10,3 @@ public:
 	static double Value;
 };
 
-double King::Value = 500;

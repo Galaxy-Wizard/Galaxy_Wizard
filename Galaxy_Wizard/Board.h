@@ -8,6 +8,7 @@ class Board
 protected:
 	Matrix position;
 public:
+	Board();
 	Board(const Matrix m);
 	~Board();
 	Board(const Board &b);

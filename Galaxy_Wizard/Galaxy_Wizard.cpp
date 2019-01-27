@@ -4,50 +4,20 @@
 #include "pch.h"
 #include <iostream>
 
-#include "Board.h"
-#include "Matrix.h"
+#include "Game.h"
 
-#include "King.h"
-#include "Queen.h"
-#include "Rook.h"
-#include "Bishop.h"
-#include "Knight.h"
-#include "Pawn.h"
+double King::Value = 500;
+double Queen::Value = 11;
+double Rook::Value = 6;
+double Bishop::Value = 4.5;
+double Knight::Value = 4;
+double Pawn::Value = 1;
 
 int main()
 {
     std::cout << "Hello World!\n"; 
 
-	Matrix position(8, 8);
-
-	for (size_t i = 0; i < 8; i++)
-	{
-		position.put(i, 1, +Pawn::Value);
-		position.put(i, 6, -Pawn::Value);
-	}
-
-	position.put(0, 0, +Rook::Value);
-	position.put(7, 0, +Rook::Value);
-	position.put(0, 7, -Rook::Value);
-	position.put(7, 7, -Rook::Value);
-
-	position.put(1, 0, +Knight::Value);
-	position.put(6, 0, +Knight::Value);
-	position.put(1, 7, -Knight::Value);
-	position.put(6, 7, -Knight::Value);
-
-	position.put(2, 0, +Bishop::Value);
-	position.put(5, 0, +Bishop::Value);
-	position.put(2, 7, -Bishop::Value);
-	position.put(5, 7, -Bishop::Value);
-
-	position.put(3, 0, +Queen::Value);
-	position.put(4, 0, +King::Value);
-	position.put(3, 7, -Queen::Value);
-	position.put(4, 7, -King::Value);
-
-
-	Board board(position);
+	std::auto_ptr<Game> game(new Game());
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

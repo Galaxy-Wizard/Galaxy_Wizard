@@ -9,5 +9,3 @@ public:
 
 	static double Value;
 };
-
-double Knight::Value = 4;

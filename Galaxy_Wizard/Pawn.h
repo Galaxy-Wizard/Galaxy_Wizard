@@ -9,5 +9,3 @@ public:
 
 	static double Value;
 };
-
-double Pawn::Value = 1;

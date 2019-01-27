@@ -9,6 +9,3 @@ public:
 
 	static double Value;
 };
-
-
-double Bishop::Value = 4.5;

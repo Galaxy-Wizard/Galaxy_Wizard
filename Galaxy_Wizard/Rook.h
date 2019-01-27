@@ -9,5 +9,3 @@ public:
 
 	static double Value;
 };
-
-double Rook::Value = 6;
