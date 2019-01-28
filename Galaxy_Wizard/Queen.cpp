@@ -2,7 +2,7 @@
 #include "Queen.h"
 
 
-Queen::Queen(size_t x, size_t y, WORD Score)
+Queen::Queen(size_t x, size_t y, DWORD Score)
 	:Figure(x, y, Score)
 {
 }
@@ -40,6 +40,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -55,6 +59,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -84,6 +92,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -99,6 +111,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -128,6 +144,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -143,6 +163,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -172,6 +196,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -187,6 +215,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -216,6 +248,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -231,6 +267,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -260,6 +300,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -275,6 +319,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -304,6 +352,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -319,6 +371,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -348,6 +404,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
+					new_move.x_from = x;
+					new_move.y_from = y;
+					new_move.x_to = current_x;
+					new_move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -363,6 +423,10 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
+						new_move.x_from = x;
+						new_move.y_from = y;
+						new_move.x_to = current_x;
+						new_move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}

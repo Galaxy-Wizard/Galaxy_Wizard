@@ -24,6 +24,9 @@ public:
 	size_t get_matrix_n() const;
 	size_t get_matrix_m() const;
 
+	size_t x_from, y_from;
+	size_t x_to, y_to;
+	void format_move(std::string &current_move);
 	size_t enpassant;
 };
 

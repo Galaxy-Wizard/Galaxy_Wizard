@@ -4,7 +4,7 @@ class Knight :
 	public Figure
 {
 public:
-	Knight(size_t x, size_t y, WORD Score);
+	Knight(size_t x, size_t y, DWORD Score);
 	~Knight();
 
 	virtual Figure* Clone();

@@ -4,7 +4,7 @@ class King :
 	public Figure
 {
 public:
-	King(size_t x, size_t y, WORD Score);
+	King(size_t x, size_t y, DWORD Score);
 	~King();
 
 	bool king_not_moved;

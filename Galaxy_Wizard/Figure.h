@@ -8,10 +8,10 @@
 class Figure
 {
 public:
-	Figure(size_t x, size_t y, WORD Score);
+	Figure(size_t x, size_t y, DWORD Score);
 	~Figure();
 
-	WORD Value;
+	DWORD Value;
 	size_t m, n;
 
 	virtual Figure* Clone() = 0;

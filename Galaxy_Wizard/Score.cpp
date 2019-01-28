@@ -3,7 +3,7 @@
 #include "Figure.h"
 
 Score::Score()
-	:side_to_move(1), evaluation(0)
+	:side_to_move(1), evaluation(0), parent(nullptr)
 {
 }
 
@@ -12,9 +12,9 @@ Score::~Score()
 {
 }
 
-WORD Score::Evaluate()
+DWORD Score::Evaluate()
 {
-	WORD result = 0;
+	DWORD result = 0;
 	for (size_t x = 0; x < board.position.get_matrix_m(); x++)
 	{
 		for (size_t y = 0; y < board.position.get_matrix_n(); y++)
@@ -50,7 +50,12 @@ void Score::GenetateAllMoves()
 						Board board(*current_figure_moves_iterator);
 
 						Score current_score;
+						current_score.parent = this;
 						current_score.board = board;
+
+						std::string current_move;
+						current_figure_moves_iterator->format_move(current_move);
+						current_score.move = current_move;
 
 						current_score.side_to_move = -side_to_move;
 

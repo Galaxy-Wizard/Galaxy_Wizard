@@ -6,12 +6,16 @@ Matrix::Matrix()
 {
 	matrix_n = 0;
 	matrix_m = 0;
+
+	x_from = y_from = x_to = y_to = size_t(-1);
 }
 
 Matrix::Matrix(size_t m, size_t n)
 {
 	matrix_m = m;
 	matrix_n = n;
+
+	x_from = y_from = x_to = y_to = size_t(-1);
 
 	for (size_t c = 0; c < m; c++)
 	{
@@ -47,6 +51,8 @@ Matrix::Matrix(const Matrix &m)
 	matrix_m = m.matrix_m;
 	matrix_n = m.matrix_n;
 
+	x_from = y_from = x_to = y_to = size_t(-1);
+
 	for (size_t c = 0; c < matrix_m; c++)
 	{
 		std::vector<Figure*> line(matrix_n);
@@ -71,6 +77,11 @@ Matrix::Matrix(const Matrix &m)
 			}
 		}
 	}
+
+	x_from = m.x_from;
+	y_from = m.y_from;
+	x_to = m.x_to;
+	y_to = m.y_to;
 
 	enpassant = m.enpassant;
 }
@@ -121,6 +132,11 @@ Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 			}
 		}
 	}
+
+	x_from = m.x_from;
+	y_from = m.y_from;
+	x_to = m.x_to;
+	y_to = m.y_to;
 
 	enpassant = m.enpassant;
 
@@ -184,4 +200,25 @@ size_t Matrix::get_matrix_n() const
 size_t Matrix::get_matrix_m() const
 {
 	return matrix_m;
+}
+
+void Matrix::format_move(std::string &current_move)
+{
+	char buffer_x_from[4];
+	char buffer_y_from[4];
+	char buffer_x_to[4];
+	char buffer_y_to[4];
+
+	memset(buffer_x_from, 0, sizeof(char) * 4);
+	memset(buffer_y_from, 0, sizeof(char) * 4);
+	memset(buffer_x_to, 0, sizeof(char) * 4);
+	memset(buffer_y_to, 0, sizeof(char) * 4);
+
+	_itoa_s(x_from, buffer_x_from, 10);
+	_itoa_s(y_from, buffer_y_from, 10);
+	_itoa_s(x_to, buffer_x_to, 10);
+	_itoa_s(y_to, buffer_y_to, 10);
+
+	current_move = std::string("from(") + std::string(buffer_x_from) + std::string(" ") + std::string(buffer_y_from) + std::string(")") +
+		std::string(" to(") + std::string(buffer_x_to) + std::string(" ") + std::string(buffer_y_to) + std::string(")");
 }
