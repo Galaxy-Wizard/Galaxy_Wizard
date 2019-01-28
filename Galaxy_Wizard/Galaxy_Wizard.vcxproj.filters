@@ -54,9 +54,6 @@
     <ClInclude Include="Score.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="basic_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>

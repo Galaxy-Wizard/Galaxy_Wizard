@@ -14,11 +14,11 @@
 
 class Game
 {
-protected:
-	Board board;
-	Score score;
 public:
 	Game();
 	~Game();
+
+	Board board;
+	Score score;
 };
 

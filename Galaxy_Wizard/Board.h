@@ -5,8 +5,6 @@
 
 class Board
 {
-protected:
-	Matrix position;
 public:
 	Board();
 	Board(const Matrix &m);
@@ -15,5 +13,7 @@ public:
 	Board& operator=(const Board& b);
 
 	Board& move(const Matrix &m);
+
+	Matrix position;
 };
 

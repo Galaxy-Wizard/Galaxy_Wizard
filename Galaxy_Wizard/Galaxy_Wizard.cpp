@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include "Game.h"
+#include "Board.h"
+#include "Score.h"
 
 int main()
 {
@@ -24,6 +26,8 @@ int main()
 
 		if (game != nullptr)
 		{
+			WORD evaluation = game->score.Evaluate();
+
 			delete game;
 
 			game = nullptr;
