@@ -14,7 +14,7 @@ protected:
 	size_t matrix_m;
 public:
 	explicit Matrix();
-	Matrix(size_t n, size_t m);
+	Matrix(size_t m, size_t n);
 	~Matrix();
 	Matrix(const Matrix &m);
 	Matrix& operator=(const Matrix& m) throw(Exception());
