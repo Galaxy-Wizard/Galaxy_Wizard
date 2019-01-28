@@ -45,6 +45,8 @@ Matrix::~Matrix()
 Matrix::Matrix(const Matrix &m)
 {
 	matrix = m.matrix;
+	matrix_m = m.matrix_m;
+	matrix_n = m.matrix_n;
 
 	enpassant = m.enpassant;
 }
@@ -93,6 +95,9 @@ Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 			}
 		}
 	}
+
+	matrix_m = m.matrix_m;
+	matrix_n = m.matrix_n;
 
 	enpassant = m.enpassant;
 
