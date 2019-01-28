@@ -288,14 +288,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					if (figure->Value > 0)
 					{
 						current_y++;
-						current_y1 = current_y;
-						current_y1++;
+						current_y1 = y;
 					}
 					else
 					{
 						current_y--;
-						current_y1 = current_y;
-						current_y1--;
+						current_y1 = y;
 					}
 
 					if (current_x > m.get_matrix_m())
@@ -321,14 +319,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					if (figure->Value > 0)
 					{
 						current_y++;
-						current_y1 = current_y;
-						current_y1++;
+						current_y1 = y;
 					}
 					else
 					{
 						current_y--;
-						current_y1 = current_y;
-						current_y1--;
+						current_y1 = y;
 					}
 
 					if (current_x > m.get_matrix_m())
