@@ -1,6 +1,5 @@
 #pragma once
 #include <list>
-#include "tree.h"
 #include "basic_types.h"
 #include "board.h"
 
