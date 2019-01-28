@@ -8,3 +8,5 @@ const DWORD Queen_Value = 11 * Pawn_Value;
 const DWORD Rook_Value = 6 * Pawn_Value;
 const DWORD Bishop_Value = DWORD(4.5 * Pawn_Value);
 const DWORD Knight_Value = 4 * Pawn_Value;
+
+const DWORD MoveScoreBonus = Pawn_Value / 100;

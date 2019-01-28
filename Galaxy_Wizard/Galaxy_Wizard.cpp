@@ -9,6 +9,8 @@
 #include "Board.h"
 #include "Score.h"
 
+#include <algorithm>
+
 int main()
 {
     std::cout << "Galaxy_Wizard 1.0" << std::endl;
@@ -43,9 +45,65 @@ int main()
 			__time64_t calculation_end_time;
 
 			game->score.evaluation = game->score.Evaluate();
+			nodes_calculated++;
 
-			size_t tree_task_depth_level = 4;
-			game->score.iterative_search(tree_task_depth_level, tree_task_depth_level, nodes_calculated, evaluation_best_score);
+			DWORD alpha = -4 * King_Value;
+			DWORD beta = +4 * King_Value;
+
+			DWORD delta = 20;
+
+			size_t maximum_tree_task_depth_level = 4;
+			size_t tree_task_depth_level = 0;
+
+			while (maximum_tree_task_depth_level >= tree_task_depth_level)
+			{
+				DWORD best_evaluation = game->score.iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
+
+				std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
+
+				if (best_evaluation <= alpha || best_evaluation >= beta)
+				{
+					Score *this_current_score = evaluation_best_score;
+
+					if (this_current_score != nullptr)
+					{
+						std::string variant;
+
+						Score *current_score = this_current_score;
+						for (; current_score != nullptr; current_score = current_score->parent)
+						{
+							std::string current_move;
+
+							current_score->board.position.format_move(current_move);
+
+							variant = current_move + std::string(" ") + variant;
+						}
+
+						if (this_current_score != nullptr)
+						{
+							std::cout << "Best variant " << variant << " ";
+							std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
+						}
+					}
+				}
+				
+				if (best_evaluation <= alpha)
+				{
+					beta = (alpha + beta) / 2;
+					alpha = std::max(best_evaluation - delta, -4 * King_Value);
+				}
+				else if (best_evaluation >= beta)
+				{
+					beta = std::min(best_evaluation + delta, 4 * King_Value);
+				}
+				else
+				{
+				}
+
+				delta += delta / 4 + 5;
+
+				tree_task_depth_level++;
+			}
 
 			_time64(&calculation_end_time);
 

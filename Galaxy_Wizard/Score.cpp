@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include <iostream>
+#include <algorithm>
 #include "Score.h"
 #include "Figure.h"
 
@@ -28,6 +29,11 @@ DWORD Score::Evaluate()
 				result += figure->Value;
 			}
 		}
+	}
+
+	if (parent != nullptr)
+	{
+		//result += parent->childen.size() * MoveScoreBonus * (-side_to_move);
 	}
 
 	return result;
@@ -69,119 +75,133 @@ void Score::GenetateAllMoves()
 	}
 }
 
-void Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score *evaluation_best_score)
+DWORD Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation)
 {
-	Evaluate();
-	nodes_calculated++;
-
 	if (evaluation_best_score == nullptr)
 	{
-		evaluation_best_score = this;
+		*evaluation_best_score = this;
 	}
 
-	Score *this_current_score = this;
-
-	if (false)
-	if (this_current_score != nullptr)
+	if (tree_task_depth_level <= tree_depth_level)
 	{
-		std::string variant;
+		DWORD best_evaluation = evaluation = Evaluate();
+		nodes_calculated++;
 
-		Score *current_score = this_current_score;
-		for (; current_score != nullptr; current_score = current_score->parent)
+		if (best_evaluation > beta)
 		{
-			std::string current_move;
-
-			current_score->board.position.format_move(current_move);
-
-			variant = current_move + std::string(" ") + variant;
+			return best_evaluation;
 		}
 
-		if (evaluation_best_score != nullptr)
+		if (principal_variation && best_evaluation > alpha)
+			alpha = best_evaluation;
+
+		DWORD prior_pruning_base = best_evaluation + 128;
+
+		if (childen.size() == 0)
 		{
-			std::cout << "Variant " << variant << " ";
-			std::cout << "Variant evaluation " << this_current_score->evaluation << std::endl;
+			GenetateAllMoves();
 		}
+
+		for (auto child = childen.begin(); child != childen.end(); child++)
+		{
+			Score *evaluation_child_best_score = &(*child);
+
+			DWORD prior_pruning = prior_pruning_base + child->board.position.get(child->board.position.x_to, child->board.position.y_to)->Value;
+
+			if (prior_pruning <= alpha)
+			{
+				best_evaluation = std::max(best_evaluation, prior_pruning);
+				continue;
+			}
+
+			evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level, nodes_calculated, &evaluation_child_best_score, -beta, -alpha, principal_variation);
+
+			if (evaluation > best_evaluation)
+			{
+				best_evaluation = evaluation;
+
+				if (evaluation > alpha)
+				{
+					if (principal_variation)
+					{
+						*evaluation_best_score = evaluation_child_best_score;
+					}
+
+					if (principal_variation && evaluation < beta)
+						alpha = evaluation;
+					else
+					{
+						break;
+					}
+				}
+			}
+		}
+
+		return best_evaluation;
 	}
 
-	if (tree_depth_level == 0)
+	if (childen.size() == 0)
 	{
-		return;
+		GenetateAllMoves();
 	}
 
-	GenetateAllMoves();
-
-	if (false)
+	if (alpha >= beta)
 	{
-		std::cout << "Tree depth level = " << tree_task_depth_level - tree_depth_level << std::endl;
-		std::cout << "Moves generated = " << childen.size() << std::endl;
+		return alpha;
 	}
+
+	DWORD best_evaluation = -4 * King_Value;
+
+	evaluation = best_evaluation;
 
 	for (auto child = childen.begin(); child != childen.end(); child++)
 	{
-		Score *evaluation_child_best_score = evaluation_best_score;
+		Score *evaluation_child_best_score = &(*child);
 
-		child->iterative_search(tree_task_depth_level, tree_depth_level-1, nodes_calculated, evaluation_child_best_score);
+		DWORD child_static_evaluation = child->evaluation = child->Evaluate();
+		nodes_calculated++;
 
-		if (side_to_move > 0)
 		{
-			if (evaluation_child_best_score->evaluation < evaluation_best_score->evaluation)
+			if (tree_task_depth_level - tree_depth_level + 1 >= 3)
 			{
-				evaluation_best_score = evaluation_child_best_score;
-				std::cout << "Tree depth level = " << tree_task_depth_level - tree_depth_level << std::endl;
+				evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level + 1, nodes_calculated, &evaluation_child_best_score, -alpha - 1, -alpha, false);
+			}
 
-				if (evaluation_best_score != nullptr)
-				{
-					std::string variant;
+			if (evaluation > alpha || !principal_variation)
+			{
+				evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level + 1, nodes_calculated, &evaluation_child_best_score, -alpha - 1, -alpha, false);
+			}
 
-					Score *current_score = evaluation_best_score;
-					for (; current_score != nullptr; current_score = current_score->parent)
-					{
-						std::string current_move;
-
-						current_score->board.position.format_move(current_move);
-
-						variant = current_move + std::string(" ") + variant;
-					}
-
-					if (evaluation_best_score != nullptr)
-					{
-						std::cout << "Best variant " << variant << " ";
-						std::cout << "Best variant evaluation " << evaluation_best_score->evaluation << std::endl;
-					}
-				}
+			if (principal_variation && evaluation > alpha && (tree_depth_level == 0 || evaluation < beta))
+			{
+				evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level + 1, nodes_calculated, &evaluation_child_best_score, -beta, -alpha, true);
 			}
 		}
-		else
+
+		if (evaluation > best_evaluation)
 		{
-			if (side_to_move < 0)
+			best_evaluation = evaluation;
+
+			if (evaluation > alpha)
 			{
-				if (evaluation_child_best_score->evaluation > evaluation_best_score->evaluation)
+				if (principal_variation)
 				{
-					evaluation_best_score = evaluation_child_best_score;
-					std::cout << "Tree depth level = " << tree_task_depth_level - tree_depth_level << std::endl;
+					*evaluation_best_score = evaluation_child_best_score;
+				}
 
-					if (evaluation_best_score != nullptr)
-					{
-						std::string variant;
-
-						Score *current_score = evaluation_best_score;
-						for (; current_score != nullptr; current_score = current_score->parent)
-						{
-							std::string current_move;
-
-							current_score->board.position.format_move(current_move);
-
-							variant = current_move + std::string(" ") + variant;
-						}
-
-						if (evaluation_best_score != nullptr)
-						{
-							std::cout << "Best variant " << variant << " ";
-							std::cout << "Best variant evaluation " << evaluation_best_score->evaluation << std::endl;
-						}
-					}
+				if (principal_variation && evaluation < beta)
+				{
+					alpha = evaluation;
+				}
+				else
+				{
+					break;
 				}
 			}
 		}
 	}
+
+	evaluation = best_evaluation;
+
+	return best_evaluation;
 }
