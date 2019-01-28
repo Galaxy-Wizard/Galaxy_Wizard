@@ -10,11 +10,24 @@ int main()
 {
     std::cout << "Hello World!\n";
 
-	Game* game = new Game();
+	Game* game = nullptr;
 
-	if (game != nullptr)
 	{
-		delete game;
+		if (game != nullptr)
+		{
+			delete game;
+
+			game = nullptr;
+		}
+
+		game = new Game();
+
+		if (game != nullptr)
+		{
+			delete game;
+
+			game = nullptr;
+		}
 	}
 }
 
