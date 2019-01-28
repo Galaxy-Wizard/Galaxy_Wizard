@@ -38,7 +38,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					Matrix new_move(m);
 
 					new_move.put(current_x, current_y, figure);
-					new_move.put(x, y, 0);
+					new_move.put(x, y, nullptr);
 
 					result.push_back(new_move);
 				}
@@ -53,7 +53,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						Matrix new_move(m);
 
 						new_move.put(current_x, current_y, figure);
-						new_move.put(x, y, 0);
+						new_move.put(x, y, nullptr);
 
 						result.push_back(new_move);
 					}
@@ -82,7 +82,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					Matrix new_move(m);
 
 					new_move.put(current_x, current_y, figure);
-					new_move.put(x, y, 0);
+					new_move.put(x, y, nullptr);
 
 					result.push_back(new_move);
 				}
@@ -97,7 +97,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						Matrix new_move(m);
 
 						new_move.put(current_x, current_y, figure);
-						new_move.put(x, y, 0);
+						new_move.put(x, y, nullptr);
 
 						result.push_back(new_move);
 					}
@@ -126,7 +126,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					Matrix new_move(m);
 
 					new_move.put(current_x, current_y, figure);
-					new_move.put(x, y, 0);
+					new_move.put(x, y, nullptr);
 
 					result.push_back(new_move);
 				}
@@ -141,7 +141,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						Matrix new_move(m);
 
 						new_move.put(current_x, current_y, figure);
-						new_move.put(x, y, 0);
+						new_move.put(x, y, nullptr);
 
 						result.push_back(new_move);
 					}
@@ -170,7 +170,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					Matrix new_move(m);
 
 					new_move.put(current_x, current_y, figure);
-					new_move.put(x, y, 0);
+					new_move.put(x, y, nullptr);
 
 					result.push_back(new_move);
 				}
@@ -185,7 +185,7 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						Matrix new_move(m);
 
 						new_move.put(current_x, current_y, figure);
-						new_move.put(x, y, 0);
+						new_move.put(x, y, nullptr);
 
 						result.push_back(new_move);
 					}

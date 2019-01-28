@@ -22,6 +22,8 @@ Matrix::Matrix(size_t m, size_t n)
 		}
 		matrix.push_back(line);
 	}
+
+	enpassant = size_t(-1);
 }
 
 
@@ -43,6 +45,8 @@ Matrix::~Matrix()
 Matrix::Matrix(const Matrix &m)
 {
 	matrix = m.matrix;
+
+	enpassant = m.enpassant;
 }
 
 Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
@@ -90,6 +94,8 @@ Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 		}
 	}
 
+	enpassant = m.enpassant;
+
 	return *this;
 }
 
@@ -97,6 +103,15 @@ Matrix& Matrix::put(size_t x, size_t y, Figure* f) throw(Exception)
 {
 	if (x < matrix_m && y < matrix_n)
 	{
+		if (f == nullptr)
+		{
+			if (matrix.at(x).at(y) != nullptr)
+			{
+				delete matrix.at(x).at(y);
+
+				matrix.at(x).at(y) = nullptr;
+			}
+		}
 		if (matrix.at(x).at(y) != nullptr)
 		{
 			delete matrix.at(x).at(y);

@@ -23,5 +23,7 @@ public:
 	Figure* get(size_t x, size_t y) throw(Exception);
 	size_t get_matrix_n() const;
 	size_t get_matrix_m() const;
+
+	size_t enpassant;
 };
 
