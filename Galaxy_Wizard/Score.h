@@ -15,6 +15,8 @@ public:
 	std::list<Score> childen;
 	signed char side_to_move;
 
+	WORD evaluation;
+
 	void GenetateAllMoves();
 };
 

@@ -3,7 +3,7 @@
 #include "Figure.h"
 
 Score::Score()
-	:side_to_move(1)
+	:side_to_move(1), evaluation(0)
 {
 }
 

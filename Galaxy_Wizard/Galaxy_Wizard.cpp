@@ -26,7 +26,10 @@ int main()
 
 		if (game != nullptr)
 		{
-			WORD evaluation = game->score.Evaluate();
+			WORD evaluation_minimum = 0;
+			WORD evaluation_maximum = 0;
+
+			game->score.evaluation = game->score.Evaluate();
 
 			Score *score_level_1 = &game->score;
 
@@ -40,6 +43,8 @@ int main()
 
 				score_level_2->GenetateAllMoves();
 
+				score_level_2->evaluation = score_level_2->Evaluate();
+
 				for (auto child = score_level_2->childen.begin(); child != score_level_2->childen.end(); child++)
 				{
 					child->GenetateAllMoves();
@@ -47,6 +52,8 @@ int main()
 					Score *score_level_3 = &*child;
 
 					score_level_3->GenetateAllMoves();
+
+					score_level_3->evaluation = score_level_3->Evaluate();
 
 					for (auto child = score_level_3->childen.begin(); child != score_level_3->childen.end(); child++)
 					{
@@ -56,13 +63,34 @@ int main()
 
 						score_level_4->GenetateAllMoves();
 
+						score_level_4->evaluation = score_level_4->Evaluate();
+
 						for (auto child = score_level_4->childen.begin(); child != score_level_4->childen.end(); child++)
 						{
 							child->GenetateAllMoves();
+
+							Score *score_level_5 = &*child;
+
+							//score_level_5->GenetateAllMoves();
+
+							score_level_5->evaluation = score_level_5->Evaluate();
+
+							if (evaluation_minimum > score_level_5->evaluation)
+							{
+								evaluation_minimum = score_level_5->evaluation;
+							}
+							if (evaluation_maximum < score_level_5->evaluation)
+							{
+								evaluation_maximum = score_level_5->evaluation;
+							}
 						}
 					}
 				}
-			}			
+			}
+
+			std::cout << "Minimum score = " << evaluation_minimum << std::endl;
+
+			std::cout << "Maximum score = " << evaluation_maximum << std::endl;
 
 			delete game;
 
