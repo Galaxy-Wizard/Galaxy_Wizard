@@ -27,7 +27,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x;
 			current_y++;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -71,7 +71,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x;
 			current_y--;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -115,7 +115,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x--;
 			current_y;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -159,7 +159,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x++;
 			current_y;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -203,7 +203,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x++;
 			current_y++;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -247,7 +247,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x--;
 			current_y--;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -291,7 +291,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x--;
 			current_y++;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -335,7 +335,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 			current_x++;
 			current_y--;
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}

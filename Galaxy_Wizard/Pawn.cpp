@@ -23,7 +23,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 	Figure* figure = m.get(x, y);
 
-	if ((y == m.get_matrix_n()-1 && figure->Value > 0) || (y == 1 && figure->Value < 0))
+	if ((y == m.get_matrix_n()-2 && figure->Value > 0) || (y == 1 && figure->Value < 0))
 	{
 		{
 			auto current_x = x;
@@ -41,7 +41,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					current_y--;
 				}
 
-				if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+				if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 				{
 					break;
 				}
@@ -105,7 +105,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					current_y--;
 				}
 
-				if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+				if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 				{
 					break;
 				}
@@ -169,7 +169,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					current_y--;
 				}
 
-				if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n())
+				if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 				{
 					break;
 				}
@@ -234,7 +234,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 				current_y--;
 			}
 
-			if (current_x > m.get_matrix_m() && current_y > m.get_matrix_n() && current_y > 0)
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n() && current_y > 0)
 			{
 				break;
 			}
@@ -273,7 +273,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 	if (m.enpassant != size_t(-1))
 	{
-		if ((y == m.get_matrix_n() - 4 && figure->Value > 0) || (y == 4 && figure->Value < 0))
+		if ((y == m.get_matrix_n() - 4 && figure->Value > 0) || (y == 3 && figure->Value < 0))
 		{
 			auto current_x = x;
 			auto current_y = y;
@@ -347,7 +347,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 		}
 	}
 
-	if ((y == m.get_matrix_n() - 1 && figure->Value < 0) || (y == 1 && figure->Value > 0))
+	if ((y == m.get_matrix_n() - 2 && figure->Value < 0) || (y == 1 && figure->Value > 0))
 	{
 		auto current_x = x;
 		auto current_y = y;

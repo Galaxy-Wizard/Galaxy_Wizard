@@ -28,6 +28,42 @@ int main()
 		{
 			WORD evaluation = game->score.Evaluate();
 
+			Score *score = &game->score;
+
+			score->GenetateAllMoves();
+
+			for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+			{
+				child->GenetateAllMoves();
+
+				score = &*child;
+
+				score->GenetateAllMoves();
+
+				for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+				{
+					child->GenetateAllMoves();
+
+					score = &*child;
+
+					score->GenetateAllMoves();
+
+					for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+					{
+						child->GenetateAllMoves();
+
+						score = &*child;
+
+						score->GenetateAllMoves();
+
+						for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+						{
+							child->GenetateAllMoves();
+						}
+					}
+				}
+			}			
+
 			delete game;
 
 			game = nullptr;
