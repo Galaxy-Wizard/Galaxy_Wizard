@@ -71,25 +71,6 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					}
 					else
 					{
-						std::list<Figure*> promoted_figure;
-						promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-						promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-						promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-						promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
-
-						for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
-						{
-							Matrix new_move(m);
-
-							new_move.put(current_x, current_y, *promoted_figure_iterator);
-							new_move.put(x, y, nullptr);
-
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
-							result.push_back(new_move);
-						}
 					}
 				}
 
@@ -121,46 +102,30 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 				{
 					if (m.get(current_x, current_y) == nullptr)
 					{
-						std::list<Figure*> promoted_figure;
-						promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-						promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-						promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-						promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
-
-						for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
-						{
-							Matrix new_move(m);
-
-							new_move.put(current_x, current_y, *promoted_figure_iterator);
-							new_move.put(x, y, nullptr);
-
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
-							result.push_back(new_move);
-						}
 					}
 					else
 					{
-						std::list<Figure*> promoted_figure;
-						promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-						promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-						promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-						promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
-
-						for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
+						if (figure->Value * m.get(current_x, current_y)->Value < 0)
 						{
-							Matrix new_move(m);
+							std::list<Figure*> promoted_figure;
+							promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
+							promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
+							promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
+							promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
 
-							new_move.put(current_x, current_y, *promoted_figure_iterator);
-							new_move.put(x, y, nullptr);
+							for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
+							{
+								Matrix new_move(m);
 
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
-							result.push_back(new_move);
+								new_move.put(current_x, current_y, *promoted_figure_iterator);
+								new_move.put(x, y, nullptr);
+
+								new_move.x_from = x;
+								new_move.y_from = y;
+								new_move.x_to = current_x;
+								new_move.y_to = current_y;
+								result.push_back(new_move);
+							}
 						}
 					}
 				}
@@ -193,46 +158,30 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 				{
 					if (m.get(current_x, current_y) == nullptr)
 					{
-						std::list<Figure*> promoted_figure;
-						promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-						promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-						promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-						promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
-
-						for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
-						{
-							Matrix new_move(m);
-
-							new_move.put(current_x, current_y, *promoted_figure_iterator);
-							new_move.put(x, y, nullptr);
-
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
-							result.push_back(new_move);
-						}
 					}
 					else
 					{
-						std::list<Figure*> promoted_figure;
-						promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-						promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-						promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-						promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
-
-						for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
+						if (figure->Value * m.get(current_x, current_y)->Value < 0)
 						{
-							Matrix new_move(m);
+							std::list<Figure*> promoted_figure;
+							promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
+							promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
+							promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
+							promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
 
-							new_move.put(current_x, current_y, *promoted_figure_iterator);
-							new_move.put(x, y, nullptr);
+							for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
+							{
+								Matrix new_move(m);
 
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
-							result.push_back(new_move);
+								new_move.put(current_x, current_y, *promoted_figure_iterator);
+								new_move.put(x, y, nullptr);
+
+								new_move.x_from = x;
+								new_move.y_from = y;
+								new_move.x_to = current_x;
+								new_move.y_to = current_y;
+								result.push_back(new_move);
+							}
 						}
 					}
 				}
@@ -241,7 +190,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 			}
 		}
 	}
-
+	else
 	{
 		auto current_x = x;
 		auto current_y = y;
@@ -279,23 +228,6 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 				}
 				else
 				{
-					if (m.get(current_x, current_y)->Value * figure->Value > 0)
-					{
-						break;
-					}
-					else
-					{
-						Matrix new_move(m);
-
-						new_move.put(current_x, current_y, figure);
-						new_move.put(x, y, nullptr);
-
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
-						result.push_back(new_move);
-					}
 				}
 			}
 
