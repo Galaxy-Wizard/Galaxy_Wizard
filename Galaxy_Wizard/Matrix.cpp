@@ -44,41 +44,17 @@ Matrix::~Matrix()
 
 Matrix::Matrix(const Matrix &m)
 {
-	matrix = m.matrix;
 	matrix_m = m.matrix_m;
 	matrix_n = m.matrix_n;
 
-	enpassant = m.enpassant;
-}
-
-Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
-{
-	if (matrix_m != m.matrix_m)
+	for (size_t c = 0; c < matrix_m; c++)
 	{
-		if (matrix_m == 0)
+		std::vector<Figure*> line(matrix_n);
+		for (size_t i = 0; i < matrix_n; i++)
 		{
-			matrix_m = m.matrix_m;
-			matrix_n = m.matrix_n;
-
-			for (size_t c = 0; c < matrix_m; c++)
-			{
-				std::vector<Figure*> line(matrix_n);
-				for (size_t i = 0; i < matrix_n; i++)
-				{
-					line[i] = nullptr;
-				}
-				matrix.push_back(line);
-			}
+			line[i] = nullptr;
 		}
-		else
-		{
-			throw Exception();
-		}
-	}
-
-	if (matrix_n != m.matrix_n)
-	{
-		throw Exception();
+		matrix.push_back(line);
 	}
 
 	for (size_t c = 0; c < matrix_n; c++)
@@ -96,8 +72,55 @@ Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 		}
 	}
 
+	enpassant = m.enpassant;
+}
+
+Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
+{
+	for (size_t c = 0; c < matrix_m; c++)
+	{
+		for (size_t i = 0; i < matrix_n; i++)
+		{
+			if (matrix.at(c).at(i) != nullptr)
+			{
+				delete matrix.at(c).at(i);
+				matrix.at(c).at(i) = nullptr;
+			}
+		}
+	}
+
+	for (size_t c = 0; c < matrix_m; c++)
+	{
+		matrix.pop_back();
+	}
+
 	matrix_m = m.matrix_m;
 	matrix_n = m.matrix_n;
+
+	for (size_t c = 0; c < matrix_m; c++)
+	{
+		std::vector<Figure*> line(matrix_n);
+		for (size_t i = 0; i < matrix_n; i++)
+		{
+			line[i] = nullptr;
+		}
+		matrix.push_back(line);
+	}
+
+	for (size_t c = 0; c < matrix_n; c++)
+	{
+		for (size_t i = 0; i < matrix_m; i++)
+		{
+			if (m.matrix.at(c).at(i) != nullptr)
+			{
+				matrix.at(c).at(i) = m.matrix.at(c).at(i)->Clone();
+			}
+			else
+			{
+				matrix.at(c).at(i) = nullptr;
+			}
+		}
+	}
 
 	enpassant = m.enpassant;
 
@@ -121,7 +144,14 @@ Matrix& Matrix::put(size_t x, size_t y, Figure* f) throw(Exception)
 		{
 			delete matrix.at(x).at(y);
 		}
-		matrix.at(x).at(y) = f;
+		if (f == nullptr)
+		{
+			matrix.at(x).at(y) = f;
+		}
+		else
+		{
+			matrix.at(x).at(y) = f->Clone();
+		}
 	}
 	else
 	{

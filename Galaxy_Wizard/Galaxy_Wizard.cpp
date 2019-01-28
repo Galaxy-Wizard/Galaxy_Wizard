@@ -28,35 +28,35 @@ int main()
 		{
 			WORD evaluation = game->score.Evaluate();
 
-			Score *score = &game->score;
+			Score *score_level_1 = &game->score;
 
-			score->GenetateAllMoves();
+			score_level_1->GenetateAllMoves();
 
-			for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+			for (auto child = score_level_1->childen.begin(); child != score_level_1->childen.end(); child++)
 			{
 				child->GenetateAllMoves();
 
-				score = &*child;
+				Score *score_level_2 = &*child;
 
-				score->GenetateAllMoves();
+				score_level_2->GenetateAllMoves();
 
-				for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+				for (auto child = score_level_2->childen.begin(); child != score_level_2->childen.end(); child++)
 				{
 					child->GenetateAllMoves();
 
-					score = &*child;
+					Score *score_level_3 = &*child;
 
-					score->GenetateAllMoves();
+					score_level_3->GenetateAllMoves();
 
-					for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+					for (auto child = score_level_3->childen.begin(); child != score_level_3->childen.end(); child++)
 					{
 						child->GenetateAllMoves();
 
-						score = &*child;
+						Score *score_level_4 = &*child;
 
-						score->GenetateAllMoves();
+						score_level_4->GenetateAllMoves();
 
-						for (auto child = score->childen.begin(); child != score->childen.end(); child++)
+						for (auto child = score_level_4->childen.begin(); child != score_level_4->childen.end(); child++)
 						{
 							child->GenetateAllMoves();
 						}
