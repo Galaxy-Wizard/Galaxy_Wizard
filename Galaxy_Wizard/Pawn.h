@@ -4,7 +4,7 @@ class Pawn :
 	public Figure
 {
 public:
-	Pawn(size_t x, size_t y, double Score);
+	Pawn(size_t x, size_t y, WORD Score);
 	~Pawn();
 
 	virtual Figure* Clone();

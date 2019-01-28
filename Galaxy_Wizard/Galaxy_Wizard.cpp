@@ -8,7 +8,7 @@
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+    std::cout << "Hello World!\n";
 
 	Game* game = new Game();
 

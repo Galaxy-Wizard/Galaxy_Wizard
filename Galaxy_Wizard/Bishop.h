@@ -4,7 +4,7 @@ class Bishop :
 	public Figure
 {
 public:
-	Bishop(size_t x, size_t y, double Score);
+	Bishop(size_t x, size_t y, WORD Score);
 	~Bishop();
 
 	virtual Figure* Clone();

@@ -2,7 +2,7 @@
 #include "Pawn.h"
 
 
-Pawn::Pawn(size_t x, size_t y, double Score)
+Pawn::Pawn(size_t x, size_t y, WORD Score)
 	:Figure(x, y, Score)
 {
 }

@@ -2,7 +2,7 @@
 #include "Bishop.h"
 
 
-Bishop::Bishop(size_t x, size_t y, double Score)
+Bishop::Bishop(size_t x, size_t y, WORD Score)
 	:Figure(x, y, Score)
 {
 }
@@ -16,7 +16,7 @@ std::list<Matrix> Bishop::moves(Matrix m, size_t x, size_t y)
 {
 	std::list<Matrix> result;
 
-	Bishop* figure = dynamic_cast<Bishop*>(m.get(x, y));
+	Figure* figure = m.get(x, y);
 
 	{
 		auto current_x = x;

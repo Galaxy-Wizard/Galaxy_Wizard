@@ -2,15 +2,16 @@
 
 #include <list>
 
+#include "basic_types.h"
 #include "Matrix.h"
 
 class Figure
 {
 public:
-	Figure(size_t x, size_t y, double Score);
+	Figure(size_t x, size_t y, WORD Score);
 	~Figure();
 
-	double Value;
+	WORD Value;
 	size_t m, n;
 
 	virtual Figure* Clone() = 0;

@@ -2,8 +2,8 @@
 #include "Rook.h"
 
 
-Rook::Rook(size_t x, size_t y, double Score)
-	:Figure(x, y, Score)
+Rook::Rook(size_t x, size_t y, WORD Score)
+	:Figure(x, y, Score), rook_not_moved(true)
 {
 }
 

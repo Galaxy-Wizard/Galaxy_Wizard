@@ -2,7 +2,7 @@
 #include "Knight.h"
 
 
-Knight::Knight(size_t x, size_t y, double Score)
+Knight::Knight(size_t x, size_t y, WORD Score)
 	:Figure(x, y, Score)
 {
 }
