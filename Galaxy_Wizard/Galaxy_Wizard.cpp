@@ -51,7 +51,7 @@ int main()
 
 			auto calculation_time = calculation_end_time - calculation_start_time;
 
-			std::cout << "Calculating time " << calculation_time <<" seconds" << std::endl;
+			std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
 
 			std::cout << "Nodes calculated " << nodes_calculated << std::endl;
 
