@@ -15,12 +15,12 @@ int main()
 {
     std::cout << "Galaxy_Wizard 1.0" << std::endl;
 
-	std::cout << "Size of Game = " << sizeof(Game) << std::endl;
-	std::cout << "Size of Board = " << sizeof(Board) << std::endl;
-	std::cout << "Size of Score = " << sizeof(Score) << std::endl;
-	std::cout << "Size of Matrix = " << sizeof(Matrix) << std::endl;
+	std::cout << "Size of Game = " << sizeof(Game) + 30 * sizeof(void*) + 2 * (8 * 8 * sizeof(void*) + sizeof(Figure) * 32) << std::endl;
+	std::cout << "Size of Board = " << sizeof(Board) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
+	std::cout << "Size of Score = " << sizeof(Score) + 30 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
+	std::cout << "Size of Matrix = " << sizeof(Matrix) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Figure = " << sizeof(Figure) << std::endl;
-	std::cout << "Size of Node = " << (sizeof(Figure) * 32 + sizeof(Matrix)) + sizeof(Score) << std::endl;
+	std::cout << "Size of Node = " << sizeof(Score) + 30 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 
 	Game* game = nullptr;
 
@@ -52,7 +52,7 @@ int main()
 
 			DWORD delta = 20;
 
-			size_t maximum_tree_task_depth_level = 4;
+			size_t maximum_tree_task_depth_level = 5;
 			size_t tree_task_depth_level = 0;
 
 			while (maximum_tree_task_depth_level >= tree_task_depth_level)
