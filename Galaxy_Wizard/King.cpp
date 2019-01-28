@@ -232,13 +232,16 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 							size_t current_x1 = 0;
 							for (; current_x1 < m.get_matrix_m(); current_x1++)
 							{
-								if (abs(m.get(current_x1, current_y)->Value) == Rook_Value)
+								if (m.get(current_x1, current_y) != nullptr)
 								{
-									if (current_x1 < current_x)
+									if (abs(m.get(current_x1, current_y)->Value) == Rook_Value)
 									{
-										castle_side = true;
+										if (current_x1 < current_x)
+										{
+											castle_side = true;
 
-										break;
+											break;
+										}
 									}
 								}
 							}
@@ -308,13 +311,16 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 							size_t current_x1 = 0;
 							for (; current_x1 < m.get_matrix_m(); current_x1++)
 							{
-								if (abs(m.get(current_x1, current_y)->Value) == Rook_Value)
+								if (m.get(current_x1, current_y) != nullptr)
 								{
-									if (current_x1 < current_x)
+									if (abs(m.get(current_x1, current_y)->Value) == Rook_Value)
 									{
-										castle_side = true;
+										if (current_x1 < current_x)
+										{
+											castle_side = true;
 
-										break;
+											break;
+										}
 									}
 								}
 							}
