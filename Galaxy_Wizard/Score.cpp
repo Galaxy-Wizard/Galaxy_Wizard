@@ -6,23 +6,36 @@
 #include "Figure.h"
 
 Score::Score()
-	:side_to_move(1), evaluation(0), parent(nullptr)
+	:side_to_move(1), evaluation(0), parent(nullptr), board(new Board())
 {
 }
 
 
 Score::~Score()
 {
+	if (board != nullptr)
+	{
+		delete board;
+
+		board = nullptr;
+	}
 }
 
-DWORD Score::Evaluate()
+DWORD Score::Evaluate() throw (Exception())
 {
-	DWORD result = 0;
-	for (size_t x = 0; x < board.position.get_matrix_m(); x++)
+	assert(board != nullptr);
+
+	if (board == nullptr)
 	{
-		for (size_t y = 0; y < board.position.get_matrix_n(); y++)
+		throw Exception();
+	}
+
+	DWORD result = 0;
+	for (size_t x = 0; x < board->position.get_matrix_m(); x++)
+	{
+		for (size_t y = 0; y < board->position.get_matrix_n(); y++)
 		{
-			Figure *figure = board.position.get(x, y);
+			Figure *figure = board->position.get(x, y);
 
 			if (figure != nullptr)
 			{
@@ -39,35 +52,42 @@ DWORD Score::Evaluate()
 	return result;
 }
 
-void Score::GenetateAllMoves()
+void Score::GenetateAllMoves() throw (Exception())
 {
-	for (size_t x = 0; x < board.position.get_matrix_m(); x++)
+	assert(board != nullptr);
+
+	if (board == nullptr)
 	{
-		for (size_t y = 0; y < board.position.get_matrix_n(); y++)
+		throw Exception();
+	}
+
+	for (size_t x = 0; x < board->position.get_matrix_m(); x++)
+	{
+		for (size_t y = 0; y < board->position.get_matrix_n(); y++)
 		{
-			Figure *figure = board.position.get(x, y);
+			Figure *figure = board->position.get(x, y);
 
 			if (figure != nullptr)
 			{
 				if (figure->Value * side_to_move > 0)
 				{
-					auto current_figure_moves = figure->moves(board.position, x, y);
+					auto current_figure_moves = figure->moves(board->position, x, y);
 
 					for (auto current_figure_moves_iterator = current_figure_moves.begin(); current_figure_moves_iterator != current_figure_moves.end(); current_figure_moves_iterator++)
 					{
 						Board board(*current_figure_moves_iterator);
 
-						Score current_score;
-						current_score.parent = this;
-						current_score.board = board;
+						Score *current_score = new Score();
+						current_score->parent = this;
+						*current_score->board = board;
 
 						std::string current_move;
 						current_figure_moves_iterator->format_move(current_move);
-						current_score.move = current_move;
+						current_score->move = current_move;
 
-						current_score.side_to_move = -side_to_move;
+						current_score->side_to_move = -side_to_move;
 
-						childen.push_back(current_score);
+						childen.push_back(*current_score);
 					}
 				}
 			}
@@ -75,7 +95,7 @@ void Score::GenetateAllMoves()
 	}
 }
 
-DWORD Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation)
+DWORD Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation) throw (Exception())
 {
 	if (evaluation_best_score == nullptr)
 	{
@@ -106,7 +126,14 @@ DWORD Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_le
 		{
 			Score *evaluation_child_best_score = &(*child);
 
-			DWORD prior_pruning = prior_pruning_base + child->board.position.get(child->board.position.x_to, child->board.position.y_to)->Value;
+			assert(child->board != nullptr);
+
+			if (child->board == nullptr)
+			{
+				throw Exception();
+			}
+
+			DWORD prior_pruning = prior_pruning_base + child->board->position.get(child->board->position.x_to, child->board->position.y_to)->Value;
 
 			if (prior_pruning <= alpha)
 			{
@@ -214,17 +241,20 @@ void Score::DeleteNotPrincipalVariantNodes(Score *principal_variant)
 		{
 			Score *current_score = principal_variant->parent;
 
-			for (auto child = current_score->childen.begin(); child != current_score->childen.end(); child++)
+			auto child = current_score->childen.begin();
+			for (; child != current_score->childen.end(); child++)
 			{
 				if (principal_variant != &(*child))
 				{
-					for (size_t x = 0; x < child->board.position.matrix_m; x++)
+					if (child->board != nullptr)
 					{
-						child->board.position.matrix.at(x).pop_back();
+						delete child->board;
+
+						child->board = nullptr;
 					}
-					child->board.position.matrix_n = 0;
-					child->board.position.matrix.pop_back();
-					child->board.position.matrix_m = 0;
+					current_score->childen.erase(child);
+
+					child = current_score->childen.begin();
 				}
 			}
 

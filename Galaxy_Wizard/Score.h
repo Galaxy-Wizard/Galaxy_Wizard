@@ -10,19 +10,19 @@ public:
 	Score();
 	~Score();
 
-	DWORD Evaluate();
+	DWORD Evaluate() throw (Exception());
 
 	Score *parent;
-	Board board;
+	Board *board;
 	std::list<Score> childen;
 	signed char side_to_move;
 
 	std::string move;
 	DWORD evaluation;
 
-	DWORD iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation);
+	DWORD iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation) throw (Exception());
 
-	void GenetateAllMoves();
+	void GenetateAllMoves() throw (Exception());
 
 	void DeleteNotPrincipalVariantNodes(Score *principal_variant);
 };

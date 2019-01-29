@@ -37,7 +37,7 @@ Game::Game()
 
 	board = b;
 
-	score.board = b;
+	*score.board = b;
 }
 
 

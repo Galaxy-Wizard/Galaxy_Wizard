@@ -24,6 +24,7 @@ int main()
 
 	Game* game = nullptr;
 
+	try
 	{
 		if (game != nullptr)
 		{
@@ -36,126 +37,161 @@ int main()
 
 		if (game != nullptr)
 		{
-			Score *evaluation_best_score = nullptr;
-			
-			size_t nodes_calculated = 0;
-
-			__time64_t calculation_start_time;
-			_time64(&calculation_start_time);
-			__time64_t calculation_end_time;
-
-			game->score.evaluation = game->score.Evaluate();
-			nodes_calculated++;
-
-			DWORD alpha = -4 * King_Value;
-			DWORD beta = +4 * King_Value;
-
-			DWORD delta = 20;
-
-			size_t maximum_tree_task_depth_level = 17;
-			size_t tree_task_depth_level = 0;
-
-			Score *evaluation_best_score_start = &game->score;
-
-			while (maximum_tree_task_depth_level >= tree_task_depth_level)
+			try
 			{
-				DWORD best_evaluation = evaluation_best_score_start->iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
+				Score *evaluation_best_score = nullptr;
 
-				std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
+				size_t nodes_calculated = 0;
 
-				if ((best_evaluation <= alpha || best_evaluation >= beta) && abs(best_evaluation) < 4 * King_Value)
+				__time64_t calculation_start_time;
+				_time64(&calculation_start_time);
+				__time64_t calculation_end_time;
+
+				game->score.evaluation = game->score.Evaluate();
+				nodes_calculated++;
+
+				DWORD alpha = -4 * King_Value;
+				DWORD beta = +4 * King_Value;
+
+				DWORD delta = 20;
+
+				size_t maximum_tree_task_depth_level = 6;
+				size_t tree_task_depth_level = 0;
+
+				Score *evaluation_best_score_start = &game->score;
+
+				while (maximum_tree_task_depth_level >= tree_task_depth_level)
 				{
-					evaluation_best_score_start = evaluation_best_score;
+					DWORD best_evaluation = evaluation_best_score_start->iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
 
-					Score *this_current_score = evaluation_best_score;
+					std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
 
-					if (this_current_score != nullptr)
+					if ((best_evaluation <= alpha || best_evaluation >= beta) && abs(best_evaluation) < 4 * King_Value)
 					{
-						std::string variant;
+						evaluation_best_score_start = evaluation_best_score;
 
-						Score *current_score = this_current_score;
-						for (; current_score != nullptr; current_score = current_score->parent)
-						{
-							std::string current_move;
-
-							current_score->board.position.format_move(current_move);
-
-							variant = current_move + std::string(" ") + variant;
-						}
+						Score *this_current_score = evaluation_best_score;
 
 						if (this_current_score != nullptr)
 						{
-							std::cout << "Best variant " << variant << " ";
-							std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
+							std::string variant;
+
+							Score *current_score = this_current_score;
+							for (; current_score != nullptr; current_score = current_score->parent)
+							{
+								std::string current_move;
+
+								assert(current_score->board != nullptr);
+
+								if (current_score->board != nullptr)
+								{
+									current_score->board->position.format_move(current_move);
+								}
+
+								variant = current_move + std::string(" ") + variant;
+							}
+
+							if (this_current_score != nullptr)
+							{
+								std::cout << "Best variant " << variant << " ";
+								std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
+							}
+						}
+
+						if (abs(best_evaluation) < 4 * King_Value)
+						{
+							evaluation_best_score->DeleteNotPrincipalVariantNodes(evaluation_best_score);
 						}
 					}
 
-					if (abs(best_evaluation) < 4 * King_Value)
+					if (best_evaluation <= alpha)
 					{
-						evaluation_best_score->DeleteNotPrincipalVariantNodes(evaluation_best_score);
+						beta = (alpha + beta) / 2;
+						alpha = std::max(best_evaluation - delta, -4 * King_Value);
 					}
+					else if (best_evaluation >= beta)
+					{
+						beta = std::min(best_evaluation + delta, 4 * King_Value);
+					}
+					else
+					{
+					}
+
+					delta += delta / 4 + 5;
+
+					tree_task_depth_level++;
 				}
-				
-				if (best_evaluation <= alpha)
+
+				_time64(&calculation_end_time);
+
+				auto calculation_time = calculation_end_time - calculation_start_time;
+
+				std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
+
+				std::cout << "Nodes calculated " << nodes_calculated << std::endl;
+
+				if (calculation_time != 0)
 				{
-					beta = (alpha + beta) / 2;
-					alpha = std::max(best_evaluation - delta, -4 * King_Value);
-				}
-				else if (best_evaluation >= beta)
-				{
-					beta = std::min(best_evaluation + delta, 4 * King_Value);
+					std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
 				}
 				else
 				{
-				}
-
-				delta += delta / 4 + 5;
-
-				tree_task_depth_level++;
-			}
-
-			_time64(&calculation_end_time);
-
-			auto calculation_time = calculation_end_time - calculation_start_time;
-
-			std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
-
-			std::cout << "Nodes calculated " << nodes_calculated << std::endl;
-
-			if (calculation_time != 0)
-			{
-				std::cout << "Nodes per second " << nodes_calculated/ calculation_time << std::endl;
-			}
-			else
-			{
-				std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
-			}
-
-			if (evaluation_best_score != nullptr)
-			{
-				std::string variant;
-
-				Score *current_score = evaluation_best_score;
-				for (; current_score != nullptr; current_score = current_score->parent)
-				{
-					std::string current_move;
-
-					current_score->board.position.format_move(current_move);
-
-					variant = current_move + std::string(" ") + variant;
+					std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
 				}
 
 				if (evaluation_best_score != nullptr)
 				{
-					std::cout << "Best variant " << variant << " ";
-					std::cout << "Best variant evaluation " << evaluation_best_score->evaluation << std::endl;
+					std::string variant;
+
+					Score *current_score = evaluation_best_score;
+					for (; current_score != nullptr; current_score = current_score->parent)
+					{
+						std::string current_move;
+
+						assert(current_score->board != nullptr);
+
+						if (current_score->board == nullptr)
+						{
+							throw Exception();
+						}
+
+						current_score->board->position.format_move(current_move);
+
+						variant = current_move + std::string(" ") + variant;
+					}
+
+					if (evaluation_best_score != nullptr)
+					{
+						std::cout << "Best variant " << variant << " ";
+						std::cout << "Best variant evaluation " << evaluation_best_score->evaluation << std::endl;
+					}
 				}
+			}
+			catch (Exception &e)
+			{
+
+			}
+			catch (std::bad_alloc &e)
+			{
+				std::cout << std::endl << e.what() << std::endl;
+			}
+			catch (...)
+			{
+
 			}
 
 			delete game;
 
 			game = nullptr;
 		}
+	}
+	catch (std::bad_alloc &e)
+	{
+		std::cout << std::endl << e.what() << std::endl;
+	}
+	catch (...)
+	{
+
 	}
 }
 

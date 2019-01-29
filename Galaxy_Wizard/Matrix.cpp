@@ -86,7 +86,7 @@ Matrix::Matrix(const Matrix &m)
 	enpassant = m.enpassant;
 }
 
-Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
+Matrix& Matrix::operator=(const Matrix& m)
 {
 	for (size_t c = 0; c < matrix_m; c++)
 	{
@@ -102,6 +102,10 @@ Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 
 	for (size_t c = 0; c < matrix_m; c++)
 	{
+		for (size_t i = 0; i < matrix_n; i++)
+		{
+			matrix.at(c).pop_back();
+		}
 		matrix.pop_back();
 	}
 
@@ -214,12 +218,12 @@ void Matrix::format_move(std::string &current_move)
 	memset(buffer_x_to, 0, sizeof(char) * 4);
 	memset(buffer_y_to, 0, sizeof(char) * 4);
 
-	if (x_from != -1 && x_to != -1 && y_from != -1 && y_to != -1)
+	if (x_from != size_t(-1) && x_to != size_t(-1) && y_from != size_t(-1) && y_to != size_t(-1))
 	{
 		_itoa_s(x_from + 1, buffer_x_from, 10);
 		_itoa_s(x_to + 1, buffer_x_to, 10);
-		buffer_y_from[0] = y_from + 'a';
-		buffer_y_to[0] += y_to + 'a';
+		buffer_y_from[0] = char(y_from) + 'a';
+		buffer_y_to[0] += char(y_to) + 'a';
 
 		current_move = std::string(" ") + std::string(buffer_y_from) + std::string(buffer_x_from) +
 			std::string(buffer_y_to) + std::string(buffer_x_to);
