@@ -1,7 +1,6 @@
 #pragma once
 
 #include "matrix.h"
-#include "Exception.h"
 
 class Board
 {

@@ -7,8 +7,8 @@
 #include "Bishop.h"
 #include "Knight.h"
 
-Pawn::Pawn(size_t x, size_t y, DWORD Score)
-	:Figure(x, y, Score)
+Pawn::Pawn(DWORD Score)
+	:Figure(Score)
 {
 }
 
@@ -50,10 +50,10 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					if (m.get(current_x, current_y) == nullptr)
 					{
 						std::list<Figure*> promoted_figure;
-						promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-						promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-						promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-						promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
+						promoted_figure.push_back(new Queen(Queen_Value * sign(figure->Value)));
+						promoted_figure.push_back(new Rook(Rook_Value * sign(figure->Value)));
+						promoted_figure.push_back(new Bishop(Bishop_Value * sign(figure->Value)));
+						promoted_figure.push_back(new Knight(Knight_Value * sign(figure->Value)));
 
 						for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
 						{
@@ -62,6 +62,8 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 							new_move.put(current_x, current_y, *promoted_figure_iterator);
 							new_move.put(x, y, nullptr);
 							
+							new_move.enpassant = size_t(-1);
+
 							new_move.x_from = x;
 							new_move.y_from = y;
 							new_move.x_to = current_x;
@@ -108,10 +110,10 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 						if (figure->Value * m.get(current_x, current_y)->Value < 0)
 						{
 							std::list<Figure*> promoted_figure;
-							promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-							promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-							promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-							promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
+							promoted_figure.push_back(new Queen(Queen_Value * sign(figure->Value)));
+							promoted_figure.push_back(new Rook(Rook_Value * sign(figure->Value)));
+							promoted_figure.push_back(new Bishop(Bishop_Value * sign(figure->Value)));
+							promoted_figure.push_back(new Knight(Knight_Value * sign(figure->Value)));
 
 							for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
 							{
@@ -119,6 +121,8 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 								new_move.put(current_x, current_y, *promoted_figure_iterator);
 								new_move.put(x, y, nullptr);
+
+								new_move.enpassant = size_t(-1);
 
 								new_move.x_from = x;
 								new_move.y_from = y;
@@ -164,10 +168,10 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 						if (figure->Value * m.get(current_x, current_y)->Value < 0)
 						{
 							std::list<Figure*> promoted_figure;
-							promoted_figure.push_back(new Queen(current_x, current_y, Queen_Value));
-							promoted_figure.push_back(new Rook(current_x, current_y, Rook_Value));
-							promoted_figure.push_back(new Bishop(current_x, current_y, Bishop_Value));
-							promoted_figure.push_back(new Knight(current_x, current_y, Knight_Value));
+							promoted_figure.push_back(new Queen(Queen_Value * sign(figure->Value)));
+							promoted_figure.push_back(new Rook(Rook_Value * sign(figure->Value)));
+							promoted_figure.push_back(new Bishop(Bishop_Value * sign(figure->Value)));
+							promoted_figure.push_back(new Knight(Knight_Value * sign(figure->Value)));
 
 							for (auto promoted_figure_iterator = promoted_figure.begin(); promoted_figure_iterator != promoted_figure.end(); promoted_figure_iterator++)
 							{
@@ -175,6 +179,8 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 								new_move.put(current_x, current_y, *promoted_figure_iterator);
 								new_move.put(x, y, nullptr);
+
+								new_move.enpassant = size_t(-1);
 
 								new_move.x_from = x;
 								new_move.y_from = y;
@@ -219,6 +225,8 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
+
+					new_move.enpassant = size_t(-1);
 
 					new_move.x_from = x;
 					new_move.y_from = y;
@@ -272,6 +280,8 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 							new_move.put(x, y, nullptr);
 							new_move.put(current_x1, current_y, nullptr);
 
+							new_move.enpassant = size_t(-1);
+
 							new_move.x_from = x;
 							new_move.y_from = y;
 							new_move.x_to = current_x;
@@ -306,6 +316,8 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 							new_move.put(current_x, current_y, figure);
 							new_move.put(x, y, nullptr);
 							new_move.put(current_x1, current_y, nullptr);
+
+							new_move.enpassant = size_t(-1);
 
 							new_move.x_from = x;
 							new_move.y_from = y;
@@ -369,5 +381,5 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 Figure* Pawn::Clone()
 {
-	return new Pawn(m, n, Value);
+	return new Pawn(Value);
 }

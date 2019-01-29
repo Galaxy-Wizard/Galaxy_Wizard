@@ -2,8 +2,8 @@
 #include "Queen.h"
 
 
-Queen::Queen(size_t x, size_t y, DWORD Score)
-	:Figure(x, y, Score)
+Queen::Queen(DWORD Score)
+	:Figure(Score)
 {
 }
 
@@ -439,5 +439,5 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 
 Figure* Queen::Clone()
 {
-	return new Queen(m, n, Value);
+	return new Queen(Value);
 }

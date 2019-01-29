@@ -4,7 +4,7 @@ class Rook :
 	public Figure
 {
 public:
-	Rook(size_t x, size_t y, DWORD Score);
+	Rook(DWORD Score);
 	~Rook();
 
 	bool rook_not_moved;

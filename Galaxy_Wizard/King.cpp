@@ -4,8 +4,8 @@
 #include "Rook.h"
 
 
-King::King(size_t x, size_t y, DWORD Score)
-	:Figure(x, y, Score), king_not_moved(true)
+King::King( DWORD Score)
+	:Figure(Score), king_not_moved(true)
 {
 }
 
@@ -406,5 +406,5 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 Figure* King::Clone()
 {
-	return new King(m, n, Value);
+	return new King(Value);
 }

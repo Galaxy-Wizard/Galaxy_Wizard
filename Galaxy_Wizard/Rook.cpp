@@ -2,8 +2,8 @@
 #include "Rook.h"
 
 
-Rook::Rook(size_t x, size_t y, DWORD Score)
-	:Figure(x, y, Score), rook_not_moved(true)
+Rook::Rook(DWORD Score)
+	:Figure(Score), rook_not_moved(true)
 {
 }
 
@@ -231,5 +231,5 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 
 Figure* Rook::Clone()
 {
-	return new Rook(m, n, Value);
+	return new Rook(Value);
 }

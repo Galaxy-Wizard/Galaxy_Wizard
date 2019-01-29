@@ -1,18 +1,14 @@
 #pragma once
-#include <vector>
-#include <memory>
-
-#include "Exception.h"
 
 class Figure;
 
 class Matrix
 {
-protected:
+public:
 	std::vector<std::vector<Figure*>> matrix;
 	size_t matrix_n;
 	size_t matrix_m;
-public:
+
 	explicit Matrix();
 	Matrix(size_t m, size_t n);
 	~Matrix();
