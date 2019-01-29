@@ -13,7 +13,7 @@
 
 int main()
 {
-    std::cout << "Galaxy_Wizard 1.0" << std::endl;
+    std::cout << "Galaxy_Wizard 2.0" << std::endl;
 
 	std::cout << "Size of Game = " << sizeof(Game) + 30 * sizeof(void*) + 2 * (8 * 8 * sizeof(void*) + sizeof(Figure) * 32) << std::endl;
 	std::cout << "Size of Board = " << sizeof(Board) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
