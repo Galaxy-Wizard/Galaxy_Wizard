@@ -2,8 +2,8 @@
 #include "Bishop.h"
 
 
-Bishop::Bishop(size_t x, size_t y, DWORD Score)
-	:Figure(x, y, Score)
+Bishop::Bishop(DWORD Score)
+	:Figure(Score)
 {
 }
 
@@ -231,5 +231,5 @@ std::list<Matrix> Bishop::moves(Matrix m, size_t x, size_t y)
 
 Figure* Bishop::Clone()
 {
-	return new Bishop(m, n, Value);
+	return new Bishop(Value);
 }

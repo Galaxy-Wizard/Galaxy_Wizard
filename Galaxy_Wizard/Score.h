@@ -23,5 +23,7 @@ public:
 	DWORD iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation);
 
 	void GenetateAllMoves();
+
+	void DeleteNotPrincipalVariantNodes(Score *principal_variant);
 };
 

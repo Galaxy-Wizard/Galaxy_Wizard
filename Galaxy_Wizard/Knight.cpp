@@ -2,8 +2,8 @@
 #include "Knight.h"
 
 
-Knight::Knight(size_t x, size_t y, DWORD Score)
-	:Figure(x, y, Score)
+Knight::Knight(DWORD Score)
+	:Figure(Score)
 {
 }
 
@@ -455,5 +455,5 @@ std::list<Matrix> Knight::moves(Matrix m, size_t x, size_t y)
 
 Figure* Knight::Clone()
 {
-	return new Knight(m, n, Value);
+	return new Knight(Value);
 }

@@ -33,7 +33,7 @@ DWORD Score::Evaluate()
 
 	if (parent != nullptr)
 	{
-		//result += parent->childen.size() * MoveScoreBonus * (-side_to_move);
+		result += parent->childen.size() * MoveScoreBonus * (-side_to_move);
 	}
 
 	return result;
@@ -204,4 +204,31 @@ DWORD Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_le
 	evaluation = best_evaluation;
 
 	return best_evaluation;
+}
+
+void Score::DeleteNotPrincipalVariantNodes(Score *principal_variant)
+{
+	if (principal_variant != nullptr)
+	{
+		if (principal_variant->parent != nullptr)
+		{
+			Score *current_score = principal_variant->parent;
+
+			for (auto child = current_score->childen.begin(); child != current_score->childen.end(); child++)
+			{
+				if (principal_variant != &(*child))
+				{
+					for (size_t x = 0; x < child->board.position.matrix_m; x++)
+					{
+						child->board.position.matrix.at(x).pop_back();
+					}
+					child->board.position.matrix_n = 0;
+					child->board.position.matrix.pop_back();
+					child->board.position.matrix_m = 0;
+				}
+			}
+
+			DeleteNotPrincipalVariantNodes(current_score);
+		}
+	}
 }

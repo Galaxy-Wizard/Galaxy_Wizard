@@ -4,7 +4,7 @@ class Queen :
 	public Figure
 {
 public:
-	Queen(size_t x, size_t y, DWORD Score);
+	Queen(DWORD Score);
 	~Queen();
 
 	virtual Figure* Clone();

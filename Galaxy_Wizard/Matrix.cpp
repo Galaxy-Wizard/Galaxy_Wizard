@@ -214,11 +214,18 @@ void Matrix::format_move(std::string &current_move)
 	memset(buffer_x_to, 0, sizeof(char) * 4);
 	memset(buffer_y_to, 0, sizeof(char) * 4);
 
-	_itoa_s(x_from, buffer_x_from, 10);
-	_itoa_s(y_from, buffer_y_from, 10);
-	_itoa_s(x_to, buffer_x_to, 10);
-	_itoa_s(y_to, buffer_y_to, 10);
+	if (x_from != -1 && x_to != -1 && y_from != -1 && y_to != -1)
+	{
+		_itoa_s(x_from + 1, buffer_x_from, 10);
+		_itoa_s(x_to + 1, buffer_x_to, 10);
+		buffer_y_from[0] = y_from + 'a';
+		buffer_y_to[0] += y_to + 'a';
 
-	current_move = std::string("from(") + std::string(buffer_x_from) + std::string(" ") + std::string(buffer_y_from) + std::string(")") +
-		std::string(" to(") + std::string(buffer_x_to) + std::string(" ") + std::string(buffer_y_to) + std::string(")");
+		current_move = std::string(" ") + std::string(buffer_y_from) + std::string(buffer_x_from) +
+			std::string(buffer_y_to) + std::string(buffer_x_to);
+	}
+	else
+	{
+		current_move = std::string("____");
+	}
 }
