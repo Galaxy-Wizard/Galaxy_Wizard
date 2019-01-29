@@ -460,5 +460,7 @@ Figure* Knight::Clone()
 
 void Knight::make_move(Matrix& matrix, Move move)
 {
+	matrix.move = move;
+
 	throw Exception();
 }

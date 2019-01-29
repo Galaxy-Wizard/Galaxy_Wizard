@@ -15,12 +15,12 @@ int main()
 {
     std::cout << "Galaxy_Wizard 2.0" << std::endl;
 
-	std::cout << "Size of Game = " << sizeof(Game) + 30 * sizeof(void*) + 2 * (8 * 8 * sizeof(void*) + sizeof(Figure) * 32) << std::endl;
+	std::cout << "Size of Game = " << sizeof(Game) + 30 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Board = " << sizeof(Board) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
-	std::cout << "Size of Score = " << sizeof(Score) + 30 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Matrix = " << sizeof(Matrix) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Figure = " << sizeof(Figure) << std::endl;
-	std::cout << "Size of Node = " << sizeof(Score) + 30 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
+	std::cout << "Size of Score = " << sizeof(Score) + 30 * sizeof(void*) << std::endl;
+	std::cout << "Size of Node = " << sizeof(Score) + 30 * sizeof(void*) << std::endl;
 
 	Game* game = nullptr;
 
@@ -55,21 +55,19 @@ int main()
 
 				DWORD delta = 20;
 
-				size_t maximum_tree_task_depth_level = 6;
+				size_t maximum_tree_task_depth_level = 17;
 				size_t tree_task_depth_level = 0;
 
 				Score *evaluation_best_score_start = &game->score;
 
 				while (maximum_tree_task_depth_level >= tree_task_depth_level)
 				{
-					DWORD best_evaluation = game->score.iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
+					DWORD best_evaluation = evaluation_best_score_start->iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
 
 					std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
 
 					if ((best_evaluation <= alpha || best_evaluation >= beta) && abs(best_evaluation) < 4 * King_Value)
 					{
-						evaluation_best_score_start = evaluation_best_score;
-
 						Score *this_current_score = evaluation_best_score;
 
 						if (this_current_score != nullptr)
@@ -93,10 +91,12 @@ int main()
 							}
 						}
 
-						//if (abs(best_evaluation) < 4 * King_Value)
-						//{
-						//	evaluation_best_score->delete_not_principal_variant_nodes(evaluation_best_score);
-						//}
+						if (abs(best_evaluation) < 4 * King_Value && tree_task_depth_level >= 8 && tree_task_depth_level % 4 == 0)
+						{
+							evaluation_best_score_start = evaluation_best_score;
+
+							evaluation_best_score->delete_not_principal_variant_nodes(evaluation_best_score);
+						}
 					}
 
 					if (best_evaluation <= alpha)

@@ -386,5 +386,7 @@ Figure* Pawn::Clone()
 
 void Pawn::make_move(Matrix& matrix, Move move)
 {
+	matrix.move = move;
+
 	throw Exception();
 }

@@ -236,5 +236,7 @@ Figure* Rook::Clone()
 
 void Rook::make_move(Matrix& matrix, Move move)
 {
+	matrix.move = move;
+
 	throw Exception();
 }

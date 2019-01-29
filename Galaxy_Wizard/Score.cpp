@@ -248,3 +248,27 @@ void Score::prepare_board(Board &board)
 		board.make_move((*s)->move);
 	}
 }
+
+void Score::delete_not_principal_variant_nodes(Score *principal_variant)
+{
+	if (principal_variant != nullptr)
+	{
+		if (principal_variant->parent != nullptr)
+		{
+			Score *current_score = principal_variant->parent;
+
+			auto child = current_score->childen.begin();
+			for (; child != current_score->childen.end(); child++)
+			{
+				if (principal_variant != &(*child))
+				{
+					current_score->childen.erase(child);
+
+					child = current_score->childen.begin();
+				}
+			}
+
+			delete_not_principal_variant_nodes(current_score);
+		}
+	}
+}

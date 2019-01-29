@@ -236,5 +236,7 @@ Figure* Bishop::Clone()
 
 void Bishop::make_move(Matrix& matrix, Move move)
 {
+	matrix.move = move;
+
 	throw Exception();
 }

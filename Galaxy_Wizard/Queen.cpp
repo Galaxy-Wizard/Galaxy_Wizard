@@ -444,5 +444,7 @@ Figure* Queen::Clone()
 
 void Queen::make_move(Matrix& matrix, Move move)
 {
+	matrix.move = move;
+
 	throw Exception();
 }

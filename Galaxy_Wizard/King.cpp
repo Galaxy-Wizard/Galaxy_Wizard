@@ -415,5 +415,7 @@ Figure* King::Clone()
 
 void King::make_move(Matrix& matrix, Move move)
 {
+	matrix.move = move;
+
 	throw Exception();
 }

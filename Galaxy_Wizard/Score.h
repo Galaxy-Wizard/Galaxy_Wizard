@@ -26,6 +26,8 @@ public:
 
 	void genetate_all_moves();
 
+	void delete_not_principal_variant_nodes(Score *principal_variant);
+
 	void prepare_board(Board &board);
 };
 
