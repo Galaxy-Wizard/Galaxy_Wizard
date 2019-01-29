@@ -3,7 +3,7 @@
 
 
 Rook::Rook(DWORD Score)
-	:Figure(Score), rook_not_moved(true)
+	:Figure(Score)
 {
 }
 
@@ -40,10 +40,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -59,10 +59,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -92,10 +92,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -111,10 +111,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -144,10 +144,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -163,10 +163,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -196,10 +196,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -215,10 +215,10 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -232,4 +232,9 @@ std::list<Matrix> Rook::moves(Matrix m, size_t x, size_t y)
 Figure* Rook::Clone()
 {
 	return new Rook(Value);
+}
+
+void Rook::make_move(Matrix& matrix, Move move)
+{
+	throw Exception();
 }

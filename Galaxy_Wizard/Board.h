@@ -1,6 +1,7 @@
 #pragma once
 
 #include "matrix.h"
+#include "Move.h"
 
 class Board
 {
@@ -14,5 +15,7 @@ public:
 	Board& move(const Matrix &m);
 
 	Matrix position;
+
+	void make_move(Move move) throw (Exception());
 };
 

@@ -62,7 +62,7 @@ int main()
 
 				while (maximum_tree_task_depth_level >= tree_task_depth_level)
 				{
-					DWORD best_evaluation = evaluation_best_score_start->iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
+					DWORD best_evaluation = game->score.iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
 
 					std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
 
@@ -81,12 +81,7 @@ int main()
 							{
 								std::string current_move;
 
-								assert(current_score->board != nullptr);
-
-								if (current_score->board != nullptr)
-								{
-									current_score->board->position.format_move(current_move);
-								}
+								current_score->move.format_move(current_move);
 
 								variant = current_move + std::string(" ") + variant;
 							}
@@ -98,10 +93,10 @@ int main()
 							}
 						}
 
-						if (abs(best_evaluation) < 4 * King_Value)
-						{
-							evaluation_best_score->DeleteNotPrincipalVariantNodes(evaluation_best_score);
-						}
+						//if (abs(best_evaluation) < 4 * King_Value)
+						//{
+						//	evaluation_best_score->delete_not_principal_variant_nodes(evaluation_best_score);
+						//}
 					}
 
 					if (best_evaluation <= alpha)
@@ -148,14 +143,7 @@ int main()
 					{
 						std::string current_move;
 
-						assert(current_score->board != nullptr);
-
-						if (current_score->board == nullptr)
-						{
-							throw Exception();
-						}
-
-						current_score->board->position.format_move(current_move);
+						current_score->move.format_move(current_move);
 
 						variant = current_move + std::string(" ") + variant;
 					}

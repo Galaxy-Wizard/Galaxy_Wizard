@@ -62,12 +62,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 							new_move.put(current_x, current_y, *promoted_figure_iterator);
 							new_move.put(x, y, nullptr);
 							
-							new_move.enpassant = size_t(-1);
+							new_move.move.enpassant = size_t(-1);
 
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
+							new_move.move.x_from = x;
+							new_move.move.y_from = y;
+							new_move.move.x_to = current_x;
+							new_move.move.y_to = current_y;
 							result.push_back(new_move);
 						}
 					}
@@ -122,12 +122,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 								new_move.put(current_x, current_y, *promoted_figure_iterator);
 								new_move.put(x, y, nullptr);
 
-								new_move.enpassant = size_t(-1);
+								new_move.move.enpassant = size_t(-1);
 
-								new_move.x_from = x;
-								new_move.y_from = y;
-								new_move.x_to = current_x;
-								new_move.y_to = current_y;
+								new_move.move.x_from = x;
+								new_move.move.y_from = y;
+								new_move.move.x_to = current_x;
+								new_move.move.y_to = current_y;
 								result.push_back(new_move);
 							}
 						}
@@ -180,12 +180,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 								new_move.put(current_x, current_y, *promoted_figure_iterator);
 								new_move.put(x, y, nullptr);
 
-								new_move.enpassant = size_t(-1);
+								new_move.move.enpassant = size_t(-1);
 
-								new_move.x_from = x;
-								new_move.y_from = y;
-								new_move.x_to = current_x;
-								new_move.y_to = current_y;
+								new_move.move.x_from = x;
+								new_move.move.y_from = y;
+								new_move.move.x_to = current_x;
+								new_move.move.y_to = current_y;
 								result.push_back(new_move);
 							}
 						}
@@ -226,12 +226,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.enpassant = size_t(-1);
+					new_move.move.enpassant = size_t(-1);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -243,7 +243,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 		}
 	}
 
-	if (m.enpassant != size_t(-1))
+	if (m.move.enpassant != size_t(-1))
 	{
 		if ((x == m.get_matrix_m() - 4 && figure->Value > 0) || (x == 3 && figure->Value < 0))
 		{
@@ -252,9 +252,9 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 			auto current_x1 = x;
 
-			if (m.enpassant == y - 1 || m.enpassant == y + 1)
+			if (m.move.enpassant == y - 1 || m.move.enpassant == y + 1)
 			{
-				if (m.enpassant == y - 1)
+				if (m.move.enpassant == y - 1)
 				{
 					current_y--;
 					if (figure->Value > 0)
@@ -280,18 +280,18 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 							new_move.put(x, y, nullptr);
 							new_move.put(current_x1, current_y, nullptr);
 
-							new_move.enpassant = size_t(-1);
+							new_move.move.enpassant = size_t(-1);
 
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
+							new_move.move.x_from = x;
+							new_move.move.y_from = y;
+							new_move.move.x_to = current_x;
+							new_move.move.y_to = current_y;
 							result.push_back(new_move);
 						}
 					}
 				}
 
-				if (m.enpassant == y + 1)
+				if (m.move.enpassant == y + 1)
 				{
 					current_y++;
 					if (figure->Value > 0)
@@ -317,12 +317,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 							new_move.put(x, y, nullptr);
 							new_move.put(current_x1, current_y, nullptr);
 
-							new_move.enpassant = size_t(-1);
+							new_move.move.enpassant = size_t(-1);
 
-							new_move.x_from = x;
-							new_move.y_from = y;
-							new_move.x_to = current_x;
-							new_move.y_to = current_y;
+							new_move.move.x_from = x;
+							new_move.move.y_from = y;
+							new_move.move.x_to = current_x;
+							new_move.move.y_to = current_y;
 							result.push_back(new_move);
 						}
 					}
@@ -365,12 +365,12 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 				new_move.put(current_x, current_y, figure);
 				new_move.put(x, y, nullptr);
 
-				new_move.enpassant = y;
+				new_move.move.enpassant = y;
 
-				new_move.x_from = x;
-				new_move.y_from = y;
-				new_move.x_to = current_x;
-				new_move.y_to = current_y;
+				new_move.move.x_from = x;
+				new_move.move.y_from = y;
+				new_move.move.x_to = current_x;
+				new_move.move.y_to = current_y;
 				result.push_back(new_move);
 			}
 		}
@@ -382,4 +382,9 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 Figure* Pawn::Clone()
 {
 	return new Pawn(Value);
+}
+
+void Pawn::make_move(Matrix& matrix, Move move)
+{
+	throw Exception();
 }

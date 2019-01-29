@@ -3,19 +3,17 @@
 #include "Figure.h"
 
 Matrix::Matrix()
+	: left_rook_not_moved(true), right_rook_not_moved(true), king_not_moved(true)
 {
 	matrix_n = 0;
 	matrix_m = 0;
-
-	x_from = y_from = x_to = y_to = size_t(-1);
 }
 
 Matrix::Matrix(size_t m, size_t n)
+	: left_rook_not_moved(true), right_rook_not_moved(true), king_not_moved(true)
 {
 	matrix_m = m;
 	matrix_n = n;
-
-	x_from = y_from = x_to = y_to = size_t(-1);
 
 	for (size_t c = 0; c < m; c++)
 	{
@@ -26,8 +24,6 @@ Matrix::Matrix(size_t m, size_t n)
 		}
 		matrix.push_back(line);
 	}
-
-	enpassant = size_t(-1);
 }
 
 
@@ -50,8 +46,6 @@ Matrix::Matrix(const Matrix &m)
 {
 	matrix_m = m.matrix_m;
 	matrix_n = m.matrix_n;
-
-	x_from = y_from = x_to = y_to = size_t(-1);
 
 	for (size_t c = 0; c < matrix_m; c++)
 	{
@@ -78,12 +72,9 @@ Matrix::Matrix(const Matrix &m)
 		}
 	}
 
-	x_from = m.x_from;
-	y_from = m.y_from;
-	x_to = m.x_to;
-	y_to = m.y_to;
-
-	enpassant = m.enpassant;
+	left_rook_not_moved = m.left_rook_not_moved;
+	right_rook_not_moved = m.right_rook_not_moved;
+	king_not_moved = m.king_not_moved;
 }
 
 Matrix& Matrix::operator=(const Matrix& m)
@@ -137,12 +128,9 @@ Matrix& Matrix::operator=(const Matrix& m)
 		}
 	}
 
-	x_from = m.x_from;
-	y_from = m.y_from;
-	x_to = m.x_to;
-	y_to = m.y_to;
-
-	enpassant = m.enpassant;
+	left_rook_not_moved = m.left_rook_not_moved;
+	right_rook_not_moved = m.right_rook_not_moved;
+	king_not_moved = m.king_not_moved;
 
 	return *this;
 }
@@ -206,30 +194,4 @@ size_t Matrix::get_matrix_m() const
 	return matrix_m;
 }
 
-void Matrix::format_move(std::string &current_move)
-{
-	char buffer_x_from[4];
-	char buffer_y_from[4];
-	char buffer_x_to[4];
-	char buffer_y_to[4];
 
-	memset(buffer_x_from, 0, sizeof(char) * 4);
-	memset(buffer_y_from, 0, sizeof(char) * 4);
-	memset(buffer_x_to, 0, sizeof(char) * 4);
-	memset(buffer_y_to, 0, sizeof(char) * 4);
-
-	if (x_from != size_t(-1) && x_to != size_t(-1) && y_from != size_t(-1) && y_to != size_t(-1))
-	{
-		_itoa_s(x_from + 1, buffer_x_from, 10);
-		_itoa_s(x_to + 1, buffer_x_to, 10);
-		buffer_y_from[0] = char(y_from) + 'a';
-		buffer_y_to[0] += char(y_to) + 'a';
-
-		current_move = std::string(" ") + std::string(buffer_y_from) + std::string(buffer_x_from) +
-			std::string(buffer_y_to) + std::string(buffer_x_to);
-	}
-	else
-	{
-		current_move = std::string("____");
-	}
-}

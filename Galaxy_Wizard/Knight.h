@@ -7,6 +7,7 @@ public:
 	Knight(DWORD Score);
 	~Knight();
 
+	virtual void make_move(Matrix& matrix, Move move);
 	virtual Figure* Clone();
 	virtual std::list<Matrix> moves(Matrix, size_t, size_t);
 };

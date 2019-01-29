@@ -5,7 +5,7 @@
 
 
 King::King( DWORD Score)
-	:Figure(Score), king_not_moved(true)
+	:Figure(Score)
 {
 }
 
@@ -42,10 +42,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -61,10 +61,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -95,10 +95,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -114,10 +114,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -148,10 +148,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -167,10 +167,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -201,10 +201,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.put(current_x, current_y, figure);
 					new_move.put(x, y, nullptr);
 
-					new_move.x_from = x;
-					new_move.y_from = y;
-					new_move.x_to = current_x;
-					new_move.y_to = current_y;
+					new_move.move.x_from = x;
+					new_move.move.y_from = y;
+					new_move.move.x_to = current_x;
+					new_move.move.y_to = current_y;
 					result.push_back(new_move);
 				}
 				else
@@ -220,10 +220,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.put(current_x, current_y, figure);
 						new_move.put(x, y, nullptr);
 
-						new_move.x_from = x;
-						new_move.y_from = y;
-						new_move.x_to = current_x;
-						new_move.y_to = current_y;
+						new_move.move.x_from = x;
+						new_move.move.y_from = y;
+						new_move.move.x_to = current_x;
+						new_move.move.y_to = current_y;
 						result.push_back(new_move);
 					}
 				}
@@ -232,7 +232,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 		}
 	}
 
-	if (king_not_moved)
+	if (m.king_not_moved)
 	{
 		{
 			auto current_x = x;
@@ -282,7 +282,9 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 							Rook* rook = dynamic_cast<Rook*>(m.get(current_x, current_y));
 
-							if (rook->rook_not_moved)
+							bool rook_not_moved = (castle_side && m.left_rook_not_moved) || (!castle_side && m.right_rook_not_moved);
+
+							if (rook_not_moved)
 							{
 								if (castle_side)
 								{
@@ -298,10 +300,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 								new_move.put(x, y, nullptr);
 								new_move.put(current_x, current_y, nullptr);
 
-								new_move.x_from = x;
-								new_move.y_from = y;
-								new_move.x_to = current_x;
-								new_move.y_to = current_y;
+								new_move.move.x_from = x;
+								new_move.move.y_from = y;
+								new_move.move.x_to = current_x;
+								new_move.move.y_to = current_y;
 								result.push_back(new_move);
 							}
 						}
@@ -365,7 +367,9 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 							Rook* rook = dynamic_cast<Rook*>(m.get(current_x, current_y));
 
-							if (rook->rook_not_moved)
+							bool rook_not_moved = (castle_side && m.left_rook_not_moved) || (!castle_side && m.right_rook_not_moved);
+
+							if (rook_not_moved)
 							{
 								if (castle_side)
 								{
@@ -381,10 +385,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 								new_move.put(x, y, nullptr);
 								new_move.put(current_x, current_y, nullptr);
 
-								new_move.x_from = x;
-								new_move.y_from = y;
-								new_move.x_to = current_x;
-								new_move.y_to = current_y;
+								new_move.move.x_from = x;
+								new_move.move.y_from = y;
+								new_move.move.x_to = current_x;
+								new_move.move.y_to = current_y;
 								result.push_back(new_move);
 							}
 						}
@@ -407,4 +411,9 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 Figure* King::Clone()
 {
 	return new King(Value);
+}
+
+void King::make_move(Matrix& matrix, Move move)
+{
+	throw Exception();
 }

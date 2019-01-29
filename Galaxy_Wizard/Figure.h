@@ -13,6 +13,7 @@ public:
 
 	DWORD Value;
 
+	virtual void make_move(Matrix&, Move) = 0;
 	virtual Figure* Clone() = 0;
 	virtual std::list<Matrix> moves(Matrix, size_t, size_t) = 0;
 };
