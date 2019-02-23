@@ -46,6 +46,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -65,6 +66,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -99,6 +101,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -118,6 +121,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -152,6 +156,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -171,6 +176,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -205,6 +211,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -224,6 +231,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -290,11 +298,23 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 								{
 									new_move.put(2, current_y, figure);
 									new_move.put(3, current_y, m.get(current_x, current_y));
+									new_move.move.x_to = 2;
+									new_move.move.y_to = current_y;
+									new_move.move.rook_x_from = current_x;
+									new_move.move.rook_y_from = current_y;
+									new_move.move.rook_x_to = 3;
+									new_move.move.rook_y_to = current_y;
 								}
 								else
 								{
 									new_move.put(6, current_y, figure);
 									new_move.put(5, current_y, m.get(current_x, current_y));
+									new_move.move.x_to = 6;
+									new_move.move.y_to = current_y;
+									new_move.move.rook_x_from = current_x;
+									new_move.move.rook_y_from = current_y;
+									new_move.move.rook_x_to = 5;
+									new_move.move.rook_y_to = current_y;
 								}
 
 								new_move.put(x, y, nullptr);
@@ -302,8 +322,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 								new_move.move.x_from = x;
 								new_move.move.y_from = y;
-								new_move.move.x_to = current_x;
-								new_move.move.y_to = current_y;
+								new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 								result.push_back(new_move);
 							}
 						}
@@ -375,11 +394,23 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 								{
 									new_move.put(2, current_y, figure);
 									new_move.put(3, current_y, m.get(current_x, current_y));
+									new_move.move.x_to = 2;
+									new_move.move.y_to = current_y;
+									new_move.move.rook_x_from = current_x;
+									new_move.move.rook_y_from = current_y;
+									new_move.move.rook_x_to = 3;
+									new_move.move.rook_y_to = current_y;
 								}
 								else
 								{
 									new_move.put(6, current_y, figure);
 									new_move.put(5, current_y, m.get(current_x, current_y));
+									new_move.move.x_to = 6;
+									new_move.move.y_to = current_y;
+									new_move.move.rook_x_from = current_x;
+									new_move.move.rook_y_from = current_y;
+									new_move.move.rook_x_to = 5;
+									new_move.move.rook_y_to = current_y;
 								}
 
 								new_move.put(x, y, nullptr);
@@ -387,8 +418,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 								new_move.move.x_from = x;
 								new_move.move.y_from = y;
-								new_move.move.x_to = current_x;
-								new_move.move.y_to = current_y;
+								new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 								result.push_back(new_move);
 							}
 						}

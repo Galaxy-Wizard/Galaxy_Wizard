@@ -15,12 +15,12 @@ int main()
 {
     std::cout << "Galaxy_Wizard 2.0" << std::endl;
 
-	std::cout << "Size of Game = " << sizeof(Game) + 30 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
+	std::cout << "Size of Game = " << sizeof(Game) + 40 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Board = " << sizeof(Board) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Matrix = " << sizeof(Matrix) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Figure = " << sizeof(Figure) << std::endl;
-	std::cout << "Size of Score = " << sizeof(Score) + 30 * sizeof(void*) << std::endl;
-	std::cout << "Size of Node = " << sizeof(Score) + 30 * sizeof(void*) << std::endl;
+	std::cout << "Size of Score = " << sizeof(Score) + 40 * sizeof(void*) << std::endl;
+	std::cout << "Size of Node = " << sizeof(Score) + 40 * sizeof(void*) << std::endl;
 
 	Game* game = nullptr;
 
@@ -41,14 +41,16 @@ int main()
 			{
 				Score *evaluation_best_score = nullptr;
 
-				size_t nodes_calculated = 0;
+				size_t total_nodes_calculated = 0;
 
 				__time64_t calculation_start_time;
 				_time64(&calculation_start_time);
 				__time64_t calculation_end_time;
 
+				__time64_t total_calculation_time = 0;
+
 				game->score.evaluation = game->score.Evaluate();
-				nodes_calculated++;
+				total_nodes_calculated++;
 
 				DWORD alpha = -4 * King_Value;
 				DWORD beta = +4 * King_Value;
@@ -57,11 +59,19 @@ int main()
 
 				size_t maximum_tree_task_depth_level = 17;
 				size_t tree_task_depth_level = 0;
-
+				
 				Score *evaluation_best_score_start = &game->score;
+
+				_time64(&calculation_end_time);
+
+				total_calculation_time += calculation_end_time - calculation_start_time;
 
 				while (maximum_tree_task_depth_level >= tree_task_depth_level)
 				{
+					_time64(&calculation_start_time);
+
+					size_t nodes_calculated = 0;
+
 					DWORD best_evaluation = evaluation_best_score_start->iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
 
 					std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
@@ -115,23 +125,36 @@ int main()
 					delta += delta / 4 + 5;
 
 					tree_task_depth_level++;
+
+
+					_time64(&calculation_end_time);
+
+					auto calculation_time = calculation_end_time - calculation_start_time;
+
+					std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
+
+					std::cout << "Nodes calculated " << nodes_calculated << std::endl;
+					std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
+
+					if (calculation_time != 0)
+					{
+						std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
+					}
+					else
+					{
+						std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
+					}
+
+					total_calculation_time += calculation_time;
 				}
 
-				_time64(&calculation_end_time);
-
-				auto calculation_time = calculation_end_time - calculation_start_time;
-
-				std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
-
-				std::cout << "Nodes calculated " << nodes_calculated << std::endl;
-
-				if (calculation_time != 0)
+				if (total_calculation_time != 0)
 				{
-					std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
+					std::cout << "Total nodes per second " << total_nodes_calculated / total_calculation_time << std::endl;
 				}
 				else
 				{
-					std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
+					std::cout << "Total nodes per second " << total_nodes_calculated / 1 << std::endl;
 				}
 
 				if (evaluation_best_score != nullptr)
@@ -157,7 +180,7 @@ int main()
 			}
 			catch (Exception &e)
 			{
-
+				std::cout << std::endl << "Exception occured" << std::endl;
 			}
 			catch (std::bad_alloc &e)
 			{
@@ -165,7 +188,7 @@ int main()
 			}
 			catch (...)
 			{
-
+				std::cout << std::endl << "Unknown exception occured" << std::endl;
 			}
 
 			delete game;

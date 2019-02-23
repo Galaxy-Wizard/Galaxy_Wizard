@@ -44,6 +44,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -63,6 +64,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -96,6 +98,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -115,6 +118,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -148,6 +152,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -167,6 +172,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -200,6 +206,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -219,6 +226,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -252,6 +260,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -271,6 +280,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -304,6 +314,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -323,6 +334,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -356,6 +368,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -375,6 +388,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}
@@ -408,6 +422,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 					new_move.move.y_from = y;
 					new_move.move.x_to = current_x;
 					new_move.move.y_to = current_y;
+					new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 					result.push_back(new_move);
 				}
 				else
@@ -427,6 +442,7 @@ std::list<Matrix> Queen::moves(Matrix m, size_t x, size_t y)
 						new_move.move.y_from = y;
 						new_move.move.x_to = current_x;
 						new_move.move.y_to = current_y;
+						new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 						result.push_back(new_move);
 					}
 				}

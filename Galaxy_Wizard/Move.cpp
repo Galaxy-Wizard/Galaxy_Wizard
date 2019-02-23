@@ -6,6 +6,9 @@ Move::Move()
 {
 	x_from = y_from = x_to = y_to = size_t(-1);
 	enpassant = size_t(-1);
+	from_figure = 0;
+	to_figure = 0;
+	rook_x_from = rook_y_from = rook_x_to = rook_y_to = size_t(-1);
 }
 
 
@@ -21,6 +24,13 @@ Move::Move(const Move &m)
 	y_to = m.y_to;
 
 	enpassant = m.enpassant;
+	from_figure = m.from_figure;
+	to_figure = m.to_figure;
+
+	rook_x_from = m.rook_x_from;
+	rook_y_from = m.rook_y_from;
+	rook_x_to = m.rook_x_to;
+	rook_y_to = m.rook_y_to;
 }
 
 Move& Move::operator=(const Move &m)
@@ -31,6 +41,13 @@ Move& Move::operator=(const Move &m)
 	y_to = m.y_to;
 
 	enpassant = m.enpassant;
+	from_figure = m.from_figure;
+	to_figure = m.to_figure;
+
+	rook_x_from = m.rook_x_from;
+	rook_y_from = m.rook_y_from;
+	rook_x_to = m.rook_x_to;
+	rook_y_to = m.rook_y_to;
 
 	return *this;
 }
