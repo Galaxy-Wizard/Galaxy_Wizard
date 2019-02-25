@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <list>
+
 using DWORD = signed __int64;
 
 const DWORD Pawn_Value = 200;
@@ -40,11 +43,32 @@ enum MoveTypeEnum : int
 	None = 0,
 };
 
-class MachineStudingData
+class MachineStudingMoveTypeData
 {
 public:
-	MachineStudingData() : MoveType(None), Weight(0.0) {}
-	~MachineStudingData() {}
+	MachineStudingMoveTypeData() : MoveType(None), Weight(0.0), Generation(0.0) {}
+	~MachineStudingMoveTypeData() {}
+
 	MoveTypeEnum MoveType;
 	double Weight;
+	double Generation;
+};
+
+class Puzzle
+{
+public:
+	Puzzle(std::string f, std::string s): Fen(f), Solution(s) {}
+	~Puzzle() {}
+
+	std::string Fen;
+	std::string Solution;
+};
+
+class Puzzles
+{
+public:
+	Puzzles() {}
+	~Puzzles() {}
+
+	std::list<Puzzle> PuzzleList;
 };
