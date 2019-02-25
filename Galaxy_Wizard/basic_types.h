@@ -9,7 +9,7 @@ const DWORD Rook_Value = 6 * Pawn_Value;
 const DWORD Bishop_Value = DWORD(4.5 * Pawn_Value);
 const DWORD Knight_Value = 4 * Pawn_Value;
 
-const DWORD MoveScoreBonus = Pawn_Value / 100;
+const DWORD MoveScoreBonus = Pawn_Value / 50;
 
 template <class T>
 T sign(T v)
@@ -30,3 +30,21 @@ T sign(T v)
 		}
 	}
 }
+
+enum MoveTypeEnum : int
+{
+	Capture = 1,
+	Attack = 2,
+	Avoidance = 4,
+	QuiteMove = 8,
+	None = 0,
+};
+
+class MachineStudingData
+{
+public:
+	MachineStudingData() : MoveType(None), Weight(0.0) {}
+	~MachineStudingData() {}
+	MoveTypeEnum MoveType;
+	double Weight;
+};
