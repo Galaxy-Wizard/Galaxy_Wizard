@@ -5,6 +5,8 @@
 #include <iostream>
 #include <time.h>
 
+#include "basic_types.h"
+
 #include "Game.h"
 #include "Board.h"
 #include "Score.h"
@@ -21,6 +23,10 @@ int main()
 	std::cout << "Size of Figure = " << sizeof(Figure) << std::endl;
 	std::cout << "Size of Score = " << sizeof(Score) + 40 * sizeof(void*) << std::endl;
 	std::cout << "Size of Node = " << sizeof(Score) + 40 * sizeof(void*) << std::endl;
+
+	std::cout << "Studying started" << std::endl;
+	PuzzleSpace::StudyStrongPuzzles();
+	std::cout << "Studying ended" << std::endl;
 
 	Game* game = nullptr;
 

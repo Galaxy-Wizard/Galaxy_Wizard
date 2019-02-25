@@ -65,6 +65,8 @@ namespace PuzzleSpace
 		Puzzle(std::string f, std::string s, MoveTypeEnum mt = None) : Fen(f), Solution(s), MoveType(mt) {}
 		~Puzzle() {}
 
+		bool operator!=(const Puzzle &p) const { return Fen != p.Fen || Solution != p.Solution || MoveType != p.MoveType; }
+
 		std::string Fen;
 		std::string Solution;
 		MoveTypeEnum MoveType;
@@ -78,4 +80,6 @@ namespace PuzzleSpace
 
 		std::list<Puzzle> PuzzleList;
 	};
+
+	void StudyStrongPuzzles();
 }
