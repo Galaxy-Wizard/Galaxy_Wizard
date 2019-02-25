@@ -43,32 +43,39 @@ enum MoveTypeEnum : int
 	None = 0,
 };
 
-class MachineStudingMoveTypeData
+namespace MachineStuding
 {
-public:
-	MachineStudingMoveTypeData() : MoveType(None), Weight(0.0), Generation(0.0) {}
-	~MachineStudingMoveTypeData() {}
+	class MachineStudingMoveTypeData
+	{
+	public:
+		MachineStudingMoveTypeData() : MoveType(None), Weight(0.0), Generation(0.0) {}
+		~MachineStudingMoveTypeData() {}
 
-	MoveTypeEnum MoveType;
-	double Weight;
-	double Generation;
-};
+		MoveTypeEnum MoveType;
+		double Weight;
+		double Generation;
+	};
+}
 
-class Puzzle
+namespace PuzzleSpace
 {
-public:
-	Puzzle(std::string f, std::string s): Fen(f), Solution(s) {}
-	~Puzzle() {}
+	class Puzzle
+	{
+	public:
+		Puzzle(std::string f, std::string s, MoveTypeEnum mt = None) : Fen(f), Solution(s), MoveType(mt) {}
+		~Puzzle() {}
 
-	std::string Fen;
-	std::string Solution;
-};
+		std::string Fen;
+		std::string Solution;
+		MoveTypeEnum MoveType;
+	};
 
-class Puzzles
-{
-public:
-	Puzzles() {}
-	~Puzzles() {}
+	class Puzzles
+	{
+	public:
+		Puzzles() {}
+		~Puzzles() {}
 
-	std::list<Puzzle> PuzzleList;
-};
+		std::list<Puzzle> PuzzleList;
+	};
+}
