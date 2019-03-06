@@ -17,5 +17,9 @@ public:
 	Matrix position;
 
 	void make_move(Move move) throw (Exception());
+
+	bool legal_move(Move move);
+
+	void set_root_position();
 };
 

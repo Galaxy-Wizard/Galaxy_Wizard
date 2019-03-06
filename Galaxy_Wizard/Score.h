@@ -22,7 +22,7 @@ public:
 
 	DWORD evaluation;
 
-	DWORD iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation);
+	DWORD search(const Matrix &position);
 
 	void genetate_all_moves();
 

@@ -85,139 +85,9 @@ void Score::genetate_all_moves()
 	}
 }
 
-DWORD Score::iterative_search(size_t tree_task_depth_level, size_t tree_depth_level, size_t &nodes_calculated, Score **evaluation_best_score, DWORD alpha, DWORD beta, bool principal_variation)
+DWORD Score::search(const Matrix &position)
 {
-	if (evaluation_best_score == nullptr)
-	{
-		*evaluation_best_score = this;
-	}
-
-	if (tree_task_depth_level <= tree_depth_level)
-	{
-		DWORD best_evaluation = evaluation = Evaluate();
-		nodes_calculated++;
-
-		if (best_evaluation > beta)
-		{
-			return best_evaluation;
-		}
-
-		if (principal_variation && best_evaluation > alpha)
-			alpha = best_evaluation;
-
-		DWORD prior_pruning_base = best_evaluation + 128;
-
-		if (childen.size() == 0)
-		{
-			genetate_all_moves();
-		}
-
-		for (auto child = childen.begin(); child != childen.end(); child++)
-		{
-			Score *evaluation_child_best_score = &(*child);
-
-			Board board;
-
-			child->prepare_board(board);
-
-			DWORD prior_pruning = prior_pruning_base + board.position.get(board.position.move.x_to, board.position.move.y_to)->Value;
-
-			if (prior_pruning <= alpha)
-			{
-				best_evaluation = std::max(best_evaluation, prior_pruning);
-				continue;
-			}
-
-			evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level, nodes_calculated, &evaluation_child_best_score, -beta, -alpha, principal_variation);
-
-			if (evaluation > best_evaluation)
-			{
-				best_evaluation = evaluation;
-
-				if (evaluation > alpha)
-				{
-					if (principal_variation)
-					{
-						*evaluation_best_score = evaluation_child_best_score;
-					}
-
-					if (principal_variation && evaluation < beta)
-						alpha = evaluation;
-					else
-					{
-						break;
-					}
-				}
-			}
-		}
-
-		return best_evaluation;
-	}
-
-	if (childen.size() == 0)
-	{
-		genetate_all_moves();
-	}
-
-	if (alpha >= beta)
-	{
-		return alpha;
-	}
-
-	DWORD best_evaluation = -4 * King_Value;
-
-	evaluation = best_evaluation;
-
-	for (auto child = childen.begin(); child != childen.end(); child++)
-	{
-		Score *evaluation_child_best_score = &(*child);
-
-		DWORD child_static_evaluation = child->evaluation = child->Evaluate();
-		nodes_calculated++;
-
-		{
-			if (tree_task_depth_level - tree_depth_level + 1 >= 3)
-			{
-				evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level + 1, nodes_calculated, &evaluation_child_best_score, -alpha - 1, -alpha, false);
-			}
-
-			if (evaluation > alpha || !principal_variation)
-			{
-				evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level + 1, nodes_calculated, &evaluation_child_best_score, -alpha - 1, -alpha, false);
-			}
-
-			if (principal_variation && evaluation > alpha && (tree_depth_level == 0 || evaluation < beta))
-			{
-				evaluation = -child->iterative_search(tree_task_depth_level, tree_depth_level + 1, nodes_calculated, &evaluation_child_best_score, -beta, -alpha, true);
-			}
-		}
-
-		if (evaluation > best_evaluation)
-		{
-			best_evaluation = evaluation;
-
-			if (evaluation > alpha)
-			{
-				if (principal_variation)
-				{
-					*evaluation_best_score = evaluation_child_best_score;
-				}
-
-				if (principal_variation && evaluation < beta)
-				{
-					alpha = evaluation;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
-	}
-
-	evaluation = best_evaluation;
-
-	return best_evaluation;
+	return 0;
 }
 
 void Score::prepare_board(Board &board)
@@ -231,13 +101,16 @@ void Score::prepare_board(Board &board)
 
 	for (; current_score != nullptr;)
 	{
-		path_score.push_back(current_score);
 		if (current_score->parent != nullptr)
 		{
+			path_score.push_back(current_score);
 			start_score = current_score->parent;
 		}
 		else
 		{
+			//	Initial board should be prepared here
+			board.set_root_position();
+
 			break;
 		}
 		current_score = current_score->parent;

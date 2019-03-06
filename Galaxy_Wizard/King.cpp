@@ -447,5 +447,68 @@ void King::make_move(Matrix& matrix, Move move)
 {
 	matrix.move = move;
 
-	throw Exception();
+	size_t x_from = move.x_from;
+	size_t y_from = move.x_from;
+	size_t x_to = move.x_to;
+	size_t y_to = move.y_to;
+
+	if (
+		x_from >= matrix.get_matrix_m()
+		||
+		y_from >= matrix.get_matrix_n()
+		||
+		x_to >= matrix.get_matrix_m()
+		||
+		y_to >= matrix.get_matrix_n()
+		)
+	{
+		throw Exception();
+	}
+
+	auto Figure = matrix.get(x_from, y_from);
+	auto CapturedFigure = matrix.get(x_to, y_to);
+	matrix.put(x_to, y_to, Figure);
+	matrix.put(x_from, y_from, nullptr);
+
+	if (CapturedFigure != nullptr)
+	{
+		delete CapturedFigure;
+	}
+	else
+	{
+		size_t rook_x_from = move.rook_x_from;
+		size_t rook_y_from = move.rook_y_from;
+		size_t rook_x_to = move.rook_x_to;
+		size_t rook_y_to = move.rook_y_to;
+
+		if (
+			rook_x_from != size_t(-1) && rook_y_from != size_t(-1)
+			&&
+			rook_x_to != size_t(-1) && rook_y_to != size_t(-1)
+			)
+		{
+			if (
+				rook_x_from >= matrix.get_matrix_m()
+				||
+				rook_y_from >= matrix.get_matrix_n()
+				||
+				rook_x_to >= matrix.get_matrix_m()
+				||
+				rook_y_to >= matrix.get_matrix_n()
+				)
+			{
+				throw Exception();
+			}
+
+			auto Rook = matrix.get(rook_x_from, rook_y_from);
+			auto CapturedFigure = matrix.get(x_to, y_to);
+			matrix.put(rook_x_to, rook_y_to, Rook);
+			matrix.put(rook_x_from, rook_y_from, nullptr);
+
+			if (CapturedFigure != nullptr)
+			{
+				throw Exception();
+			}
+		}
+	}
 }

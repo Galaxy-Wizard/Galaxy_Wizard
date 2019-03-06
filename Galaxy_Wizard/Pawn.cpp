@@ -398,5 +398,67 @@ void Pawn::make_move(Matrix& matrix, Move move)
 {
 	matrix.move = move;
 
-	throw Exception();
+	size_t x_from = move.x_from;
+	size_t y_from = move.x_from;
+	size_t x_to = move.x_to;
+	size_t y_to = move.y_to;
+
+	if (
+		x_from >= matrix.get_matrix_m()
+		||
+		y_from >= matrix.get_matrix_n()
+		||
+		x_to >= matrix.get_matrix_m()
+		||
+		y_to >= matrix.get_matrix_n()
+		)
+	{
+		throw Exception();
+	}
+
+	auto Figure = matrix.get(x_from, y_from);
+
+	auto from_figure = move.from_figure;
+	auto to_figure = move.to_figure;
+	if (from_figure != to_figure)	//	Promotion
+	{
+		delete Figure;
+
+		switch (abs(to_figure))
+		{
+		Queen_Value: Figure = new Queen(to_figure);
+			break;
+		Rook_Value: Figure = new Rook(to_figure);
+			break;
+		Bishop_Value: Figure = new Bishop(to_figure);
+			break;
+		Knight_Value: Figure = new Knight(to_figure);
+			break;
+		default:
+			throw Exception();
+			break;
+		}
+	}
+
+	auto CapturedFigure = matrix.get(x_to, y_to);
+	matrix.put(x_to, y_to, Figure);
+	matrix.put(x_from, y_from, nullptr);
+	if (CapturedFigure != nullptr)
+	{
+		delete CapturedFigure;
+	}
+
+	size_t enpassant = move.enpassant;
+
+	if (enpassant != size_t(-1))
+	{
+		auto Pawn = matrix.get(enpassant, y_from);
+
+		if (Pawn == nullptr)
+		{
+			throw Exception();
+		}
+
+		delete Pawn;
+	}
 }

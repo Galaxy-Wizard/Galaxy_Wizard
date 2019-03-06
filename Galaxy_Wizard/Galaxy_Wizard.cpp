@@ -10,6 +10,7 @@
 #include "Game.h"
 #include "Board.h"
 #include "Score.h"
+#include "Figure.h"
 
 #include <algorithm>
 
@@ -58,11 +59,6 @@ int main()
 				game->score.evaluation = game->score.Evaluate();
 				total_nodes_calculated++;
 
-				DWORD alpha = -4 * King_Value;
-				DWORD beta = +4 * King_Value;
-
-				DWORD delta = 20;
-
 				size_t maximum_tree_task_depth_level = 17;
 				size_t tree_task_depth_level = 0;
 				
@@ -78,11 +74,11 @@ int main()
 
 					size_t nodes_calculated = 0;
 
-					DWORD best_evaluation = evaluation_best_score_start->iterative_search(tree_task_depth_level, 0, nodes_calculated, &evaluation_best_score, alpha, beta, true);
+					DWORD best_evaluation = evaluation_best_score_start->search(game->board.position);
 
 					std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
 
-					if ((best_evaluation <= alpha || best_evaluation >= beta) && abs(best_evaluation) < 4 * King_Value)
+					if (abs(best_evaluation) < 4 * King_Value)
 					{
 						Score *this_current_score = evaluation_best_score;
 
@@ -114,21 +110,6 @@ int main()
 							evaluation_best_score->delete_not_principal_variant_nodes(evaluation_best_score);
 						}
 					}
-
-					if (best_evaluation <= alpha)
-					{
-						beta = (alpha + beta) / 2;
-						alpha = std::max(best_evaluation - delta, -4 * King_Value);
-					}
-					else if (best_evaluation >= beta)
-					{
-						beta = std::min(best_evaluation + delta, 4 * King_Value);
-					}
-					else
-					{
-					}
-
-					delta += delta / 4 + 5;
 
 					tree_task_depth_level++;
 
