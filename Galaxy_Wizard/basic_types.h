@@ -55,6 +55,15 @@ namespace MachineStuding
 		double Weight;
 		double Generation;
 	};
+
+	class MachineStudingMoveTypeDataList
+	{
+	public:
+		MachineStudingMoveTypeDataList() {}
+		~MachineStudingMoveTypeDataList() {}
+
+		std::list<MachineStudingMoveTypeData> MachineStudingData;
+	};
 }
 
 namespace PuzzleSpace

@@ -79,3 +79,8 @@ void Move::format_move(std::string &current_move)
 		current_move = std::string("____");
 	}
 }
+
+MoveTypeEnum Move::get_move_type() const
+{
+	return MoveTypeEnum::None;
+}

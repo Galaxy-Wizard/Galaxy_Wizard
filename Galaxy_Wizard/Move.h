@@ -23,5 +23,7 @@ public:
 	size_t rook_x_to, rook_y_to;
 
 	void format_move(std::string &current_move);
+
+	MoveTypeEnum get_move_type() const;
 };
 

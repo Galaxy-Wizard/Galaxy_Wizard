@@ -24,10 +24,16 @@ public:
 
 	DWORD search(const Matrix &position);
 
+	bool game_ended(const Matrix &position, DWORD &result);
+	bool enemy_plan(const Matrix &position, DWORD &result);
+	bool my_plan(const Matrix &position, DWORD &result);
+
 	void genetate_all_moves();
 
 	void delete_not_principal_variant_nodes(Score *principal_variant);
 
 	void prepare_board(Board &board);
 };
+
+bool sort_procedure(const Score &s1, const Score &s2);
 

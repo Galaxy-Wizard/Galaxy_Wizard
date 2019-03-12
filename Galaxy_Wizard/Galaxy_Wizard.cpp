@@ -14,6 +14,9 @@
 
 #include <algorithm>
 
+
+MachineStuding::MachineStudingMoveTypeDataList MachineStudingMoveTypeDataListSortData;
+
 int main()
 {
     std::cout << "Galaxy_Wizard 2.0" << std::endl;

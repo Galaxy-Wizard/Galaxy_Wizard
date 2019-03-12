@@ -87,6 +87,51 @@ void Score::genetate_all_moves()
 
 DWORD Score::search(const Matrix &position)
 {
+	DWORD search_result = 0;
+	DWORD game_end_result = 0;
+	DWORD enemy_plan_result = 0;
+	DWORD my_plan_result = 0;
+	
+	//	1.
+	if (game_ended(position, game_end_result))
+	{
+		return game_end_result;
+	}
+
+	//	2.
+	if (enemy_plan(position, enemy_plan_result))
+	{
+//		return enemy_plan_result;
+	}
+
+	//	3.
+	if (my_plan(position, my_plan_result))
+	{
+//		return my_plan_result;
+	}
+
+	//	4.
+	genetate_all_moves();
+
+	//	5.
+	auto ca = childen.begin();
+	auto cz = childen.end();
+	std::stable_sort(ca, cz, sort_procedure);
+
+	//	6.
+	for (auto child = childen.begin(); child != childen.end(); child++)
+	{
+		child->Evaluate();
+	}
+
+	//	7.
+	for (auto child = childen.begin(); child != childen.end(); child++)
+	{
+		Board b1;
+		child->prepare_board(b1);
+		child->search(b1.position);
+	}
+
 	return 0;
 }
 
@@ -144,4 +189,54 @@ void Score::delete_not_principal_variant_nodes(Score *principal_variant)
 			delete_not_principal_variant_nodes(current_score);
 		}
 	}
+}
+
+bool Score::game_ended(const Matrix &position, DWORD &result)
+{
+	return false;
+
+	result = 0;
+	return true;
+}
+
+bool Score::enemy_plan(const Matrix &position, DWORD &result)
+{
+	return false;
+
+	result = 0;
+	return true;
+}
+
+bool Score::my_plan(const Matrix &position, DWORD &result)
+{
+	return false;
+
+	result = 0;
+	return true;
+}
+
+extern MachineStuding::MachineStudingMoveTypeDataList MachineStudingMoveTypeDataListSortData;
+
+bool sort_procedure(const Score &s1, const Score &s2)
+{
+	auto s1_move_type = s1.move.get_move_type();
+	auto s2_move_type = s2.move.get_move_type();
+
+	double s1_move_weight = 0.0;
+	double s2_move_weight = 0.0;
+
+	for (auto mi = MachineStudingMoveTypeDataListSortData.MachineStudingData.begin(); mi != MachineStudingMoveTypeDataListSortData.MachineStudingData.end(); mi++)
+	{
+		if (bool(s1_move_type & mi->MoveType))
+		{
+			s1_move_weight += mi->Weight;
+		}
+
+		if (bool(s2_move_type & mi->MoveType))
+		{
+			s2_move_weight += mi->Weight;
+		}
+	}
+
+	return s1_move_weight >= s2_move_weight;
 }
