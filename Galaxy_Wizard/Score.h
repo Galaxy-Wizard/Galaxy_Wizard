@@ -4,6 +4,7 @@
 #include "basic_types.h"
 #include "Move.h"
 #include "Board.h"
+#include "TimeManager.h"
 
 class Score
 {
@@ -23,6 +24,8 @@ public:
 	DWORD evaluation;
 
 	DWORD search(const Matrix &position);
+
+	static TimeManager *time_manager;
 
 	bool game_ended(const Matrix &position, DWORD &result);
 	bool enemy_plan(const Matrix &position, DWORD &result);

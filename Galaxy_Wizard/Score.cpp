@@ -99,40 +99,62 @@ DWORD Score::search(const Matrix &position)
 	}
 
 	//	2.
-	if (enemy_plan(position, enemy_plan_result))
-	{
-//		return enemy_plan_result;
-	}
+	enemy_plan(position, enemy_plan_result);
 
 	//	3.
-	if (my_plan(position, my_plan_result))
-	{
-//		return my_plan_result;
-	}
+	my_plan(position, my_plan_result);
 
 	//	4.
-	genetate_all_moves();
+	if (abs(my_plan_result - enemy_plan_result) <= Pawn_Value / 3)
+	{
+		return enemy_plan_result + (my_plan_result - enemy_plan_result) / 2;
+	}
 
 	//	5.
+	genetate_all_moves();
+
+	//	6.
 	auto ca = childen.begin();
 	auto cz = childen.end();
 	std::stable_sort(ca, cz, sort_procedure);
 
-	//	6.
+	//	7.
 	for (auto child = childen.begin(); child != childen.end(); child++)
 	{
 		child->Evaluate();
 	}
 
-	//	7.
+	//	8.
 	for (auto child = childen.begin(); child != childen.end(); child++)
 	{
+		if (time_manager->think_time_expired())
+		{
+			return evaluation;
+		}
+
 		Board b1;
 		child->prepare_board(b1);
 		child->search(b1.position);
 	}
 
-	return 0;
+	//	9.
+	search_result = evaluation;
+
+	for (auto child = childen.begin(); child != childen.end(); child++)
+	{
+		if (
+			((search_result > child->evaluation) && (side_to_move > 0))
+			||
+			((search_result < child->evaluation) && (side_to_move < 0))
+			)
+		{
+			search_result = child->evaluation;
+		}
+	}
+
+	evaluation = search_result;
+
+	return search_result;
 }
 
 void Score::prepare_board(Board &board)
