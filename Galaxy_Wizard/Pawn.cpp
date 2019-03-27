@@ -426,13 +426,13 @@ void Pawn::make_move(Matrix& matrix, Move move)
 
 		switch (abs(to_figure))
 		{
-		Queen_Value: Figure = new Queen(to_figure);
+		case Queen_Value: Figure = new Queen(to_figure);
 			break;
-		Rook_Value: Figure = new Rook(to_figure);
+		case Rook_Value: Figure = new Rook(to_figure);
 			break;
-		Bishop_Value: Figure = new Bishop(to_figure);
+		case Bishop_Value: Figure = new Bishop(to_figure);
 			break;
-		Knight_Value: Figure = new Knight(to_figure);
+		case Knight_Value: Figure = new Knight(to_figure);
 			break;
 		default:
 			throw Exception();

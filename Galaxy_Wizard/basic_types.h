@@ -39,7 +39,8 @@ enum MoveTypeEnum : int
 	Capture = 1,
 	Attack = 2,
 	Avoidance = 4,
-	QuiteMove = 8,
+	Defence = 8,
+	QuiteMove = 16,
 	None = 0,
 };
 
