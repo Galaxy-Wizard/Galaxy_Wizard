@@ -9,7 +9,7 @@ const DWORD Pawn_Value = 200;
 const DWORD King_Value = 500 * Pawn_Value;
 const DWORD Queen_Value = 11 * Pawn_Value;
 const DWORD Rook_Value = 6 * Pawn_Value;
-const DWORD Bishop_Value = DWORD(4.5 * Pawn_Value);
+const DWORD Bishop_Value = DWORD(4.25 * Pawn_Value);
 const DWORD Knight_Value = 4 * Pawn_Value;
 
 const DWORD MoveScoreBonus = Pawn_Value / 50;
@@ -36,11 +36,12 @@ T sign(T v)
 
 enum MoveTypeEnum : int
 {
-	Capture = 1,
-	Attack = 2,
-	Avoidance = 4,
-	Defence = 8,
-	QuiteMove = 16,
+	Check = 1,
+	Capture = 2,
+	Attack = 4,
+	Avoidance = 8,
+	Defence = 16,
+	QuiteMove = 32,
 	None = 0,
 };
 
