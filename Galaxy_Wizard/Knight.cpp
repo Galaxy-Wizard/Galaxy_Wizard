@@ -479,7 +479,7 @@ void Knight::make_move(Matrix& matrix, Move move)
 	matrix.move = move;
 
 	size_t x_from = move.x_from;
-	size_t y_from = move.x_from;
+	size_t y_from = move.y_from;
 	size_t x_to = move.x_to;
 	size_t y_to = move.y_to;
 
