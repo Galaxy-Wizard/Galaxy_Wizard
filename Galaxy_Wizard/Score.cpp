@@ -7,7 +7,7 @@
 #include "Figure.h"
 
 Score::Score()
-	:side_to_move(1), evaluation(0), parent(nullptr)
+	:side_to_move(-1), evaluation(0), parent(nullptr)
 {
 }
 
@@ -19,7 +19,6 @@ Score::~Score()
 DWORD Score::Evaluate()
 {
 	Board board;
-
 	prepare_board(board);
 
 	DWORD result = 0;
@@ -47,7 +46,6 @@ DWORD Score::Evaluate()
 void Score::genetate_all_moves()
 {
 	Board board;
-
 	prepare_board(board);
 
 	for (size_t x = 0; x < board.position.get_matrix_m(); x++)
@@ -85,29 +83,41 @@ void Score::genetate_all_moves()
 	}
 }
 
-DWORD Score::search(const Matrix &position)
+DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
 {
 	DWORD search_result = 0;
 	DWORD game_end_result = 0;
 	DWORD enemy_plan_result = 0;
 	DWORD my_plan_result = 0;
-	
+
+	size_t currently_nodes_calculated = 0;
+	size_t currently_nodes_calculated_1 = 0;
+	size_t currently_nodes_calculated_2 = 0;
+	size_t currently_nodes_calculated_3 = 0;
+	size_t currently_nodes_calculated_7 = 0;
+	size_t currently_nodes_calculated_8 = 0;
+
 	//	1.
 	if (game_ended(position, game_end_result))
 	{
+		currently_nodes_calculated_1++;
+		nodes_calculated = currently_nodes_calculated_1;
 		return game_end_result;
 	}
 
 	//	2.
-	enemy_plan(position, enemy_plan_result);
+	enemy_plan(position, enemy_plan_result, currently_nodes_calculated_2);
 
 	//	3.
-	my_plan(position, my_plan_result);
+	my_plan(position, my_plan_result, currently_nodes_calculated_3);
 
 	//	4.
 	if (abs(my_plan_result - enemy_plan_result) <= Pawn_Value / 3)
 	{
-		return enemy_plan_result + (my_plan_result - enemy_plan_result) / 2;
+		nodes_calculated = currently_nodes_calculated_2 + currently_nodes_calculated_3;
+#ifdef DEBUG
+		return enemy_plan_result + (my_plan_result + enemy_plan_result) / 2;
+#endif
 	}
 
 	//	5.
@@ -121,8 +131,36 @@ DWORD Score::search(const Matrix &position)
 	//	7.
 	for (auto child = childen.begin(); child != childen.end(); child++)
 	{
+		currently_nodes_calculated_7++;
 		child->Evaluate();
 	}
+
+	{
+		Score *this_current_score = this;
+
+		if (this_current_score != nullptr)
+		{
+			std::string variant;
+
+			Score *current_score = this_current_score;
+			for (; current_score != nullptr; current_score = current_score->parent)
+			{
+				std::string current_move;
+
+				current_score->move.format_move(current_move);
+
+				variant = current_move + std::string(" ") + variant;
+			}
+
+			if (this_current_score != nullptr)
+			{
+				std::cout << "Current variant " << variant << " ";
+				std::cout << "Current variant evaluation " << this_current_score->evaluation << std::endl;
+			}
+		}
+	}
+
+	currently_nodes_calculated += currently_nodes_calculated_2 + currently_nodes_calculated_3 + currently_nodes_calculated_7;
 
 	//	8.
 	for (auto child = childen.begin(); child != childen.end(); child++)
@@ -134,7 +172,8 @@ DWORD Score::search(const Matrix &position)
 
 		Board b1;
 		child->prepare_board(b1);
-		child->search(b1.position);
+		child->search(b1.position, currently_nodes_calculated_8);
+		currently_nodes_calculated += currently_nodes_calculated_8;
 	}
 
 	//	9.
@@ -170,8 +209,11 @@ void Score::prepare_board(Board &board)
 	{
 		if (current_score->parent != nullptr)
 		{
-			path_score.push_back(current_score);
-			start_score = current_score->parent;
+			if (current_score->parent->parent != nullptr)
+			{
+				path_score.push_back(current_score);
+				start_score = current_score->parent;
+			}
 		}
 		else
 		{
@@ -221,7 +263,7 @@ bool Score::game_ended(const Matrix &position, DWORD &result)
 	return true;
 }
 
-bool Score::enemy_plan(const Matrix &position, DWORD &result)
+bool Score::enemy_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated)
 {
 	return false;
 
@@ -229,7 +271,7 @@ bool Score::enemy_plan(const Matrix &position, DWORD &result)
 	return true;
 }
 
-bool Score::my_plan(const Matrix &position, DWORD &result)
+bool Score::my_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated)
 {
 	return false;
 
@@ -260,5 +302,5 @@ bool sort_procedure(const Score &s1, const Score &s2)
 		}
 	}
 
-	return s1_move_weight >= s2_move_weight;
+	return s1_move_weight > s2_move_weight;
 }

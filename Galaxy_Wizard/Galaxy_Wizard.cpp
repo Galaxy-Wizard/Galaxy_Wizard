@@ -70,81 +70,64 @@ int main()
 					game->score.evaluation = game->score.Evaluate();
 					total_nodes_calculated++;
 
-					size_t maximum_tree_task_depth_level = 17;
-					size_t tree_task_depth_level = 0;
-
 					Score *evaluation_best_score_start = &game->score;
 
 					_time64(&calculation_end_time);
 
 					total_calculation_time += calculation_end_time - calculation_start_time;
 
-					while (maximum_tree_task_depth_level >= tree_task_depth_level)
+					
+					_time64(&calculation_start_time);
+
+					size_t nodes_calculated = 0;
+
+					DWORD best_evaluation = evaluation_best_score_start->search(game->board.position, nodes_calculated);
+
+					if (abs(best_evaluation) < 4 * King_Value)
 					{
-						_time64(&calculation_start_time);
+						Score *this_current_score = evaluation_best_score;
 
-						size_t nodes_calculated = 0;
-
-						DWORD best_evaluation = evaluation_best_score_start->search(game->board.position);
-
-						std::cout << "Current tree depth level = " << tree_task_depth_level << std::endl;
-
-						if (abs(best_evaluation) < 4 * King_Value)
+						if (this_current_score != nullptr)
 						{
-							Score *this_current_score = evaluation_best_score;
+							std::string variant;
+
+							Score *current_score = this_current_score;
+							for (; current_score != nullptr; current_score = current_score->parent)
+							{
+								std::string current_move;
+
+								current_score->move.format_move(current_move);
+
+								variant = current_move + std::string(" ") + variant;
+							}
 
 							if (this_current_score != nullptr)
 							{
-								std::string variant;
-
-								Score *current_score = this_current_score;
-								for (; current_score != nullptr; current_score = current_score->parent)
-								{
-									std::string current_move;
-
-									current_score->move.format_move(current_move);
-
-									variant = current_move + std::string(" ") + variant;
-								}
-
-								if (this_current_score != nullptr)
-								{
-									std::cout << "Best variant " << variant << " ";
-									std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
-								}
-							}
-
-							if (abs(best_evaluation) < 4 * King_Value && tree_task_depth_level >= 8 && tree_task_depth_level % 4 == 0)
-							{
-								evaluation_best_score_start = evaluation_best_score;
-
-								evaluation_best_score->delete_not_principal_variant_nodes(evaluation_best_score);
+								std::cout << "Best variant " << variant << " ";
+								std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
 							}
 						}
-
-						tree_task_depth_level++;
-
-
-						_time64(&calculation_end_time);
-
-						auto calculation_time = calculation_end_time - calculation_start_time;
-
-						std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
-
-						std::cout << "Nodes calculated " << nodes_calculated << std::endl;
-						std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
-
-						if (calculation_time != 0)
-						{
-							std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
-						}
-						else
-						{
-							std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
-						}
-
-						total_calculation_time += calculation_time;
 					}
+
+					_time64(&calculation_end_time);
+
+					auto calculation_time = calculation_end_time - calculation_start_time;
+
+					std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
+
+					std::cout << "Nodes calculated " << nodes_calculated << std::endl;
+					std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
+
+					if (calculation_time != 0)
+					{
+						std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
+					}
+					else
+					{
+						std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
+					}
+
+					total_calculation_time += calculation_time;
 
 					if (total_calculation_time != 0)
 					{
@@ -153,27 +136,6 @@ int main()
 					else
 					{
 						std::cout << "Total nodes per second " << total_nodes_calculated / 1 << std::endl;
-					}
-
-					if (evaluation_best_score != nullptr)
-					{
-						std::string variant;
-
-						Score *current_score = evaluation_best_score;
-						for (; current_score != nullptr; current_score = current_score->parent)
-						{
-							std::string current_move;
-
-							current_score->move.format_move(current_move);
-
-							variant = current_move + std::string(" ") + variant;
-						}
-
-						if (evaluation_best_score != nullptr)
-						{
-							std::cout << "Best variant " << variant << " ";
-							std::cout << "Best variant evaluation " << evaluation_best_score->evaluation << std::endl;
-						}
 					}
 				}
 				catch (Exception &e)

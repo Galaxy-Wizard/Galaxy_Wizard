@@ -56,6 +56,7 @@ void Board::make_move(Move move) throw (Exception())
 			if (legal_move(move))
 			{
 				figure->make_move(position, move);
+				position.side_to_move = -position.side_to_move;
 			}
 			else
 			{
@@ -80,31 +81,33 @@ bool Board::legal_move(Move move)
 
 void Board::set_root_position()
 {
-	Matrix position(8, 8);
+	Matrix root_position(8, 8);
 
 	for (size_t i = 0; i < 8; i++)
 	{
-		position.put(1, i, new Pawn(+Pawn_Value));
-		position.put(6, i, new Pawn(-Pawn_Value));
+		root_position.put(i, 1, new Pawn(+Pawn_Value));
+		root_position.put(i, 6, new Pawn(-Pawn_Value));
 	}
 
-	position.put(0, 0, new Rook(+Rook_Value));
-	position.put(0, 7, new Rook(+Rook_Value));
-	position.put(7, 0, new Rook(-Rook_Value));
-	position.put(7, 7, new Rook(-Rook_Value));
+	root_position.put(0, 0, new Rook(+Rook_Value));
+	root_position.put(7, 0, new Rook(+Rook_Value));
+	root_position.put(0, 7, new Rook(-Rook_Value));
+	root_position.put(7, 7, new Rook(-Rook_Value));
 
-	position.put(0, 1, new Knight(+Knight_Value));
-	position.put(0, 6, new Knight(+Knight_Value));
-	position.put(7, 1, new Knight(-Knight_Value));
-	position.put(7, 6, new Knight(-Knight_Value));
+	root_position.put(1, 0, new Knight(+Knight_Value));
+	root_position.put(6, 0, new Knight(+Knight_Value));
+	root_position.put(1, 7, new Knight(-Knight_Value));
+	root_position.put(6, 7, new Knight(-Knight_Value));
 
-	position.put(0, 2, new Bishop(+Bishop_Value));
-	position.put(0, 5, new Bishop(+Bishop_Value));
-	position.put(7, 2, new Bishop(-Bishop_Value));
-	position.put(7, 5, new Bishop(-Bishop_Value));
+	root_position.put(2, 0, new Bishop(+Bishop_Value));
+	root_position.put(5, 0, new Bishop(+Bishop_Value));
+	root_position.put(2, 7, new Bishop(-Bishop_Value));
+	root_position.put(5, 7, new Bishop(-Bishop_Value));
 
-	position.put(0, 3, new Queen(+Queen_Value));
-	position.put(0, 4, new King(+King_Value));
-	position.put(7, 3, new Queen(-Queen_Value));
-	position.put(7, 4, new King(-King_Value));
+	root_position.put(3, 0, new Queen(+Queen_Value));
+	root_position.put(4, 0, new King(+King_Value));
+	root_position.put(3, 7, new Queen(-Queen_Value));
+	root_position.put(4, 7, new King(-King_Value));
+
+	position = root_position;
 }

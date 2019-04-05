@@ -3,14 +3,18 @@
 #include "Figure.h"
 
 Matrix::Matrix()
-	: left_rook_not_moved(true), right_rook_not_moved(true), king_not_moved(true)
+	: white_left_rook_not_moved(true), white_right_rook_not_moved(true), white_king_not_moved(true),
+	black_left_rook_not_moved(true), black_right_rook_not_moved(true), black_king_not_moved(true),
+	side_to_move(1)
 {
 	matrix_n = 0;
 	matrix_m = 0;
 }
 
 Matrix::Matrix(size_t m, size_t n)
-	: left_rook_not_moved(true), right_rook_not_moved(true), king_not_moved(true)
+	: white_left_rook_not_moved(true), white_right_rook_not_moved(true), white_king_not_moved(true),
+	black_left_rook_not_moved(true), black_right_rook_not_moved(true), black_king_not_moved(true),
+	side_to_move(1)
 {
 	matrix_m = m;
 	matrix_n = n;
@@ -72,12 +76,19 @@ Matrix::Matrix(const Matrix &m)
 		}
 	}
 
-	left_rook_not_moved = m.left_rook_not_moved;
-	right_rook_not_moved = m.right_rook_not_moved;
-	king_not_moved = m.king_not_moved;
+	white_left_rook_not_moved = m.white_left_rook_not_moved;
+	white_right_rook_not_moved = m.white_right_rook_not_moved;
+	white_king_not_moved = m.white_king_not_moved;
+	black_left_rook_not_moved = m.black_left_rook_not_moved;
+	black_right_rook_not_moved = m.black_right_rook_not_moved;
+	black_king_not_moved = m.black_king_not_moved;
+
+	side_to_move = m.side_to_move;
+
+	move = m.move;
 }
 
-Matrix& Matrix::operator=(const Matrix& m)
+Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
 {
 	for (size_t c = 0; c < matrix_m; c++)
 	{
@@ -128,9 +139,16 @@ Matrix& Matrix::operator=(const Matrix& m)
 		}
 	}
 
-	left_rook_not_moved = m.left_rook_not_moved;
-	right_rook_not_moved = m.right_rook_not_moved;
-	king_not_moved = m.king_not_moved;
+	white_left_rook_not_moved = m.white_left_rook_not_moved;
+	white_right_rook_not_moved = m.white_right_rook_not_moved;
+	white_king_not_moved = m.white_king_not_moved;
+	black_left_rook_not_moved = m.black_left_rook_not_moved;
+	black_right_rook_not_moved = m.black_right_rook_not_moved;
+	black_king_not_moved = m.black_king_not_moved;
+
+	side_to_move = m.side_to_move;
+
+	move = m.move;
 
 	return *this;
 }

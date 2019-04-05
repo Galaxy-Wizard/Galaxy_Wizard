@@ -23,7 +23,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 	Figure* figure = m.get(x, y);
 
-	if ((x == m.get_matrix_n()-2 && figure->Value > 0) || (x == 1 && figure->Value < 0))
+	if ((y == m.get_matrix_n()-2 && figure->Value > 0) || (y == 1 && figure->Value < 0))
 	{
 		{
 			auto current_x = x;
@@ -31,14 +31,14 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 			for (;;)
 			{
-				current_y;
+				current_x;
 				if (figure->Value > 0)
 				{
-					current_x++;
+					current_y++;
 				}
 				else
 				{
-					current_x--;
+					current_y--;
 				}
 
 				if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
@@ -88,14 +88,14 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 			for (;;)
 			{
-				current_y++;
+				current_x++;
 				if (figure->Value > 0)
 				{
-					current_x++;
+					current_y++;
 				}
 				else
 				{
-					current_x--;
+					current_y--;
 				}
 
 				if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
@@ -148,14 +148,14 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 			for (;;)
 			{
-				current_y--;
+				current_x--;
 				if (figure->Value > 0)
 				{
-					current_x++;
+					current_y++;
 				}
 				else
 				{
-					current_x--;
+					current_y--;
 				}
 
 				if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
@@ -209,17 +209,17 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 		for (;;)
 		{
-			current_y;
+			current_x;
 			if (figure->Value > 0)
 			{
-				current_x++;
+				current_y++;
 			}
 			else
 			{
-				current_x--;
+				current_y--;
 			}
 
-			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n() && current_y > 0)
+			if (current_x >= m.get_matrix_m() || current_y >= m.get_matrix_n())
 			{
 				break;
 			}
@@ -252,32 +252,32 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 	if (m.move.enpassant != size_t(-1))
 	{
-		if ((x == m.get_matrix_m() - 4 && figure->Value > 0) || (x == 3 && figure->Value < 0))
+		if ((y == m.get_matrix_n() - 4 && figure->Value > 0) || (y == 3 && figure->Value < 0))
 		{
 			auto current_x = x;
 			auto current_y = y;
 
-			auto current_x1 = x;
+			auto current_y1 = y;
 
-			if (m.move.enpassant == y - 1 || m.move.enpassant == y + 1)
+			if (m.move.enpassant == x - 1 || m.move.enpassant == x + 1)
 			{
-				if (m.move.enpassant == y - 1)
+				if (m.move.enpassant == x - 1)
 				{
-					current_y--;
+					current_x--;
 					if (figure->Value > 0)
 					{
-						current_x++;
-						current_x1 = x;
+						current_y++;
+						current_y1 = y;
 					}
 					else
 					{
-						current_x--;
-						current_x1 = x;
+						current_y--;
+						current_y1 = y;
 					}
 
-					if (current_y < m.get_matrix_n())
+					if (current_x < m.get_matrix_n())
 					{
-						Figure *pawn = m.get(current_x1, current_y);
+						Figure *pawn = m.get(current_x, current_y1);
 
 						if (pawn->Value == -Value)
 						{
@@ -285,7 +285,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 							new_move.put(current_x, current_y, figure);
 							new_move.put(x, y, nullptr);
-							new_move.put(current_x1, current_y, nullptr);
+							new_move.put(current_x, current_y1, nullptr);
 
 							new_move.move.enpassant = size_t(-1);
 
@@ -299,23 +299,23 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 					}
 				}
 
-				if (m.move.enpassant == y + 1)
+				if (m.move.enpassant == x + 1)
 				{
-					current_y++;
+					current_x++;
 					if (figure->Value > 0)
 					{
-						current_x++;
-						current_x1 = x;
+						current_y++;
+						current_y1 = y;
 					}
 					else
 					{
-						current_x--;
-						current_x1 = x;
+						current_y--;
+						current_y1 = y;
 					}
 
 					if (current_y < m.get_matrix_n())
 					{
-						Figure *pawn = m.get(current_x1, current_y);
+						Figure *pawn = m.get(current_x, current_y1);
 
 						if (pawn->Value == -Value)
 						{
@@ -323,7 +323,7 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 
 							new_move.put(current_x, current_y, figure);
 							new_move.put(x, y, nullptr);
-							new_move.put(current_x1, current_y, nullptr);
+							new_move.put(current_x, current_y1, nullptr);
 
 							new_move.move.enpassant = size_t(-1);
 
@@ -340,31 +340,31 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 		}
 	}
 
-	if ((x == m.get_matrix_m() - 2 && figure->Value < 0) || (x == 1 && figure->Value > 0))
+	if ((y == m.get_matrix_n() - 2 && figure->Value < 0) || (y == 1 && figure->Value > 0))
 	{
 		auto current_x = x;
 		auto current_y = y;
 
-		current_y;
+		current_x;
 		if (figure->Value > 0)
 		{
-			current_x++;
+			current_y++;
 		}
 		else
 		{
-			current_x--;
+			current_y--;
 		}
 
 		if (m.get(current_x, current_y) == nullptr)
 		{
-			current_y;
+			current_x;
 			if (figure->Value > 0)
 			{
-				current_x++;
+				current_y++;
 			}
 			else
 			{
-				current_x--;
+				current_y--;
 			}
 
 			if (m.get(current_x, current_y) == nullptr)
@@ -374,7 +374,31 @@ std::list<Matrix> Pawn::moves(Matrix m, size_t x, size_t y)
 				new_move.put(current_x, current_y, figure);
 				new_move.put(x, y, nullptr);
 
-				new_move.move.enpassant = y;
+				new_move.move.enpassant = size_t(-1);
+
+				if (current_x > 0)
+				{
+					Figure *pawn = m.get(current_x-1, current_y);
+					if (pawn != nullptr)
+					{
+						if (pawn->Value == -Value)
+						{
+							new_move.move.enpassant = x;
+						}
+					}
+				}
+				if (current_x < m.get_matrix_m() - 1)
+				{
+					Figure *pawn = m.get(current_x + 1, current_y);
+
+					if (pawn != nullptr)
+					{
+						if (pawn->Value == -Value)
+						{
+							new_move.move.enpassant = x;
+						}
+					}
+				}
 
 				new_move.move.x_from = x;
 				new_move.move.y_from = y;
@@ -445,7 +469,7 @@ void Pawn::make_move(Matrix& matrix, Move move)
 	matrix.put(x_from, y_from, nullptr);
 	if (CapturedFigure != nullptr)
 	{
-		delete CapturedFigure;
+		//delete CapturedFigure;
 	}
 
 	size_t enpassant = move.enpassant;

@@ -502,6 +502,6 @@ void Knight::make_move(Matrix& matrix, Move move)
 	matrix.put(x_from, y_from, nullptr);
 	if (CapturedFigure != nullptr)
 	{
-		delete CapturedFigure;
+		//delete CapturedFigure;
 	}
 }

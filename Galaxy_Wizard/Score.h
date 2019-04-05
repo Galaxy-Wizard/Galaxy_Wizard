@@ -23,13 +23,13 @@ public:
 
 	DWORD evaluation;
 
-	DWORD search(const Matrix &position);
+	DWORD search(const Matrix &position, size_t &nodes_calculated);
 
 	static TimeManager *time_manager;
 
 	bool game_ended(const Matrix &position, DWORD &result);
-	bool enemy_plan(const Matrix &position, DWORD &result);
-	bool my_plan(const Matrix &position, DWORD &result);
+	bool enemy_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated);
+	bool my_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated);
 
 	void genetate_all_moves();
 

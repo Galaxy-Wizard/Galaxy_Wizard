@@ -12,11 +12,15 @@ public:
 	size_t matrix_m;
 
 	Move move;
+	signed char side_to_move;
 
-	bool left_rook_not_moved;
-	bool right_rook_not_moved;
-	bool king_not_moved;
+	bool white_left_rook_not_moved;
+	bool white_right_rook_not_moved;
+	bool white_king_not_moved;
 
+	bool black_left_rook_not_moved;
+	bool black_right_rook_not_moved;
+	bool black_king_not_moved;
 
 	explicit Matrix();
 	Matrix(size_t m, size_t n);

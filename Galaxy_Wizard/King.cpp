@@ -240,7 +240,18 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 		}
 	}
 
-	if (m.king_not_moved)
+	bool left_rook_not_moved = m.white_left_rook_not_moved;
+	bool right_rook_not_moved = m.white_right_rook_not_moved;
+	bool king_not_moved = m.white_king_not_moved;
+
+	if (m.side_to_move < 0)
+	{
+		left_rook_not_moved = m.black_left_rook_not_moved;
+		right_rook_not_moved = m.black_right_rook_not_moved;
+		king_not_moved = m.black_king_not_moved;
+	}
+
+	if (king_not_moved)
 	{
 		{
 			auto current_x = x;
@@ -290,7 +301,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 							Rook* rook = dynamic_cast<Rook*>(m.get(current_x, current_y));
 
-							bool rook_not_moved = (castle_side && m.left_rook_not_moved) || (!castle_side && m.right_rook_not_moved);
+							bool rook_not_moved = (castle_side && left_rook_not_moved) || (!castle_side && right_rook_not_moved);
 
 							if (rook_not_moved)
 							{
@@ -386,7 +397,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 
 							Rook* rook = dynamic_cast<Rook*>(m.get(current_x, current_y));
 
-							bool rook_not_moved = (castle_side && m.left_rook_not_moved) || (!castle_side && m.right_rook_not_moved);
+							bool rook_not_moved = (castle_side && left_rook_not_moved) || (!castle_side && right_rook_not_moved);
 
 							if (rook_not_moved)
 							{
@@ -448,7 +459,7 @@ void King::make_move(Matrix& matrix, Move move)
 	matrix.move = move;
 
 	size_t x_from = move.x_from;
-	size_t y_from = move.x_from;
+	size_t y_from = move.y_from;
 	size_t x_to = move.x_to;
 	size_t y_to = move.y_to;
 
@@ -472,7 +483,7 @@ void King::make_move(Matrix& matrix, Move move)
 
 	if (CapturedFigure != nullptr)
 	{
-		delete CapturedFigure;
+		//delete CapturedFigure;
 	}
 	else
 	{
@@ -505,9 +516,21 @@ void King::make_move(Matrix& matrix, Move move)
 			matrix.put(rook_x_to, rook_y_to, Rook);
 			matrix.put(rook_x_from, rook_y_from, nullptr);
 
+			if (matrix.side_to_move > 0)
+			{
+				matrix.white_king_not_moved = false;
+			}
+			else
+			{
+				if (matrix.side_to_move < 0)
+				{
+					matrix.black_king_not_moved = false;
+				}
+			}
+
 			if (CapturedFigure != nullptr)
 			{
-				throw Exception();
+				//throw Exception();
 			}
 		}
 	}

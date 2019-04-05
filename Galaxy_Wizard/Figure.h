@@ -9,7 +9,7 @@ class Figure
 {
 public:
 	Figure(DWORD Score);
-	~Figure();
+	virtual ~Figure();
 
 	DWORD Value;
 

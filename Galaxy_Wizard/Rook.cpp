@@ -264,12 +264,65 @@ void Rook::make_move(Matrix& matrix, Move move)
 		throw Exception();
 	}
 
+	signed char left_rook = 0;
+
+	if ((y_from == 0 && matrix.side_to_move > 0) || (y_from == matrix.get_matrix_n() - 1 && matrix.side_to_move < 0))
+	{
+		for (size_t x_from_counter = 0; x_from_counter < matrix.get_matrix_m(); x_from_counter++)
+		{
+			auto Figure = matrix.get(x_from_counter, y_from);
+
+			if (Figure != nullptr)
+			{
+				if (Figure->Value * matrix.side_to_move == Rook_Value)
+				{
+					if (x_from_counter == x_from)
+					{
+						left_rook = -1;
+						break;
+					}
+					else
+					{
+						left_rook = +1;
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	auto Figure = matrix.get(x_from, y_from);
 	auto CapturedFigure = matrix.get(x_to, y_to);
 	matrix.put(x_to, y_to, Figure);
 	matrix.put(x_from, y_from, nullptr);
 	if (CapturedFigure != nullptr)
 	{
-		delete CapturedFigure;
+		//delete CapturedFigure;
+	}
+
+	if (matrix.side_to_move > 0)
+	{
+		if (left_rook < 0)
+		{
+			matrix.white_left_rook_not_moved = false;
+		}
+		if (left_rook > 0)
+		{
+			matrix.white_right_rook_not_moved = false;
+		}
+	}
+	else
+	{
+		if (matrix.side_to_move < 0)
+		{
+			if (left_rook < 0)
+			{
+				matrix.black_left_rook_not_moved = false;
+			}
+			if (left_rook > 0)
+			{
+				matrix.black_right_rook_not_moved = false;
+			}
+		}
 	}
 }
