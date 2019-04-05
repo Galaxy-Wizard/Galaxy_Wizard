@@ -66,13 +66,13 @@ void Move::format_move(std::string &current_move)
 
 	if (x_from != size_t(-1) && x_to != size_t(-1) && y_from != size_t(-1) && y_to != size_t(-1))
 	{
-		_itoa_s(x_from + 1, buffer_x_from, 10);
-		_itoa_s(x_to + 1, buffer_x_to, 10);
-		buffer_y_from[0] = char(y_from) + 'a';
-		buffer_y_to[0] += char(y_to) + 'a';
+		buffer_x_from[0] = char(x_from) + 'a';
+		buffer_x_to[0] += char(x_to) + 'a';
+		_itoa_s(y_from + 1, buffer_y_from, 10);
+		_itoa_s(y_to + 1, buffer_y_to, 10);
 
-		current_move = std::string(" ") + std::string(buffer_y_from) + std::string(buffer_x_from) +
-			std::string(buffer_y_to) + std::string(buffer_x_to);
+		current_move = std::string(" ") + std::string(buffer_x_from) + std::string(buffer_y_from) +
+			std::string(buffer_x_to) + std::string(buffer_y_to);
 	}
 	else
 	{

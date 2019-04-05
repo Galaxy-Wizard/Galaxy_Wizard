@@ -7,7 +7,7 @@
 #include "Figure.h"
 
 Score::Score()
-	:side_to_move(-1), evaluation(0), parent(nullptr)
+	:side_to_move(1), evaluation(0), parent(nullptr)
 {
 }
 
@@ -18,6 +18,10 @@ Score::~Score()
 
 DWORD Score::Evaluate()
 {
+#ifdef _DEBUG
+	return 0;
+#endif
+
 	Board board;
 	prepare_board(board);
 
@@ -115,7 +119,7 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
 	if (abs(my_plan_result - enemy_plan_result) <= Pawn_Value / 3)
 	{
 		nodes_calculated = currently_nodes_calculated_2 + currently_nodes_calculated_3;
-#ifdef DEBUG
+#ifndef _DEBUG
 		return enemy_plan_result + (my_plan_result + enemy_plan_result) / 2;
 #endif
 	}
@@ -209,11 +213,8 @@ void Score::prepare_board(Board &board)
 	{
 		if (current_score->parent != nullptr)
 		{
-			if (current_score->parent->parent != nullptr)
-			{
-				path_score.push_back(current_score);
-				start_score = current_score->parent;
-			}
+			path_score.push_back(current_score);
+			start_score = current_score->parent;
 		}
 		else
 		{
