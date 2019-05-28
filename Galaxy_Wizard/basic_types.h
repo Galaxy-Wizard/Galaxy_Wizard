@@ -50,7 +50,7 @@ namespace MachineStuding
 	class MachineStudingMoveTypeData
 	{
 	public:
-		MachineStudingMoveTypeData() : MoveType(None), Weight(0.0), Generation(0.0) {}
+		MachineStudingMoveTypeData() : MoveType(None), Weight(1.0), Generation(0.0) {}
 		~MachineStudingMoveTypeData() {}
 
 		MoveTypeEnum MoveType;
