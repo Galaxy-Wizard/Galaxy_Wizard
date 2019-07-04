@@ -575,6 +575,8 @@ FoundOurKingPosition:
 		our_king_position_y == size_t(-1)
 		)
 	{
+		throw Exception();
+
 		return result;
 	}
 
@@ -690,6 +692,69 @@ FoundOurKingPosition:
 						{
 							return result;
 						}
+					}
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+bool King::is_atacked(Matrix& m) throw (Exception)
+{
+	bool result = false;
+
+	size_t our_king_position_x = size_t(-1);
+	size_t our_king_position_y = size_t(-1);
+
+	for (size_t current_x = 0; current_x < m.get_matrix_m(); current_x++)
+	{
+		for (size_t current_y = 0; current_y < m.get_matrix_n(); current_y++)
+		{
+			auto CurrentFigure = m.get(current_x, current_y);
+
+			if (CurrentFigure != nullptr)
+			{
+				if (Value == CurrentFigure->Value)
+				{
+					our_king_position_x = current_x;
+					our_king_position_y = current_y;
+
+					goto FoundOurKingPosition;
+				}
+			}
+		}
+	}
+
+FoundOurKingPosition:
+
+	if (
+		our_king_position_x == size_t(-1)
+		||
+		our_king_position_y == size_t(-1)
+		)
+	{
+		throw Exception();
+
+		return result;
+	}
+
+	for (size_t current_x = 0; current_x < m.get_matrix_m(); current_x++)
+	{
+		for (size_t current_y = 0; current_y < m.get_matrix_n(); current_y++)
+		{
+			auto CurrentFigure = m.get(current_x, current_y);
+
+			if (CurrentFigure != nullptr)
+			{
+				if (Value * CurrentFigure->Value < 0)
+				{
+					result = CurrentFigure->is_atacking(our_king_position_x, our_king_position_y);
+
+					if (result)
+					{
+						return result;
 					}
 				}
 			}
