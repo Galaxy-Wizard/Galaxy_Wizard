@@ -486,3 +486,8 @@ void Pawn::make_move(Matrix& matrix, Move move)
 		delete Pawn;
 	}
 }
+
+bool Pawn::is_atacking(size_t x, size_t y)
+{
+	return false;
+}

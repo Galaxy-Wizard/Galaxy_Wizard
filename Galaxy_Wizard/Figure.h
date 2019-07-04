@@ -16,5 +16,6 @@ public:
 	virtual void make_move(Matrix&, Move) = 0;
 	virtual Figure* Clone() = 0;
 	virtual std::list<Matrix> moves(Matrix, size_t, size_t) = 0;
+	virtual bool is_atacking(size_t x, size_t y) = 0;
 };
 

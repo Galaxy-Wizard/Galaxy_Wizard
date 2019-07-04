@@ -526,7 +526,7 @@ void King::make_move(Matrix& matrix, Move move)
 				{
 					matrix.black_king_not_moved = false;
 				}
-			}
+			};
 
 			if (CapturedFigure != nullptr)
 			{
@@ -534,4 +534,167 @@ void King::make_move(Matrix& matrix, Move move)
 			}
 		}
 	}
+}
+
+bool King::is_atacking(size_t x, size_t y)
+{
+	return false;
+}
+
+bool King::is_atacked_castling_path(Matrix& m, size_t x, size_t y) throw (Exception)
+{
+	bool result = false;
+
+	size_t our_king_position_x = size_t(-1);
+	size_t our_king_position_y = size_t(-1);
+
+	for (size_t current_x = 0; current_x < m.get_matrix_m(); current_x++)
+	{
+		for (size_t current_y = 0; current_y < m.get_matrix_n(); current_y++)
+		{
+			auto CurrentFigure = m.get(current_x, current_y);
+
+			if (CurrentFigure != nullptr)
+			{
+				if (Value == CurrentFigure->Value)
+				{
+					our_king_position_x = current_x;
+					our_king_position_y = current_y;
+
+					goto FoundOurKingPosition;
+				}
+			}
+		}
+	}
+
+FoundOurKingPosition:
+
+	if (
+		our_king_position_x == size_t(-1)
+		||
+		our_king_position_y == size_t(-1)
+		)
+	{
+		return result;
+	}
+
+	for (size_t current_x = 0; current_x < m.get_matrix_m(); current_x++)
+	{
+		for (size_t current_y = 0; current_y < m.get_matrix_n(); current_y++)
+		{
+			auto CurrentFigure = m.get(current_x, current_y);
+
+			if (CurrentFigure != nullptr)
+			{
+				if (Value * CurrentFigure->Value < 0)
+				{
+					result = CurrentFigure->is_atacking(our_king_position_x, our_king_position_y);
+
+					if (result)
+					{
+						return result;
+					}
+
+					if (y == our_king_position_y)
+					{
+						if (Value > 0)
+						{
+							if (!m.white_king_not_moved)
+							{
+								continue;
+							}
+						}
+						else
+						{
+							if (Value < 0)
+							{
+								if (!m.black_king_not_moved)
+								{
+									continue;
+								}
+							}
+							else
+							{
+								throw Exception();
+							}
+						}
+
+					}
+
+					if (x > our_king_position_x)
+					{
+						if (Value > 0)
+						{
+							if (!m.white_left_rook_not_moved)
+							{
+								continue;
+							}
+						}
+						else
+						{
+							if (Value < 0)
+							{
+								if (!m.black_left_rook_not_moved)
+								{
+									continue;
+								}
+							}
+							else
+							{
+								throw Exception();
+							}
+						}
+					}
+					else
+					{
+						if (x < our_king_position_x)
+						{
+							if (Value > 0)
+							{
+								if (!m.white_right_rook_not_moved)
+								{
+									continue;
+								}
+							}
+							else
+							{
+								if (Value < 0)
+								{
+									if (!m.white_right_rook_not_moved)
+									{
+										continue;
+									}
+								}
+								else
+								{
+									throw Exception();
+								}
+							}
+						}
+						else
+						{
+							throw Exception();
+						}
+					}
+
+					auto our_king_path_position_y = y;
+
+					auto our_king_path_position_x_start = x < our_king_position_x ? x + 1 : our_king_position_x;
+					auto our_king_path_position_x_end = x < our_king_position_x ? our_king_position_x : x - 1;
+
+					for (auto our_king_path_position_x = our_king_path_position_x_start; our_king_path_position_x < our_king_path_position_x_end; our_king_path_position_x++)
+					{
+						result = CurrentFigure->is_atacking(our_king_path_position_x, our_king_path_position_y);
+
+						if (result)
+						{
+							return result;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return result;
 }

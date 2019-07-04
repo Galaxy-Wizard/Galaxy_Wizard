@@ -505,3 +505,8 @@ void Knight::make_move(Matrix& matrix, Move move)
 		//delete CapturedFigure;
 	}
 }
+
+bool Knight::is_atacking(size_t x, size_t y)
+{
+	return false;
+}

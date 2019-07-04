@@ -326,3 +326,8 @@ void Rook::make_move(Matrix& matrix, Move move)
 		}
 	}
 }
+
+bool Rook::is_atacking(size_t x, size_t y)
+{
+	return false;
+}

@@ -273,3 +273,8 @@ void Bishop::make_move(Matrix& matrix, Move move)
 		//delete CapturedFigure;
 	}
 }
+
+bool Bishop::is_atacking(size_t x, size_t y)
+{
+	return false;
+}
