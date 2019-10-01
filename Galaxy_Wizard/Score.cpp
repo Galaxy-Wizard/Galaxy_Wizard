@@ -87,7 +87,7 @@ void Score::genetate_all_moves()
 	}
 }
 
-DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
+DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t depth)
 {
 	DWORD search_result = 0;
 	DWORD game_end_result = 0;
@@ -120,12 +120,17 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
 	{
 		nodes_calculated = currently_nodes_calculated_2 + currently_nodes_calculated_3;
 #ifndef _DEBUG
+#ifdef PLAN
 		return enemy_plan_result + (my_plan_result + enemy_plan_result) / 2;
+#endif
 #endif
 	}
 
 	//	5.
-	genetate_all_moves();
+	if (depth != 0)
+	{
+		genetate_all_moves();
+	}
 
 	//	6.
 	auto ca = childen.begin();
@@ -158,6 +163,7 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
 
 			if (this_current_score != nullptr)
 			{
+				std::cout << "Depth " << depth << " ";
 				std::cout << "Current variant " << variant << " ";
 				std::cout << "Current variant evaluation " << this_current_score->evaluation << std::endl;
 			}
@@ -165,6 +171,11 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
 	}
 
 	currently_nodes_calculated += currently_nodes_calculated_2 + currently_nodes_calculated_3 + currently_nodes_calculated_7;
+
+	if (depth == 0)
+	{
+		return evaluation;
+	}
 
 	//	8.
 	for (auto child = childen.begin(); child != childen.end(); child++)
@@ -176,7 +187,7 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated)
 
 		Board b1;
 		child->prepare_board(b1);
-		child->search(b1.position, currently_nodes_calculated_8);
+		child->search(b1.position, currently_nodes_calculated_8, depth-1);
 		currently_nodes_calculated += currently_nodes_calculated_8;
 	}
 

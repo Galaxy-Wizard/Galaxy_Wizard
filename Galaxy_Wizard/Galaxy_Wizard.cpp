@@ -15,14 +15,15 @@
 
 #include <algorithm>
 
+const size_t const_maximum_depth = 4;
 
-TimeManager *Score::time_manager;
+TimeManager* Score::time_manager;
 
 MachineStuding::MachineStudingMoveTypeDataList MachineStudingMoveTypeDataListSortData;
 
 int main()
 {
-    std::cout << "Galaxy_Wizard 2.0" << std::endl;
+	std::cout << "Galaxy_Wizard 2.0" << std::endl;
 
 	std::cout << "Size of Game = " << sizeof(Game) + 40 * sizeof(void*) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
 	std::cout << "Size of Board = " << sizeof(Board) + 8 * 8 * sizeof(void*) + sizeof(Figure) * 32 << std::endl;
@@ -50,13 +51,13 @@ int main()
 
 		if (game != nullptr)
 		{
-			TimeManager *time_manager = new TimeManager();
+			TimeManager* time_manager = new TimeManager();
 
 			if (time_manager != nullptr)
 			{
 				try
 				{
-					Score *evaluation_best_score = nullptr;
+					Score* evaluation_best_score = nullptr;
 
 					size_t total_nodes_calculated = 0;
 
@@ -70,79 +71,83 @@ int main()
 					game->score.evaluation = game->score.Evaluate();
 					total_nodes_calculated++;
 
-					Score *evaluation_best_score_start = &game->score;
+					Score* evaluation_best_score_start = &game->score;
 
 					_time64(&calculation_end_time);
 
 					total_calculation_time += calculation_end_time - calculation_start_time;
 
-					
+
 					_time64(&calculation_start_time);
 
 					size_t nodes_calculated = 0;
 
-					DWORD best_evaluation = evaluation_best_score_start->search(game->board.position, nodes_calculated);
-
-					if (abs(best_evaluation) < 4 * King_Value)
+					for (size_t depth = 0; depth < const_maximum_depth; depth++)
 					{
-						Score *this_current_score = evaluation_best_score;
+						DWORD best_evaluation = evaluation_best_score_start->search(game->board.position, nodes_calculated, depth);
 
-						if (this_current_score != nullptr)
+						if (abs(best_evaluation) < 4 * King_Value)
 						{
-							std::string variant;
-
-							Score *current_score = this_current_score;
-							for (; current_score != nullptr; current_score = current_score->parent)
-							{
-								std::string current_move;
-
-								current_score->move.format_move(current_move);
-
-								variant = current_move + std::string(" ") + variant;
-							}
+							Score* this_current_score = evaluation_best_score;
 
 							if (this_current_score != nullptr)
 							{
-								std::cout << "Best variant " << variant << " ";
-								std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
+								std::string variant;
+
+								Score* current_score = this_current_score;
+								for (; current_score != nullptr; current_score = current_score->parent)
+								{
+									std::string current_move;
+
+									current_score->move.format_move(current_move);
+
+									variant = current_move + std::string(" ") + variant;
+								}
+
+								if (this_current_score != nullptr)
+								{
+									std::cout << "Depth " << depth << " ";
+									std::cout << "Best variant " << variant << " ";
+									std::cout << "Best variant evaluation " << this_current_score->evaluation << std::endl;
+								}
 							}
 						}
-					}
 
-					_time64(&calculation_end_time);
+						_time64(&calculation_end_time);
 
-					auto calculation_time = calculation_end_time - calculation_start_time;
+						auto calculation_time = calculation_end_time - calculation_start_time;
 
-					std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
+						std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
 
-					std::cout << "Nodes calculated " << nodes_calculated << std::endl;
-					std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
+						std::cout << "Nodes calculated " << nodes_calculated << std::endl;
+						std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
 
-					if (calculation_time != 0)
-					{
-						std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
-					}
-					else
-					{
-						std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
-					}
+						if (calculation_time != 0)
+						{
+							std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
+						}
+						else
+						{
+							std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
+						}
 
-					total_calculation_time += calculation_time;
+						total_calculation_time += calculation_time;
 
-					if (total_calculation_time != 0)
-					{
-						std::cout << "Total nodes per second " << total_nodes_calculated / total_calculation_time << std::endl;
-					}
-					else
-					{
-						std::cout << "Total nodes per second " << total_nodes_calculated / 1 << std::endl;
+						if (total_calculation_time != 0)
+						{
+							std::cout << "Total nodes per second " << total_nodes_calculated / total_calculation_time << std::endl;
+						}
+						else
+						{
+							std::cout << "Total nodes per second " << total_nodes_calculated / 1 << std::endl;
+						}
 					}
 				}
-				catch (Exception &e)
+				catch (Exception& e)
 				{
 					std::cout << std::endl << "Exception occured" << std::endl;
 				}
-				catch (std::bad_alloc &e)
+				catch (std::bad_alloc& e)
 				{
 					std::cout << std::endl << e.what() << std::endl;
 				}
@@ -159,7 +164,7 @@ int main()
 			game = nullptr;
 		}
 	}
-	catch (std::bad_alloc &e)
+	catch (std::bad_alloc& e)
 	{
 		std::cout << std::endl << e.what() << std::endl;
 	}

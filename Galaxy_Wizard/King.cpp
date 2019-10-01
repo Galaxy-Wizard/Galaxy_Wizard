@@ -336,6 +336,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 								new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 								result.push_back(new_move);
 							}
+							else
+							{
+								break;
+							}
 						}
 						else
 						{
@@ -343,6 +347,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 							{
 								castle_right = false;
 							}
+							break;
 						}
 					}
 				}
@@ -432,6 +437,10 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 								new_move.move.from_figure = new_move.move.to_figure = figure->Value;
 								result.push_back(new_move);
 							}
+							else
+							{
+								break;
+							}
 						}
 						else
 						{
@@ -439,6 +448,7 @@ std::list<Matrix> King::moves(Matrix m, size_t x, size_t y)
 							{
 								castle_right = false;
 							}
+							break;
 						}
 					}
 				}
