@@ -47,7 +47,7 @@ DWORD Score::Evaluate()
 	return result;
 }
 
-void Score::genetate_all_moves()
+void Score::genetate_all_moves(Score *parent)
 {
 	Board board;
 	prepare_board(board);
@@ -87,7 +87,7 @@ void Score::genetate_all_moves()
 	}
 }
 
-DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t depth)
+DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t depth, Score *parent)
 {
 	DWORD search_result = 0;
 	DWORD game_end_result = 0;
@@ -127,9 +127,9 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	}
 
 	//	5.
-	if (depth != 0)
+	if (depth == 0)
 	{
-		genetate_all_moves();
+		genetate_all_moves(parent);
 	}
 
 	//	6.
@@ -187,7 +187,7 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 
 		Board b1;
 		child->prepare_board(b1);
-		child->search(b1.position, currently_nodes_calculated_8, depth-1);
+		child->search(b1.position, currently_nodes_calculated_8, depth-1, this);
 		currently_nodes_calculated += currently_nodes_calculated_8;
 	}
 
@@ -231,6 +231,7 @@ void Score::prepare_board(Board &board)
 		{
 			//	Initial board should be prepared here
 			board.set_root_position();
+			//board.set_test_position();
 
 			break;
 		}

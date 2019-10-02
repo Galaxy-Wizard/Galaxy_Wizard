@@ -23,7 +23,7 @@ public:
 
 	DWORD evaluation;
 
-	DWORD search(const Matrix &position, size_t &nodes_calculated, size_t depth);
+	DWORD search(const Matrix &position, size_t &nodes_calculated, size_t depth, Score* parent);
 
 	static TimeManager *time_manager;
 
@@ -31,7 +31,7 @@ public:
 	bool enemy_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated);
 	bool my_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated);
 
-	void genetate_all_moves();
+	void genetate_all_moves(Score *parent);
 
 	void delete_not_principal_variant_nodes(Score *principal_variant);
 

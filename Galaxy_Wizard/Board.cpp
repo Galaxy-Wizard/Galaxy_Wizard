@@ -56,6 +56,7 @@ void Board::make_move(Move move) throw (Exception())
 			if (legal_move(move))
 			{
 				figure->make_move(position, move);
+
 				position.side_to_move = -position.side_to_move;
 			}
 			else
@@ -88,6 +89,42 @@ void Board::set_root_position()
 		root_position.put(i, 1, new Pawn(+Pawn_Value));
 		root_position.put(i, 6, new Pawn(-Pawn_Value));
 	}
+
+	root_position.put(0, 0, new Rook(+Rook_Value));
+	root_position.put(7, 0, new Rook(+Rook_Value));
+	root_position.put(0, 7, new Rook(-Rook_Value));
+	root_position.put(7, 7, new Rook(-Rook_Value));
+
+	root_position.put(1, 0, new Knight(+Knight_Value));
+	root_position.put(6, 0, new Knight(+Knight_Value));
+	root_position.put(1, 7, new Knight(-Knight_Value));
+	root_position.put(6, 7, new Knight(-Knight_Value));
+
+	root_position.put(2, 0, new Bishop(+Bishop_Value));
+	root_position.put(5, 0, new Bishop(+Bishop_Value));
+	root_position.put(2, 7, new Bishop(-Bishop_Value));
+	root_position.put(5, 7, new Bishop(-Bishop_Value));
+
+	root_position.put(3, 0, new Queen(+Queen_Value));
+	root_position.put(4, 0, new King(+King_Value));
+	root_position.put(3, 7, new Queen(-Queen_Value));
+	root_position.put(4, 7, new King(-King_Value));
+
+	position = root_position;
+}
+
+void Board::set_test_position()
+{
+	Matrix root_position(8, 8);
+
+	for (size_t i = 1; i < 8; i++)
+	{
+		root_position.put(i, 1, new Pawn(+Pawn_Value));
+		root_position.put(i, 6, new Pawn(-Pawn_Value));
+	}
+
+	root_position.put(0, 4, new Pawn(+Pawn_Value));
+	root_position.put(0, 5, new Pawn(-Pawn_Value));
 
 	root_position.put(0, 0, new Rook(+Rook_Value));
 	root_position.put(7, 0, new Rook(+Rook_Value));

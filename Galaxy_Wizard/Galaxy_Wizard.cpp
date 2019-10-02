@@ -84,7 +84,7 @@ int main()
 
 					for (size_t depth = 0; depth < const_maximum_depth; depth++)
 					{
-						DWORD best_evaluation = evaluation_best_score_start->search(game->board.position, nodes_calculated, depth);
+						DWORD best_evaluation = evaluation_best_score_start->search(game->board.position, nodes_calculated, depth, NULL);
 
 						if (abs(best_evaluation) < 4 * King_Value)
 						{

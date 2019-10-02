@@ -8,6 +8,8 @@ Game::Game()
 
 	b.set_root_position();
 
+	//b.set_test_position();
+
 	board = b;
 }
 
