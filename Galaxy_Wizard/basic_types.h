@@ -3,7 +3,7 @@
 #include <string>
 #include <list>
 
-using DWORD = signed __int64;
+typedef int64_t DWORD;
 
 const DWORD Pawn_Value = 200;
 const DWORD King_Value = 500 * Pawn_Value;

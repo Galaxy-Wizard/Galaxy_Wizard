@@ -12,6 +12,8 @@ TARGET = Galaxy_Wizard
 CONFIG   += console
 CONFIG   -= app_bundle
 
+CONFIG  += c++11
+
 TEMPLATE = app
 
 
@@ -32,5 +34,23 @@ SOURCES += Galaxy_Wizard/Queen.cpp
 SOURCES += Galaxy_Wizard/Rook.cpp
 SOURCES += Galaxy_Wizard/Score.cpp
 SOURCES += Galaxy_Wizard/TimeManager.cpp
+
+HEADERS += \
+    Galaxy_Wizard/basic_types.h \
+    Galaxy_Wizard/Bishop.h \
+    Galaxy_Wizard/Board.h \
+    Galaxy_Wizard/Exception.h \
+    Galaxy_Wizard/Figure.h \
+    Galaxy_Wizard/Game.h \
+    Galaxy_Wizard/King.h \
+    Galaxy_Wizard/Knight.h \
+    Galaxy_Wizard/Matrix.h \
+    Galaxy_Wizard/Move.h \
+    Galaxy_Wizard/Pawn.h \
+    Galaxy_Wizard/pch.h \
+    Galaxy_Wizard/Queen.h \
+    Galaxy_Wizard/Rook.h \
+    Galaxy_Wizard/Score.h \
+    Galaxy_Wizard/TimeManager.h
 
 

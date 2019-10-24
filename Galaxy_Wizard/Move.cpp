@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Move.h"
-
+#include <string.h>
 
 Move::Move()
 {
@@ -68,8 +68,13 @@ void Move::format_move(std::string &current_move)
 	{
 		buffer_x_from[0] = char(x_from) + 'a';
 		buffer_x_to[0] += char(x_to) + 'a';
+#ifdef _WIN32
 		_itoa_s(int(y_from) + 1, buffer_y_from, 10);
 		_itoa_s(int(y_to) + 1, buffer_y_to, 10);
+#else
+        sprintf(buffer_y_from, "%d", int(y_from) + 1);
+        sprintf(buffer_y_to, "%d", int(y_to) + 1);
+#endif
 
 		current_move = std::string(" ") + std::string(buffer_x_from) + std::string(buffer_y_from) +
 			std::string(buffer_x_to) + std::string(buffer_y_to);

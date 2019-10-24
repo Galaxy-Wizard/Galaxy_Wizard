@@ -61,11 +61,11 @@ int main()
 
 					size_t total_nodes_calculated = 0;
 
-					__time64_t calculation_start_time;
-					_time64(&calculation_start_time);
-					__time64_t calculation_end_time;
+                    //__time64_t calculation_start_time;
+                    //_time64(&calculation_start_time);
+                    //__time64_t calculation_end_time;
 
-					__time64_t total_calculation_time = 0;
+                    //__time64_t total_calculation_time = 0;
 
 					game->score.time_manager = time_manager;
 					game->score.evaluation = game->score.Evaluate();
@@ -73,12 +73,12 @@ int main()
 
 					Score* evaluation_best_score_start = &game->score;
 
-					_time64(&calculation_end_time);
+                    //_time64(&calculation_end_time);
 
-					total_calculation_time += calculation_end_time - calculation_start_time;
+                    //total_calculation_time += calculation_end_time - calculation_start_time;
 
 
-					_time64(&calculation_start_time);
+                    //_time64(&calculation_start_time);
 
 					size_t nodes_calculated = 0;
 
@@ -113,34 +113,34 @@ int main()
 							}
 						}
 
-						_time64(&calculation_end_time);
+                        //_time64(&calculation_end_time);
 
-						auto calculation_time = calculation_end_time - calculation_start_time;
+                        //auto calculation_time = calculation_end_time - calculation_start_time;
 
-						std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
+                        //std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
 
 						std::cout << "Nodes calculated " << nodes_calculated << std::endl;
-						std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
+                        std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
 
-						if (calculation_time != 0)
-						{
-							std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
-						}
-						else
-						{
-							std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
-						}
+                        //if (calculation_time != 0)
+                        //{
+                        //	std::cout << "Nodes per second " << nodes_calculated / calculation_time << std::endl;
+                        //}
+                        //else
+                        //{
+                        //	std::cout << "Nodes per second " << nodes_calculated / 1 << std::endl;
+                        //}
 
-						total_calculation_time += calculation_time;
+                        //total_calculation_time += calculation_time;
 
-						if (total_calculation_time != 0)
-						{
-							std::cout << "Total nodes per second " << total_nodes_calculated / total_calculation_time << std::endl;
-						}
-						else
-						{
-							std::cout << "Total nodes per second " << total_nodes_calculated / 1 << std::endl;
-						}
+                        //if (total_calculation_time != 0)
+                        //{
+                        //	std::cout << "Total nodes per second " << total_nodes_calculated / total_calculation_time << std::endl;
+                        //}
+                        //else
+                        //{
+                        //	std::cout << "Total nodes per second " << total_nodes_calculated / 1 << std::endl;
+                        //}
 					}
 				}
 				catch (Exception& e)

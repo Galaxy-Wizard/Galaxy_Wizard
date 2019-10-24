@@ -133,9 +133,9 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	}
 
 	//	6.
-	auto ca = childen.begin();
-	auto cz = childen.end();
-	std::stable_sort(ca, cz, sort_procedure);
+    //auto ca = childen.begin();
+    //auto cz = childen.end();
+    //std::stable_sort(ca, cz, sort_procedure);
 
 	//	7.
 	for (auto child = childen.begin(); child != childen.end(); child++)
