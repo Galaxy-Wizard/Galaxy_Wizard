@@ -334,7 +334,7 @@ namespace PuzzleSpace
 	Puzzle("",""),
 	};
 
-	std::string SolvePuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingMoveTypeData> & data)
+	std::string SolvePuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingMoveTypeData> &data, MoveTypeEnum &MoveType)
 	{
 		return std::string();
 	}
@@ -399,7 +399,9 @@ namespace PuzzleSpace
 		{
 			for (auto i = StrongPuzzlesList.PuzzleList.begin(); i != StrongPuzzlesList.PuzzleList.end(); i++)
 			{
-				std::string Result = SolvePuzzle(i, StudingDataList.MachineStudingData);
+				MoveTypeEnum MoveType = None;
+
+				std::string Result = SolvePuzzle(i, StudingDataList.MachineStudingData, MoveType);
 
 				MachineStuding::MachineStudingMoveTypeDataAtom StudingDataAtom;
 
@@ -409,27 +411,27 @@ namespace PuzzleSpace
 				{
 					std::string solved;
 
-					if (i->MoveType & Check)
+					if (MoveType & Check)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight += MachineStuding::DELTA;
 					}
-					if (i->MoveType & Capture)
+					if (MoveType & Capture)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight += MachineStuding::DELTA;
 					}
-					if (i->MoveType & Attack)
+					if (MoveType & Attack)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight += MachineStuding::DELTA;
 					}
-					if (i->MoveType & Avoidance)
+					if (MoveType & Avoidance)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight += MachineStuding::DELTA;
 					}
-					if (i->MoveType & Defence)
+					if (MoveType & Defence)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight += MachineStuding::DELTA;
 					}
-					if (i->MoveType & QuiteMove)
+					if (MoveType & QuiteMove)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight += MachineStuding::DELTA;
 					}
@@ -438,27 +440,27 @@ namespace PuzzleSpace
 				{
 					std::string error;
 
-					if (i->MoveType & Check)
+					if (MoveType & Check)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight -= MachineStuding::DELTA;
 					}
-					if (i->MoveType & Capture)
+					if (MoveType & Capture)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight -= MachineStuding::DELTA;
 					}
-					if (i->MoveType & Attack)
+					if (MoveType & Attack)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight -= MachineStuding::DELTA;
 					}
-					if (i->MoveType & Avoidance)
+					if (MoveType & Avoidance)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight -= MachineStuding::DELTA;
 					}
-					if (i->MoveType & Defence)
+					if (MoveType & Defence)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight -= MachineStuding::DELTA;
 					}
-					if (i->MoveType & QuiteMove)
+					if (MoveType & QuiteMove)
 					{
 						StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight -= MachineStuding::DELTA;
 					}
