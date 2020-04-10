@@ -334,9 +334,36 @@ namespace PuzzleSpace
 	Puzzle("",""),
 	};
 
-	std::string SolvePuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingMoveTypeData> &data, MoveTypeEnum &MoveType)
+	void GenerateAllMoves()
+	{
+
+	}
+
+	void SortAllMovesByWeight()
+	{
+
+	}
+
+	std::string MaximumWeightMove(MoveTypeEnum &MoveType)
 	{
 		return std::string();
+	}
+
+	void UpdateMachineStudingList(std::list<MachineStuding::MachineStudingMoveTypeData> &data)
+	{
+
+	}
+
+	std::string SolvePuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingMoveTypeData> &data, MoveTypeEnum &MoveType)
+	{
+		GenerateAllMoves();
+		SortAllMovesByWeight();
+
+		std::string Result = MaximumWeightMove(MoveType);
+
+		UpdateMachineStudingList(data);
+
+		return Result;
 	}
 
 	void StudyStrongPuzzles()
