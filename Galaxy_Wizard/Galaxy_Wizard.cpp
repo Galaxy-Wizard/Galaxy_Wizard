@@ -15,7 +15,7 @@
 
 #include <algorithm>
 
-const size_t const_maximum_depth = 4;
+const size_t const_maximum_depth = 6;
 
 TimeManager* Score::time_manager;
 

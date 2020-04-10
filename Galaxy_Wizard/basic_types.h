@@ -45,6 +45,8 @@ enum MoveTypeEnum : int
 	None = 0,
 };
 
+const double MoveWeightAllowedValue = 0.5;
+
 namespace MachineStuding
 {
 	class MachineStudingMoveTypeDataAtom

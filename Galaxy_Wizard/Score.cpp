@@ -47,6 +47,27 @@ DWORD Score::Evaluate()
 	return result;
 }
 
+double Score::GetMoveWeight(const Move m, const Board const* board)
+{
+	m.get_move_type();
+
+	return 1.0;
+}
+
+bool Score::IsMoveWeightAllowed(const Move m, const Board const *board)
+{
+	if (GetMoveWeight(m, board) >= MoveWeightAllowedValue)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void Score::genetate_all_moves(Score *parent)
 {
 	Board board;
@@ -69,17 +90,20 @@ void Score::genetate_all_moves(Score *parent)
 						Board board(*current_figure_moves_iterator);
 						Move current_move = board.position.move;
 
-						Score *current_score = new Score();
-						current_score->parent = this;
-						current_score->move = current_move;
+						if (IsMoveWeightAllowed(current_move, &board))
+						{
+							Score* current_score = new Score();
+							current_score->parent = this;
+							current_score->move = current_move;
 
-						std::string current_move_string;
-						current_move.format_move(current_move_string);
-						current_score->move_string = current_move_string;
+							std::string current_move_string;
+							current_move.format_move(current_move_string);
+							current_score->move_string = current_move_string;
 
-						current_score->side_to_move = -side_to_move;
+							current_score->side_to_move = -side_to_move;
 
-						childen.push_back(*current_score);
+							childen.push_back(*current_score);
+						}
 					}
 				}
 			}
@@ -302,16 +326,18 @@ bool sort_procedure(const Score &s1, const Score &s2)
 	double s1_move_weight = 0.0;
 	double s2_move_weight = 0.0;
 
-	for (auto mi = MachineStudingMoveTypeDataListSortData.MachineStudingData.begin(); mi != MachineStudingMoveTypeDataListSortData.MachineStudingData.end(); mi++)
+	auto mi = MachineStudingMoveTypeDataListSortData.MachineStudingData.back();
+
+	for (auto av = mi.AtomVector.begin(); av != mi.AtomVector.end(); av++)
 	{
-		if (bool(s1_move_type & mi->MoveType))
+		if (bool(s1_move_type & av->MoveType))
 		{
-			s1_move_weight += mi->Weight;
+			s1_move_weight += av->Weight;
 		}
 
-		if (bool(s2_move_type & mi->MoveType))
+		if (bool(s2_move_type & av->MoveType))
 		{
-			s2_move_weight += mi->Weight;
+			s2_move_weight += av->Weight;
 		}
 	}
 

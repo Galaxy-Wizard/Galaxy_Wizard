@@ -31,6 +31,8 @@ public:
 	bool enemy_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated);
 	bool my_plan(const Matrix &position, DWORD &result, size_t &nodes_calculated);
 
+	bool IsMoveWeightAllowed(const Move m, const Board const* board);
+	double GetMoveWeight(const Move m, const Board const* board);
 	void genetate_all_moves(Score *parent);
 
 	void delete_not_principal_variant_nodes(Score *principal_variant);
