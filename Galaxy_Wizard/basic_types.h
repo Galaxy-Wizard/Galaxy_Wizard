@@ -47,15 +47,21 @@ enum MoveTypeEnum : int
 
 namespace MachineStuding
 {
-	class MachineStudingMoveTypeData
+	class MachineStudingMoveTypeDataAtom
 	{
 	public:
-		MachineStudingMoveTypeData() : MoveType(None), Weight(1.0), Generation(0.0) {}
-		~MachineStudingMoveTypeData() {}
+		MachineStudingMoveTypeDataAtom() : MoveType(None), Weight(1.0), Generation(0.0) {}
+		~MachineStudingMoveTypeDataAtom() {}
 
 		MoveTypeEnum MoveType;
 		double Weight;
 		double Generation;
+	};
+
+	class MachineStudingMoveTypeData
+	{
+	public:
+		std::vector<MachineStudingMoveTypeDataAtom> AtomVector;
 	};
 
 	class MachineStudingMoveTypeDataList
@@ -66,6 +72,10 @@ namespace MachineStuding
 
 		std::list<MachineStudingMoveTypeData> MachineStudingData;
 	};
+
+	const auto Required_Generation_Count = 100;
+
+	const auto DELTA = 0.1;
 }
 
 namespace PuzzleSpace

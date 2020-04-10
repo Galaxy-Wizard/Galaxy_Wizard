@@ -334,6 +334,11 @@ namespace PuzzleSpace
 	Puzzle("",""),
 	};
 
+	std::string SolvePuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingMoveTypeData> & data)
+	{
+		return std::string();
+	}
+
 	void StudyStrongPuzzles()
 	{
 		Puzzles StrongPuzzlesList;
@@ -343,6 +348,122 @@ namespace PuzzleSpace
 		for (size_t i = 0; StrongPuzzles[i] != EmptyPuzzle; i++)
 		{
 			StrongPuzzlesList.PuzzleList.push_back(StrongPuzzles[i]);
+		}
+
+		MachineStuding::MachineStudingMoveTypeDataList StudingDataList;
+		
+		{
+			MachineStuding::MachineStudingMoveTypeDataAtom StudingDataAtom;
+
+			MachineStuding::MachineStudingMoveTypeData StudingData;
+
+			StudingDataAtom.MoveType = Check;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataAtom.MoveType = Capture;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataAtom.MoveType = Attack;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataAtom.MoveType = Avoidance;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataAtom.MoveType = Defence;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataAtom.MoveType = QuiteMove;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataAtom.MoveType = None;
+			StudingDataAtom.Generation = 0;
+			StudingDataAtom.Weight = 1.0;
+			StudingData.AtomVector.push_back(StudingDataAtom);
+
+			StudingDataList.MachineStudingData.push_back(StudingData);
+		}
+
+		for (auto counter = 0; counter < MachineStuding::Required_Generation_Count; counter++)
+		{
+			for (auto i = StrongPuzzlesList.PuzzleList.begin(); i != StrongPuzzlesList.PuzzleList.end(); i++)
+			{
+				std::string Result = SolvePuzzle(i, StudingDataList.MachineStudingData);
+
+				MachineStuding::MachineStudingMoveTypeDataAtom StudingDataAtom;
+
+				MachineStuding::MachineStudingMoveTypeData StudingData;
+
+				if (Result == i->Solution)
+				{
+					std::string solved;
+
+					if (i->MoveType & Check)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight += MachineStuding::DELTA;
+					}
+					if (i->MoveType & Capture)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight += MachineStuding::DELTA;
+					}
+					if (i->MoveType & Attack)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight += MachineStuding::DELTA;
+					}
+					if (i->MoveType & Avoidance)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight += MachineStuding::DELTA;
+					}
+					if (i->MoveType & Defence)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight += MachineStuding::DELTA;
+					}
+					if (i->MoveType & QuiteMove)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight += MachineStuding::DELTA;
+					}
+				}
+				else
+				{
+					std::string error;
+
+					if (i->MoveType & Check)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight -= MachineStuding::DELTA;
+					}
+					if (i->MoveType & Capture)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight -= MachineStuding::DELTA;
+					}
+					if (i->MoveType & Attack)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight -= MachineStuding::DELTA;
+					}
+					if (i->MoveType & Avoidance)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight -= MachineStuding::DELTA;
+					}
+					if (i->MoveType & Defence)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight -= MachineStuding::DELTA;
+					}
+					if (i->MoveType & QuiteMove)
+					{
+						StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight -= MachineStuding::DELTA;
+					}
+				}
+			}
 		}
 	}
 }
