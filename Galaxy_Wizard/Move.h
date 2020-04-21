@@ -24,6 +24,7 @@ public:
 
 	void format_move(std::string &current_move);
 
-	MoveTypeEnum get_move_type() const;
+	Tactics::TacticsMoveTypeEnum get_tactics_move_type() const;
+	Strategy::StrategyMoveTypeEnum get_strategy_move_type() const;
 };
 

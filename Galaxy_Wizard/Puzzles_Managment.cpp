@@ -3,7 +3,7 @@
 
 namespace PuzzleSpace
 {
-	const Puzzle StrongPuzzles[] =
+	const Puzzle StrongTacticsPuzzles[] =
 	{
 	Puzzle("1k1n4/1p1b1p2/1Bp1pPp1/1PP1P3/8/6P1/8/1K6 w - - 0 1", "Bc7+"),
 	Puzzle("1k1r2r1/pb5n/1qpp2pP/1pb1p3/4P3/1PNP1QN1/1PPB4/2K2R1R w - - 0 1", "b4"),
@@ -334,6 +334,11 @@ namespace PuzzleSpace
 	Puzzle("",""),
 	};
 
+	const Puzzle StrongStrategyPuzzles[] =
+	{
+	Puzzle("",""),
+	};
+
 	void GenerateAllMoves()
 	{
 
@@ -344,152 +349,255 @@ namespace PuzzleSpace
 
 	}
 
-	std::string MaximumWeightMove(MoveTypeEnum &MoveType)
+	std::string MaximumTacticsWeightMove(Tactics::TacticsMoveTypeEnum &MoveType)
 	{
 		return std::string();
 	}
 
-	void UpdateMachineStudingList(std::list<MachineStuding::MachineStudingMoveTypeData> &data)
+	std::string MaximumStrategyWeightMove(Strategy::StrategyMoveTypeEnum &MoveType)
+	{
+		return std::string();
+	}
+
+	void UpdateMachineStudingTacticsList(std::list<MachineStuding::MachineStudingTacticsMoveTypeData> &data)
 	{
 
 	}
 
-	std::string SolvePuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingMoveTypeData> &data, MoveTypeEnum &MoveType)
+	void UpdateMachineStudingStrategyList(std::list<MachineStuding::MachineStudingStrategyMoveTypeData>& data)
+	{
+
+	}
+	std::string SolveTacticsPuzzle(std::list<Puzzle>::iterator &i, std::list<MachineStuding::MachineStudingTacticsMoveTypeData> &data, Tactics::TacticsMoveTypeEnum &MoveType)
 	{
 		GenerateAllMoves();
 		SortAllMovesByWeight();
 
-		std::string Result = MaximumWeightMove(MoveType);
+		std::string Result = MaximumTacticsWeightMove(MoveType);
 
-		UpdateMachineStudingList(data);
+		UpdateMachineStudingTacticsList(data);
+
+		return Result;
+	}
+
+	std::string SolveStrategyPuzzle(std::list<Puzzle>::iterator& i, std::list<MachineStuding::MachineStudingStrategyMoveTypeData>& data, Strategy::StrategyMoveTypeEnum &MoveType)
+	{
+		GenerateAllMoves();
+		SortAllMovesByWeight();
+
+		std::string Result = MaximumStrategyWeightMove(MoveType);
+
+		UpdateMachineStudingStrategyList(data);
 
 		return Result;
 	}
 
 	void StudyStrongPuzzles()
 	{
-		Puzzles StrongPuzzlesList;
-
-		const Puzzle EmptyPuzzle("", "");
-
-		for (size_t i = 0; StrongPuzzles[i] != EmptyPuzzle; i++)
 		{
-			StrongPuzzlesList.PuzzleList.push_back(StrongPuzzles[i]);
-		}
+			Puzzles StrongTacticsPuzzlesList;
 
-		MachineStuding::MachineStudingMoveTypeDataList StudingDataList;
-		
-		{
-			MachineStuding::MachineStudingMoveTypeDataAtom StudingDataAtom;
+			const Puzzle EmptyPuzzle("", "");
 
-			MachineStuding::MachineStudingMoveTypeData StudingData;
-
-			StudingDataAtom.MoveType = Check;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_Check;// double(rand()) / double(RAND_MAX);
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataAtom.MoveType = Capture;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_Capture;// double(rand()) / double(RAND_MAX);
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataAtom.MoveType = Attack;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_Attack;// double(rand()) / double(RAND_MAX);
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataAtom.MoveType = Avoidance;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_Avoidance;// double(rand()) / double(RAND_MAX);
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataAtom.MoveType = Defence;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_Defence;// double(rand()) / double(RAND_MAX);
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataAtom.MoveType = QuiteMove;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_QuiteMove;// double(rand()) / double(RAND_MAX);
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataAtom.MoveType = None;
-			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = Weight_None;// 1.0;
-			StudingData.AtomVector.push_back(StudingDataAtom);
-
-			StudingDataList.MachineStudingData.push_back(StudingData);
-		}
-
-		for (auto counter = 0; counter < MachineStuding::Required_Generation_Count; counter++)
-		{
-			for (auto i = StrongPuzzlesList.PuzzleList.begin(); i != StrongPuzzlesList.PuzzleList.end(); i++)
+			for (size_t i = 0; StrongTacticsPuzzles[i] != EmptyPuzzle; i++)
 			{
-				MoveTypeEnum MoveType = None;
+				StrongTacticsPuzzlesList.PuzzleList.push_back(StrongTacticsPuzzles[i]);
+			}
 
-				std::string Result = SolvePuzzle(i, StudingDataList.MachineStudingData, MoveType);
+			MachineStuding::MachineStudingTacticsMoveTypeDataList StudingDataList;
 
-				MachineStuding::MachineStudingMoveTypeDataAtom StudingDataAtom;
+			{
+				MachineStuding::MachineStudingTacticsMoveTypeDataAtom StudingDataAtom;
 
-				MachineStuding::MachineStudingMoveTypeData StudingData;
+				MachineStuding::MachineStudingTacticsMoveTypeData StudingData;
 
-				if (Result == i->Solution)
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::Check;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_Check;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::Capture;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_Capture;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::Attack;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_Attack;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::Avoidance;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_Avoidance;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::Defence;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_Defence;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::QuiteMove;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_QuiteMove;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Tactics::TacticsMoveTypeEnum::None;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Tactics::Weight_None;// 1.0;
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataList.MachineStudingData.push_back(StudingData);
+			}
+
+			for (auto counter = 0; counter < MachineStuding::Required_Generation_Count; counter++)
+			{
+				for (auto i = StrongTacticsPuzzlesList.PuzzleList.begin(); i != StrongTacticsPuzzlesList.PuzzleList.end(); i++)
 				{
-					std::string solved;
+					Tactics::TacticsMoveTypeEnum MoveType = Tactics::TacticsMoveTypeEnum::None;
 
-					if (MoveType & Check)
+					std::string Result = SolveTacticsPuzzle(i, StudingDataList.MachineStudingData, MoveType);
+
+					MachineStuding::MachineStudingTacticsMoveTypeDataAtom StudingDataAtom;
+
+					MachineStuding::MachineStudingTacticsMoveTypeData StudingData;
+
+					if (Result == i->Solution)
 					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight += MachineStuding::DELTA;
+						std::string solved;
+
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Check)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight += MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Capture)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight += MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Attack)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight += MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Avoidance)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight += MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Defence)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight += MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::QuiteMove)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight += MachineStuding::DELTA;
+						}
 					}
-					if (MoveType & Capture)
+					else
 					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight += MachineStuding::DELTA;
-					}
-					if (MoveType & Attack)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight += MachineStuding::DELTA;
-					}
-					if (MoveType & Avoidance)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight += MachineStuding::DELTA;
-					}
-					if (MoveType & Defence)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight += MachineStuding::DELTA;
-					}
-					if (MoveType & QuiteMove)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight += MachineStuding::DELTA;
+						std::string error;
+
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Check)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight -= MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Capture)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight -= MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Attack)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight -= MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Avoidance)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight -= MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::Defence)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight -= MachineStuding::DELTA;
+						}
+						if (MoveType & Tactics::TacticsMoveTypeEnum::QuiteMove)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight -= MachineStuding::DELTA;
+						}
 					}
 				}
-				else
-				{
-					std::string error;
+			}
+		}
 
-					if (MoveType & Check)
+		{
+			Puzzles StrongStrategyPuzzlesList;
+
+			const Puzzle EmptyPuzzle("", "");
+
+			for (size_t i = 0; StrongStrategyPuzzles[i] != EmptyPuzzle; i++)
+			{
+				StrongStrategyPuzzlesList.PuzzleList.push_back(StrongStrategyPuzzles[i]);
+			}
+
+			MachineStuding::MachineStudingStrategyMoveTypeDataList StudingDataList;
+
+			{
+				MachineStuding::MachineStudingStrategyMoveTypeDataAtom StudingDataAtom;
+
+				MachineStuding::MachineStudingStrategyMoveTypeData StudingData;
+
+				StudingDataAtom.MoveType = Strategy::StrategyMoveTypeEnum::Development;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Strategy::Weight_Development;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Strategy::StrategyMoveTypeEnum::CenterOccupation;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Strategy::Weight_CenterOccupation;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				//	==========	//
+				//	==========	//
+
+				StudingDataAtom.MoveType = Strategy::StrategyMoveTypeEnum::None;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Strategy::Weight_None;// 1.0;
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataList.MachineStudingData.push_back(StudingData);
+			}
+
+			for (auto counter = 0; counter < MachineStuding::Required_Generation_Count; counter++)
+			{
+				for (auto i = StrongStrategyPuzzlesList.PuzzleList.begin(); i != StrongStrategyPuzzlesList.PuzzleList.end(); i++)
+				{
+					Strategy::StrategyMoveTypeEnum MoveType = Strategy::StrategyMoveTypeEnum::None;
+
+					std::string Result = SolveStrategyPuzzle(i, StudingDataList.MachineStudingData, MoveType);
+
+					MachineStuding::MachineStudingStrategyMoveTypeDataAtom StudingDataAtom;
+
+					MachineStuding::MachineStudingStrategyMoveTypeData StudingData;
+
+					if (Result == i->Solution)
 					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight -= MachineStuding::DELTA;
+						std::string solved;
+
+						if (MoveType & Strategy::StrategyMoveTypeEnum::Development)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight += MachineStuding::DELTA;
+						}
+						if (MoveType & Strategy::StrategyMoveTypeEnum::CenterOccupation)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight += MachineStuding::DELTA;
+						}
 					}
-					if (MoveType & Capture)
+					else
 					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight -= MachineStuding::DELTA;
-					}
-					if (MoveType & Attack)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(2).Weight -= MachineStuding::DELTA;
-					}
-					if (MoveType & Avoidance)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(3).Weight -= MachineStuding::DELTA;
-					}
-					if (MoveType & Defence)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(4).Weight -= MachineStuding::DELTA;
-					}
-					if (MoveType & QuiteMove)
-					{
-						StudingDataList.MachineStudingData.back().AtomVector.at(5).Weight -= MachineStuding::DELTA;
+						std::string error;
+
+						if (MoveType & Strategy::StrategyMoveTypeEnum::Development)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(0).Weight -= MachineStuding::DELTA;
+						}
+						if (MoveType & Strategy::StrategyMoveTypeEnum::CenterOccupation)
+						{
+							StudingDataList.MachineStudingData.back().AtomVector.at(1).Weight -= MachineStuding::DELTA;
+						}
 					}
 				}
 			}

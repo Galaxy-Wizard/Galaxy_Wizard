@@ -14,13 +14,23 @@ const DWORD Knight_Value = 4 * Pawn_Value;
 
 const DWORD MoveScoreBonus = Pawn_Value / 50;
 
-const double Weight_Check = 0.8;
-const double Weight_Capture = 0.7;
-const double Weight_Attack = 0.6;
-const double Weight_Avoidance = 0.5;
-const double Weight_Defence = 0.4;
-const double Weight_QuiteMove = 0.3;
-const double Weight_None = 1.0;
+namespace Tactics
+{
+	const double Weight_Check = 0.8;
+	const double Weight_Capture = 0.7;
+	const double Weight_Attack = 0.6;
+	const double Weight_Avoidance = 0.5;
+	const double Weight_Defence = 0.4;
+	const double Weight_QuiteMove = 0.3;
+	const double Weight_None = 1.0;
+}
+
+namespace Strategy
+{
+	const double Weight_Development = 0.2;
+	const double Weight_CenterOccupation = 0.1;
+	const double Weight_None = 1.0;
+}
 
 template <class T>
 T sign(T v)
@@ -42,45 +52,85 @@ T sign(T v)
 	}
 }
 
-enum MoveTypeEnum : int
+namespace Tactics
 {
-	Check = 1,
-	Capture = 2,
-	Attack = 4,
-	Avoidance = 8,
-	Defence = 16,
-	QuiteMove = 32,
-	None = 0,
-};
+	enum TacticsMoveTypeEnum : int
+	{
+		Check = 1,
+		Capture = 2,
+		Attack = 4,
+		Avoidance = 8,
+		Defence = 16,
+		QuiteMove = 32,
+		None = 0,
+	};
+}
+
+namespace Strategy
+{
+	enum StrategyMoveTypeEnum : int
+	{
+		Development = 1,
+		CenterOccupation = 2,
+		None = 0,
+	};
+}
 
 const double MoveWeightAllowedValue = 0.5;
 
 namespace MachineStuding
 {
-	class MachineStudingMoveTypeDataAtom
+	class MachineStudingTacticsMoveTypeDataAtom
 	{
 	public:
-		MachineStudingMoveTypeDataAtom() : MoveType(None), Weight(1.0), Generation(0.0) {}
-		~MachineStudingMoveTypeDataAtom() {}
+		MachineStudingTacticsMoveTypeDataAtom() : MoveType(Tactics::TacticsMoveTypeEnum::None), Weight(Tactics::Weight_None), Generation(0.0) {}
+		~MachineStudingTacticsMoveTypeDataAtom() {}
 
-		MoveTypeEnum MoveType;
+		Tactics::TacticsMoveTypeEnum MoveType;
 		double Weight;
 		double Generation;
 	};
 
-	class MachineStudingMoveTypeData
+	class MachineStudingTacticsMoveTypeData
 	{
 	public:
-		std::vector<MachineStudingMoveTypeDataAtom> AtomVector;
+		std::vector<MachineStudingTacticsMoveTypeDataAtom> AtomVector;
 	};
 
-	class MachineStudingMoveTypeDataList
+	class MachineStudingTacticsMoveTypeDataList
 	{
 	public:
-		MachineStudingMoveTypeDataList() {}
-		~MachineStudingMoveTypeDataList() {}
+		MachineStudingTacticsMoveTypeDataList() {}
+		~MachineStudingTacticsMoveTypeDataList() {}
 
-		std::list<MachineStudingMoveTypeData> MachineStudingData;
+		std::list<MachineStudingTacticsMoveTypeData> MachineStudingData;
+	};
+
+
+	class MachineStudingStrategyMoveTypeDataAtom
+	{
+	public:
+		MachineStudingStrategyMoveTypeDataAtom() : MoveType(Strategy::StrategyMoveTypeEnum::None), Weight(Strategy::Weight_None), Generation(0.0) {}
+		~MachineStudingStrategyMoveTypeDataAtom() {}
+
+		Strategy::StrategyMoveTypeEnum MoveType;
+		double Weight;
+		double Generation;
+	};
+
+	class MachineStudingStrategyMoveTypeData
+	{
+	public:
+		std::vector<MachineStudingStrategyMoveTypeDataAtom> AtomVector;
+	};
+
+	class MachineStudingStrategyMoveTypeDataList
+	{
+	public:
+		MachineStudingStrategyMoveTypeDataList() {}
+		~MachineStudingStrategyMoveTypeDataList() {}
+
+		std::list<MachineStudingStrategyMoveTypeData> MachineStudingData;
 	};
 
 	const auto Required_Generation_Count = 100;
@@ -93,14 +143,14 @@ namespace PuzzleSpace
 	class Puzzle
 	{
 	public:
-		Puzzle(std::string f, std::string s, MoveTypeEnum mt = None) : Fen(f), Solution(s), MoveType(mt) {}
+		Puzzle(std::string f, std::string s, Tactics::TacticsMoveTypeEnum mt = Tactics::TacticsMoveTypeEnum::None) : Fen(f), Solution(s), MoveType(mt) {}
 		~Puzzle() {}
 
 		bool operator!=(const Puzzle &p) const { return Fen != p.Fen || Solution != p.Solution || MoveType != p.MoveType; }
 
 		std::string Fen;
 		std::string Solution;
-		MoveTypeEnum MoveType;
+		Tactics::TacticsMoveTypeEnum MoveType;
 	};
 
 	class Puzzles

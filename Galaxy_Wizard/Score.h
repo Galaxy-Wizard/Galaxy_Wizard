@@ -40,5 +40,5 @@ public:
 	void prepare_board(Board &board);
 };
 
-bool sort_procedure(const Score &s1, const Score &s2);
+bool sort_tactics_procedure(const Score &s1, const Score &s2);
 

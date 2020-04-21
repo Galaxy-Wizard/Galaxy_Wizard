@@ -85,7 +85,13 @@ void Move::format_move(std::string &current_move)
 	}
 }
 
-MoveTypeEnum Move::get_move_type() const
+Tactics::TacticsMoveTypeEnum Move::get_tactics_move_type() const
 {
-	return MoveTypeEnum::None;
+	return Tactics::TacticsMoveTypeEnum::None;
 }
+
+Strategy::StrategyMoveTypeEnum Move::get_strategy_move_type() const
+{
+	return Strategy::StrategyMoveTypeEnum::None;
+}
+

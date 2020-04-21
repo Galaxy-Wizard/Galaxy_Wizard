@@ -19,7 +19,8 @@ const size_t const_maximum_depth = 6;
 
 TimeManager* Score::time_manager;
 
-MachineStuding::MachineStudingMoveTypeDataList MachineStudingMoveTypeDataListSortData;
+MachineStuding::MachineStudingTacticsMoveTypeDataList MachineStudingTacticsMoveTypeDataListSortData;
+MachineStuding::MachineStudingStrategyMoveTypeDataList MachineStudingStrategyMoveTypeDataListSortData;
 
 int main()
 {

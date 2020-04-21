@@ -49,9 +49,14 @@ DWORD Score::Evaluate()
 
 double Score::GetMoveWeight(const Move m, const Board const* board)
 {
-	m.get_move_type();
+	double result = 0.0;
 
-	return 1.0;
+	double result_tactics = m.get_tactics_move_type();
+	double result_strategy = m.get_strategy_move_type();
+
+	result = result_tactics + result_strategy;
+
+	return result;
 }
 
 bool Score::IsMoveWeightAllowed(const Move m, const Board const *board)
@@ -157,9 +162,9 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	}
 
 	//	6.
-    //auto ca = childen.begin();
-    //auto cz = childen.end();
-    //std::stable_sort(ca, cz, sort_procedure);
+    auto ca = childen.begin();
+    auto cz = childen.end();
+    std::stable_sort(ca, cz, sort_tactics_procedure);
 
 	//	7.
 	for (auto child = childen.begin(); child != childen.end(); child++)
@@ -316,30 +321,31 @@ bool Score::my_plan(const Matrix &position, DWORD &result, size_t &nodes_calcula
 	return true;
 }
 
-extern MachineStuding::MachineStudingMoveTypeDataList MachineStudingMoveTypeDataListSortData;
+extern MachineStuding::MachineStudingTacticsMoveTypeDataList MachineStudingTacticsMoveTypeDataListSortData;
+extern MachineStuding::MachineStudingStrategyMoveTypeDataList MachineStudingStrategyMoveTypeDataListSortData;
 
-bool sort_procedure(const Score &s1, const Score &s2)
+bool sort_tactics_procedure(const Score &s1, const Score &s2)
 {
-	auto s1_move_type = s1.move.get_move_type();
-	auto s2_move_type = s2.move.get_move_type();
+	auto s1_tactics_move_type = s1.move.get_tactics_move_type();
+	auto s2_tactics_move_type = s2.move.get_tactics_move_type();
 
-	double s1_move_weight = 0.0;
-	double s2_move_weight = 0.0;
+	double s1_tactics_move_weight = 0.0;
+	double s2_tactics_move_weight = 0.0;
 
-	auto mi = MachineStudingMoveTypeDataListSortData.MachineStudingData.back();
+	auto mi = MachineStudingTacticsMoveTypeDataListSortData.MachineStudingData.back();
 
 	for (auto av = mi.AtomVector.begin(); av != mi.AtomVector.end(); av++)
 	{
-		if (bool(s1_move_type & av->MoveType))
+		if (bool(s1_tactics_move_type & av->MoveType))
 		{
-			s1_move_weight += av->Weight;
+			s1_tactics_move_weight += av->Weight;
 		}
 
-		if (bool(s2_move_type & av->MoveType))
+		if (bool(s2_tactics_move_type & av->MoveType))
 		{
-			s2_move_weight += av->Weight;
+			s2_tactics_move_weight += av->Weight;
 		}
 	}
 
-	return s1_move_weight > s2_move_weight;
+	return s1_tactics_move_weight > s2_tactics_move_weight;
 }
