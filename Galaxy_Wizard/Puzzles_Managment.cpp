@@ -386,37 +386,37 @@ namespace PuzzleSpace
 
 			StudingDataAtom.MoveType = Check;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingDataAtom.Weight = Weight_Check;// double(rand()) / double(RAND_MAX);
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataAtom.MoveType = Capture;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingDataAtom.Weight = Weight_Capture;// double(rand()) / double(RAND_MAX);
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataAtom.MoveType = Attack;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingDataAtom.Weight = Weight_Attack;// double(rand()) / double(RAND_MAX);
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataAtom.MoveType = Avoidance;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingDataAtom.Weight = Weight_Avoidance;// double(rand()) / double(RAND_MAX);
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataAtom.MoveType = Defence;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingDataAtom.Weight = Weight_Defence;// double(rand()) / double(RAND_MAX);
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataAtom.MoveType = QuiteMove;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = double(rand()) / double(RAND_MAX);
+			StudingDataAtom.Weight = Weight_QuiteMove;// double(rand()) / double(RAND_MAX);
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataAtom.MoveType = None;
 			StudingDataAtom.Generation = 0;
-			StudingDataAtom.Weight = 1.0;
+			StudingDataAtom.Weight = Weight_None;// 1.0;
 			StudingData.AtomVector.push_back(StudingDataAtom);
 
 			StudingDataList.MachineStudingData.push_back(StudingData);

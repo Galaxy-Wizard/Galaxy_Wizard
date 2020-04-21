@@ -14,6 +14,14 @@ const DWORD Knight_Value = 4 * Pawn_Value;
 
 const DWORD MoveScoreBonus = Pawn_Value / 50;
 
+const double Weight_Check = 0.8;
+const double Weight_Capture = 0.7;
+const double Weight_Attack = 0.6;
+const double Weight_Avoidance = 0.5;
+const double Weight_Defence = 0.4;
+const double Weight_QuiteMove = 0.3;
+const double Weight_None = 1.0;
+
 template <class T>
 T sign(T v)
 {
@@ -77,7 +85,7 @@ namespace MachineStuding
 
 	const auto Required_Generation_Count = 100;
 
-	const auto DELTA = 0.1;
+	const auto DELTA = 0.01;
 }
 
 namespace PuzzleSpace
