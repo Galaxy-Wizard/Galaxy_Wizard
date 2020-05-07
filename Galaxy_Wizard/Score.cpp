@@ -47,7 +47,7 @@ DWORD Score::Evaluate()
 	return result;
 }
 
-double Score::GetMoveWeight(const Move m, const Board const* board)
+double Score::GetMoveWeight(const Move m, const Board *board)
 {
 	double result = 0.0;
 
@@ -59,7 +59,7 @@ double Score::GetMoveWeight(const Move m, const Board const* board)
 	return result;
 }
 
-bool Score::IsMoveWeightAllowed(const Move m, const Board const *board)
+bool Score::IsMoveWeightAllowed(const Move m, const Board *board)
 {
 	if (GetMoveWeight(m, board) >= MoveWeightAllowedValue)
 	{
@@ -162,8 +162,8 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	}
 
 	//	6.
-    auto ca = childen.begin();
-    auto cz = childen.end();
+    const auto ca = childen.begin();
+	const auto cz = childen.end();
     std::stable_sort(ca, cz, sort_tactics_procedure);
 
 	//	7.
@@ -347,5 +347,6 @@ bool sort_tactics_procedure(const Score &s1, const Score &s2)
 		}
 	}
 
-	return s1_tactics_move_weight > s2_tactics_move_weight;
+	return s1_tactics_move_weight < s2_tactics_move_weight;
 }
+
