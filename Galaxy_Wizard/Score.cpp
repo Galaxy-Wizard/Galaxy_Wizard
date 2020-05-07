@@ -116,7 +116,7 @@ void Score::genetate_all_moves(Score *parent)
 	}
 }
 
-DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t depth, Score *parent)
+Score* Score::search(const Matrix &position, size_t &nodes_calculated, size_t depth, Score *parent)
 {
 	DWORD search_result = 0;
 	DWORD game_end_result = 0;
@@ -130,12 +130,15 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	size_t currently_nodes_calculated_7 = 0;
 	size_t currently_nodes_calculated_8 = 0;
 
+	Score* score_search_result = this;
+
 	//	1.
 	if (game_ended(position, game_end_result))
 	{
 		currently_nodes_calculated_1++;
 		nodes_calculated = currently_nodes_calculated_1;
-		return game_end_result;
+		evaluation = game_end_result;
+		return score_search_result;
 	}
 
 	//	2.
@@ -150,7 +153,8 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 		nodes_calculated = currently_nodes_calculated_2 + currently_nodes_calculated_3;
 #ifndef _DEBUG
 #ifdef PLAN
-		return enemy_plan_result + (my_plan_result + enemy_plan_result) / 2;
+		evaluation = enemy_plan_result + (my_plan_result + enemy_plan_result) / 2;
+		return score_search_result;
 #endif
 #endif
 	}
@@ -192,9 +196,9 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 
 			if (this_current_score != nullptr)
 			{
-				std::cout << "Depth " << depth << " ";
-				std::cout << "Current variant " << variant << " ";
-				std::cout << "Current variant evaluation " << this_current_score->evaluation << std::endl;
+				//std::cout << "Depth " << depth << " ";
+				//std::cout << "Current variant " << variant << " ";
+				//std::cout << "Current variant evaluation " << this_current_score->evaluation << std::endl;
 			}
 		}
 	}
@@ -203,7 +207,9 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 
 	if (depth == 0)
 	{
-		return evaluation;
+		//evaluation = evaluation;
+
+		return score_search_result;
 	}
 
 	//	8.
@@ -211,7 +217,7 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	{
 		if (time_manager->think_time_expired())
 		{
-			return evaluation;
+			return score_search_result;
 		}
 
 		Board b1;
@@ -221,23 +227,41 @@ DWORD Score::search(const Matrix &position, size_t &nodes_calculated, size_t dep
 	}
 
 	//	9.
-	search_result = evaluation;
+	search_result = evaluation;	
 
 	for (auto child = childen.begin(); child != childen.end(); child++)
 	{
 		if (
-			((search_result > child->evaluation) && (side_to_move > 0))
+			((search_result >= child->evaluation) && (side_to_move > 0))
 			||
-			((search_result < child->evaluation) && (side_to_move < 0))
+			((search_result <= child->evaluation) && (side_to_move < 0))
 			)
 		{
+			score_search_result = &(*child);
 			search_result = child->evaluation;
 		}
 	}
 
+	for (auto child = score_search_result->childen.begin(); child != score_search_result->childen.end(); child++)
+	{
+		if (child->evaluation == search_result)
+		{
+			score_search_result = &(*child);
+			if (score_search_result->childen.empty())
+			{
+				break;
+			}
+			else
+			{
+				child = score_search_result->childen.begin();
+			}
+		}
+	}
+
+
 	evaluation = search_result;
 
-	return search_result;
+	return score_search_result;
 }
 
 void Score::prepare_board(Board &board)
@@ -332,18 +356,21 @@ bool sort_tactics_procedure(const Score &s1, const Score &s2)
 	double s1_tactics_move_weight = 0.0;
 	double s2_tactics_move_weight = 0.0;
 
-	auto mi = MachineStudingTacticsMoveTypeDataListSortData.MachineStudingData.back();
-
-	for (auto av = mi.AtomVector.begin(); av != mi.AtomVector.end(); av++)
+	if (!MachineStudingTacticsMoveTypeDataListSortData.MachineStudingData.empty())
 	{
-		if (bool(s1_tactics_move_type & av->MoveType))
-		{
-			s1_tactics_move_weight += av->Weight;
-		}
+		auto mi = MachineStudingTacticsMoveTypeDataListSortData.MachineStudingData.back();
 
-		if (bool(s2_tactics_move_type & av->MoveType))
+		for (auto av = mi.AtomVector.begin(); av != mi.AtomVector.end(); av++)
 		{
-			s2_tactics_move_weight += av->Weight;
+			if (bool(s1_tactics_move_type & av->MoveType))
+			{
+				s1_tactics_move_weight += av->Weight;
+			}
+
+			if (bool(s2_tactics_move_type & av->MoveType))
+			{
+				s2_tactics_move_weight += av->Weight;
+			}
 		}
 	}
 

@@ -15,7 +15,7 @@
 
 #include <algorithm>
 
-const size_t const_maximum_depth = 6;
+const size_t const_maximum_depth = 4;
 
 TimeManager* Score::time_manager;
 
@@ -74,6 +74,8 @@ int main()
 
 					Score* evaluation_best_score_start = &game->score;
 
+					evaluation_best_score = evaluation_best_score_start;
+
                     //_time64(&calculation_end_time);
 
                     //total_calculation_time += calculation_end_time - calculation_start_time;
@@ -83,11 +85,22 @@ int main()
 
 					size_t nodes_calculated = 0;
 
+					DWORD best_evaluation = 0;
+					DWORD previous_best_evaluation = 0;
+
 					for (size_t depth = 0; depth < const_maximum_depth; depth++)
 					{
-						DWORD best_evaluation = evaluation_best_score_start->search(game->board.position, nodes_calculated, depth, NULL);
+						evaluation_best_score = evaluation_best_score_start->search(game->board.position, nodes_calculated, depth, NULL);
 
-						if (abs(best_evaluation) < 4 * King_Value)
+						if (evaluation_best_score != nullptr)
+						{
+							best_evaluation = evaluation_best_score->evaluation;
+							previous_best_evaluation = best_evaluation;
+						}
+					//}
+
+					//{
+						//if (best_evaluation =<better>= previous_best_evaluation)
 						{
 							Score* this_current_score = evaluation_best_score;
 
@@ -120,8 +133,8 @@ int main()
 
                         //std::cout << "Calculating time " << calculation_time << " seconds" << std::endl;
 
-						std::cout << "Nodes calculated " << nodes_calculated << std::endl;
-                        std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
+						//std::cout << "Nodes calculated " << nodes_calculated << std::endl;
+                        //std::cout << "Total nodes calculated " << total_nodes_calculated << std::endl;
 
                         //if (calculation_time != 0)
                         //{

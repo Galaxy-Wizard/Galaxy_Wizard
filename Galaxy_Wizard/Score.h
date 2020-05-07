@@ -27,7 +27,7 @@ public:
 
 	DWORD evaluation;
 
-	DWORD search(const Matrix &position, size_t &nodes_calculated, size_t depth, Score* parent);
+	Score* search(const Matrix &position, size_t &nodes_calculated, size_t depth, Score* parent);
 
 	static TimeManager *time_manager;
 
