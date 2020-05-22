@@ -72,6 +72,13 @@ namespace Strategy
 	{
 		Development = 1,
 		CenterOccupation = 2,
+		SpaceCapture = 4,
+		MobilityImprovement = 8,
+		SafetyImprovement = 16,
+		Attack = 32,
+		PieceImprovement = Development + MobilityImprovement + Attack,
+		PawnImprovement = CenterOccupation + SpaceCapture + Attack,
+		KingImprovement = SafetyImprovement + Attack,
 		None = 0,
 	};
 }
