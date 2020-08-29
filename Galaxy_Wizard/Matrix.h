@@ -26,7 +26,7 @@ public:
 	Matrix(size_t m, size_t n);
 	~Matrix();
 	Matrix(const Matrix &m);
-	Matrix& operator=(const Matrix& m) throw(Exception());
+	Matrix& operator=(const Matrix& m) throw(Exception);
 
 	Matrix& put(size_t x, size_t y, Figure* value) throw(Exception);
 	Figure* get(size_t x, size_t y) throw(Exception);

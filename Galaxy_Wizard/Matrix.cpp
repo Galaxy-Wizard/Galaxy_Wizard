@@ -88,7 +88,7 @@ Matrix::Matrix(const Matrix &m)
 	move = m.move;
 }
 
-Matrix& Matrix::operator=(const Matrix& m) throw(Exception())
+Matrix& Matrix::operator=(const Matrix& m) throw(Exception)
 {
 	for (size_t c = 0; c < matrix_m; c++)
 	{
