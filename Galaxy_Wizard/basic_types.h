@@ -16,6 +16,7 @@ const DWORD MoveScoreBonus = Pawn_Value / 50;
 
 namespace Tactics
 {
+	const double Weight_DefenceDestruction = 1.0;
 	const double Weight_Check = 0.8;
 	const double Weight_Capture = 0.7;
 	const double Weight_Attack = 0.6;
