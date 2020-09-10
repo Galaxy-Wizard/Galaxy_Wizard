@@ -73,20 +73,22 @@ namespace Strategy
 {
 	enum StrategyMoveTypeEnum : int
 	{
-		Development = 1,
-		CenterOccupation = 2,
-		SpaceCapture = 4,
-		MobilityImprovement = 8,
-		SafetyImprovement = 16,
-		Attack = 32,
+		EnemyKingSafety = 1,
+		KingSafety = 2,
+		Development = 3,
+		CenterOccupation = 4,
+		SpaceCapture = 8,
+		MobilityImprovement = 16,
+		SafetyImprovement = 32,
+		Attack = 64,
 		PieceImprovement = Development + MobilityImprovement + Attack,
 		PawnImprovement = CenterOccupation + SpaceCapture + Attack,
-		KingImprovement = SafetyImprovement + Attack,
+		KingImprovement = SafetyImprovement + Attack + EnemyKingSafety + KingSafety,
 		None = 0,
 	};
 }
 
-const double MoveWeightAllowedValue = 0.0;// 0.5;
+const double MoveWeightAllowedValue = 0.0;// 1.0;
 
 namespace MachineStuding
 {

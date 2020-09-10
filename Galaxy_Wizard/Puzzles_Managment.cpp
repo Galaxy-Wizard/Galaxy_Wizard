@@ -540,6 +540,16 @@ namespace PuzzleSpace
 
 				MachineStuding::MachineStudingStrategyMoveTypeData StudingData;
 
+				StudingDataAtom.MoveType = Strategy::StrategyMoveTypeEnum::EnemyKingSafety;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Strategy::Weight_EnemyKingSafety;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
+				StudingDataAtom.MoveType = Strategy::StrategyMoveTypeEnum::KingSafety;
+				StudingDataAtom.Generation = 0;
+				StudingDataAtom.Weight = Strategy::Weight_KingSafety;// double(rand()) / double(RAND_MAX);
+				StudingData.AtomVector.push_back(StudingDataAtom);
+
 				StudingDataAtom.MoveType = Strategy::StrategyMoveTypeEnum::Development;
 				StudingDataAtom.Generation = 0;
 				StudingDataAtom.Weight = Strategy::Weight_Development;// double(rand()) / double(RAND_MAX);
