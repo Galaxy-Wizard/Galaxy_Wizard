@@ -28,6 +28,8 @@ namespace Tactics
 
 namespace Strategy
 {
+	const double Weight_EnemyKingSafety = 0.4;
+	const double Weight_KingSafety = 0.3;
 	const double Weight_Development = 0.2;
 	const double Weight_CenterOccupation = 0.1;
 	const double Weight_None = 1.0;
