@@ -16,7 +16,6 @@ const DWORD MoveScoreBonus = Pawn_Value / 50;
 
 namespace Tactics
 {
-	const double Weight_DefenceDestruction = 1.0;
 	const double Weight_Check = 0.8;
 	const double Weight_Capture = 0.7;
 	const double Weight_Attack = 0.6;
@@ -24,6 +23,48 @@ namespace Tactics
 	const double Weight_Defence = 0.4;
 	const double Weight_QuiteMove = 0.3;
 	const double Weight_None = 1.0;
+
+	const double Pin = 0.4;
+	const double Defense = 0.3;	
+	const double Hang = 0.3;
+	const double Sacrifice = 0.2;
+	const double Clearance = 0.2;
+	const double Decoy = 0.2;
+	const double Deflection = 0.2;
+	const double Trap = 0.1;
+
+	const double DefenceDestruction = Weight_Capture + Weight_Attack;
+	const double ClearanceSacrifice = Weight_Capture + Sacrifice + Clearance;
+	const double ExchangeSacrifice = Weight_Capture + Sacrifice;
+	const double QueenSacrifice = Weight_Capture + Sacrifice;
+	const double DiscoveredAttack = Weight_Attack + Clearance;
+	const double TrappedPiece = Weight_Attack + Trap;
+	const double Fork = Weight_Attack;
+	const double DoubleAttack = Weight_Attack + Weight_Attack;
+	const double DoubleCheck = Weight_Check + Weight_Check + Weight_Attack + Weight_Attack;
+	const double XRayAttack = Weight_Attack;
+	const double Interference = Clearance + Clearance;
+	const double Overloading = Hang;
+	const double HangingPiece = Hang;
+
+	const double Promotion = Weight_Capture;
+	const double Underpromotion = Weight_Capture + Sacrifice;
+	const double EnPassant = Weight_Capture;
+
+	const double PerpetualCheck = Weight_Check;
+
+	/*/
+	const double Stalemate;				
+	const double AlekhinesGun;			
+	const double Skewer;
+	const double Zugzwang;
+	const double Desperado;		
+	const double EndgameTactics;	
+	const double SmotheredMate;
+	const double MatingNet;	
+	const double Zwischenzug;
+	const double Windmill;
+	/*/
 }
 
 namespace Strategy
@@ -33,6 +74,33 @@ namespace Strategy
 	const double Weight_Development = 0.2;
 	const double Weight_CenterOccupation = 0.1;
 	const double Weight_None = 1.0;
+
+	const double VulnerableKing = 0.2;
+	const double KnightOutpost = 0.16;
+	const double BishopPair = 0.16;
+	const double DoubledRook = 0.16;
+	const double PassedPawns = 0.12;
+	const double Battery = 0.1;
+	const double Fianchetto = 0.1;
+	const double Simplification = 0.1;
+	const double BackRank = 0.1;
+	const double RooksOnSeventh = 0.1;
+	const double OppositeColoredBishops = 0.1;
+}
+
+namespace Mastery
+{
+	const double QueenCheckMate = 0.1;
+	const double RookCheckMate = 0.1;
+	const double TwoRooksCheckMate = 0.1;
+	const double TwoBishopsCheckMate = 0.1;
+	const double BishopsAndKnightCheckMate = 0.1;
+	const double BasicCheckMates = QueenCheckMate + RookCheckMate + TwoRooksCheckMate + TwoBishopsCheckMate + BishopsAndKnightCheckMate;
+
+	const double MateIn2 = 0.1;
+	const double MateIn3 = 0.1;
+	const double MateIn4 = 0.1;
+	const double AttackingCastledKing = 0.1;
 }
 
 template <class T>
