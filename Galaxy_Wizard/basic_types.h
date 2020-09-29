@@ -39,7 +39,7 @@ namespace Tactics
 	const double QueenSacrifice = Weight_Capture + Sacrifice;
 	const double DiscoveredAttack = Weight_Attack + Clearance;
 	const double TrappedPiece = Weight_Attack + Trap;
-	const double Fork = Weight_Attack;
+	const double Fork = Weight_Attack + Weight_Attack;
 	const double DoubleAttack = Weight_Attack + Weight_Attack;
 	const double DoubleCheck = Weight_Check + Weight_Check + Weight_Attack + Weight_Attack;
 	const double XRayAttack = Weight_Attack;
